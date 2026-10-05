@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "stage": "L003",
+  "updated": "2026-10-06",
+  "primary_target_tokens": 500000000,
+  "lanes": {
+    "release_safe": {
+      "description": "Sources currently approved by the FlyWireLLM project policy for checkpoints intended to remain eligible for future release, subject to source-specific attribution/notice obligations.",
+      "allowed_source_lanes": [
+        "release_safe"
+      ],
+      "checkpoint_public_release_eligibility": "preserved_pending_final_release_audit"
+    },
+    "research_only": {
+      "description": "Conditional or unresolved sources allowed only in isolated research checkpoints.",
+      "allowed_source_lanes": [
+        "release_safe",
+        "research_only"
+      ],
+      "checkpoint_public_release_eligibility": "not_qualified"
+    }
+  },
+  "blocked_source_lane": "blocked",
+  "promotion_policy": {
+    "research_only_to_release_safe": false,
+    "release_safe_to_research_only": true,
+    "checkpoint_lane_immutable_after_first_optimizer_step": true
+  },
+  "source_assignments": {
+    "tatoeba-sentences": {
+      "lane": "release_safe",
+      "reason": "Dataset sentence exports have an explicit CC BY 2.0 FR reuse path; attribution obligations remain."
+    },
+    "mozilla-common-voice": {
+      "lane": "release_safe",
+      "reason": "Current project policy accepts CC0 release snapshots subject to release-specific verification."
+    },
+    "wikimedia-thwiki": {
+      "lane": "research_only",
+      "reason": "CC BY-SA/GFDL and project/imported-content compliance remain unresolved for production model redistribution."
+    },
+    "wikimedia-enwiki": {
+      "lane": "research_only",
+      "reason": "CC BY-SA/GFDL compliance remains unresolved for production model redistribution."
+    },
+    "fineweb2-thai": {
+      "lane": "research_only",
+      "reason": "Dataset-level ODC-By does not resolve heterogeneous underlying web-content rights, PII and opt-out policy."
+    },
+    "fineweb-english": {
+      "lane": "research_only",
+      "reason": "Dataset-level ODC-By does not resolve heterogeneous underlying web-content rights, PII and opt-out policy."
+    },
+    "project-gutenberg": {
+      "lane": "research_only",
+      "reason": "Per-work and jurisdiction-specific rights must be qualified before individual works can move to release_safe."
+    },
+    "flywiremodel-curated-export": {
+      "lane": "blocked",
+      "reason": "Automatic export remains blocked until source rights and frozen scientific evaluation controls are separated."
+    }
+  },
+  "known_token_accounting": {
+    "tokenizer": "base50m-unigram-32000-v1",
+    "release_safe_train": {
+      "tatoeba-sentences-en": 20021145,
+      "tatoeba-sentences-th": 41836,
+      "total": 20062981
+    },
+    "research_only_train": {
+      "wikimedia-thwiki-sample-v1": 38312940,
+      "total": 38312940
+    },
+    "combined_research_eligible_train": 58375921,
+    "release_safe_gap_to_500m": 479937019,
+    "combined_research_gap_to_500m": 441624079
+  },
+  "pretraining_authorization": {
+    "release_safe_requires_tokens": 500000000,
+    "research_only_requires_tokens": 500000000,
+    "source_manifest_frozen": true,
+    "evaluation_manifest_frozen": true,
+    "tokenizer_hash_pinned": true,
+    "checkpoint_lane_declared_before_training": true
+  }
+}
