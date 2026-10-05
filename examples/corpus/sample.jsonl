@@ -1,0 +1,4 @@
+{"record_id":"SYN-TR-TH-001","text":"สวัสดี นี่คือข้อมูลสังเคราะห์สำหรับทดสอบ pipeline เท่านั้น","language":"th","source_id":"flywirellm-synthetic-fixture","license":"CC0-1.0","partition":"train"}
+{"record_id":"SYN-TR-EN-001","text":"This is synthetic text for an engineering smoke test only.","language":"en","source_id":"flywirellm-synthetic-fixture","license":"CC0-1.0","partition":"train"}
+{"record_id":"SYN-VA-MIX-001","text":"validation ภาษาไทย and English remain separate from training","language":"mixed","source_id":"flywirellm-synthetic-fixture","license":"CC0-1.0","partition":"validation"}
+{"record_id":"SYN-HO-TH-001","text":"holdout ชุดนี้ห้ามใช้สำหรับปรับค่าการฝึก","language":"th","source_id":"flywirellm-synthetic-fixture","license":"CC0-1.0","partition":"holdout"}
