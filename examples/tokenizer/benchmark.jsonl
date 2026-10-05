@@ -1,0 +1,12 @@
+{"case_id":"TH-GEN-001","language":"th","category":"thai_general","text":"แบบจำลองภาษาควรอ่านและเขียนภาษาไทยได้โดยรักษาความหมายและตัวเลขให้ถูกต้อง"}
+{"case_id":"TH-GEN-002","language":"th","category":"thai_general","text":"การฝึกโมเดลจากศูนย์ต้องแยกข้อมูลฝึก ข้อมูลตรวจสอบ และข้อมูลทดสอบออกจากกัน"}
+{"case_id":"EN-GEN-001","language":"en","category":"english_general","text":"A language model trained from scratch needs clean data, stable evaluation, and reproducible checkpoints."}
+{"case_id":"EN-GEN-002","language":"en","category":"english_general","text":"Tokenizer efficiency should be measured separately for Thai and English instead of reporting one average."}
+{"case_id":"MIX-001","language":"mixed","category":"code_switching","text":"FlyWireLLM รุ่น Base-50M-v1 uses 12 layers and a 32K vocabulary."}
+{"case_id":"MIX-002","language":"mixed","category":"code_switching","text":"ค่า learning_rate=6e-4 และ gradient_clip=1.0 ต้องไม่ถูกเปลี่ยนตอนแปลเป็น English."}
+{"case_id":"ID-ROOT-001","language":"mixed","category":"identifier","text":"root_id=720575940630024566 source_id=al-gain-control-2008"}
+{"case_id":"ID-URL-001","language":"mixed","category":"identifier","text":"https://github.com/funggier/FlyWireLLM/issues/3?stage=L002&lang=th"}
+{"case_id":"CODE-001","language":"en","category":"code","text":"for step in range(10): loss.backward(); optimizer.step()"}
+{"case_id":"SCI-001","language":"mixed","category":"scientific","text":"GABA_B efficacy = 3.14159e-4; ΔF/F = 0.125; τ = 42 ms"}
+{"case_id":"SPACE-001","language":"en","category":"whitespace","text":"  preserve   repeated spaces\tand tabs  "}
+{"case_id":"UNICODE-001","language":"mixed","category":"unicode","text":"แมลงหวี่ 🪰 café naïve αβγ → causal LM"}

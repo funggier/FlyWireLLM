@@ -1,76 +1,94 @@
 # FlyWireLLM Status
 
-Updated: 2026-10-05
+Updated: 2026-10-06
 
 ## Repository
 
-- GitHub: `funggier/FlyWireLLM`
+- GitHub: funggier/FlyWireLLM
 - visibility: private
 - license: MIT
-- local workspace: `T:\Space\Projects\ProjectsAI\FlyWireLLM`
+- local workspace: T:\Space\Projects\ProjectsAI\FlyWireLLM
 
-## L001
+## Released baseline
 
-Goal: blank/random-initialized training-ready LLM baseline.
+- v0.1.0: blank/random-initialized LLM engineering baseline
+- tag commit: 2ec2f502c8a4c5caa6c1f5262333e05dcacaf0a5
+- smoke parameters: 109,120
+- pretrained weights: none
+- release qualification: GREEN
 
-Current development state:
+## L002 Base-50M-v1
 
-- decoder-only causal Transformer: implemented
-- RMSNorm: implemented
-- RoPE: implemented
-- grouped-query attention: implemented
-- SwiGLU: implemented
-- tied embeddings: implemented
-- UTF-8 byte tokenizer: implemented
-- Thai round-trip: PASS
-- English round-trip: PASS
-- causal-mask regression: PASS
-- forward/loss/backward: PASS
-- optimizer smoke step: PASS
-- step-0 blank checkpoint: PASS
-- safe checkpoint round-trip: PASS
-- no-pretrained provenance guard: PASS
-- corpus source/license/partition contract: PASS
-- wheel build: PASS
-- wheel includes MIT LICENSE: PASS
-- full L001 regression: 26 tests PASS
+Decision:
 
-## v0.1.0 release baseline
+**TARGET CONTRACT GREEN / TOKENIZER ENGINEERING GREEN / DATA INVENTORY GREEN / 500M CORPUS NOT YET ACQUIRED OR RIGHTS-QUALIFIED / PRETRAINING NOT STARTED**
 
-- release purpose: qualified blank/random-initialized LLM engineering baseline;
-- release profile: smoke model, 109,120 parameters;
-- package version: 0.1.0;
-- license: MIT;
-- blank checkpoint seed: 1234;
-- pretrained weights: none;
-- language-quality claim: none;
-- release assets: source/release ZIP, documentation ZIP, blank checkpoint and SHA-256 manifest.
+Frozen architecture:
 
-See docs/releases/v0.1.0.md.
+- parameters: 50,213,376
+- vocabulary target: 32,000
+- d_model: 512
+- layers: 12
+- query/KV heads: 8/2
+- d_ff: 1,408
+- context: 1,024 initially; 2,048 later qualification target
+- RMSNorm + RoPE + GQA + SwiGLU + tied embeddings
+- random initialization
+
+Tokenizer:
+
+- SentencePiece Unigram 32K candidate trained successfully
+- identity normalization
+- byte fallback
+- benchmark cases: 10,150
+- round-trip failures: 0
+- unknown tokens: 0
+- compression vs v0.1.0 byte tokenizer: overall 6.252x
+- Thai: 10.710x
+- English: 4.031x
+- mixed: 2.570x
+- tokenizer engineering: GREEN
+- tokenizer redistribution/production rights: NOT YET QUALIFIED
+
+Data inventory:
+
+- primary budget: 500,000,000 tokens
+- current acquired/deduplicated train tokens: 58,334,085
+- current coverage: 11.666817%
+- gap to primary target: 441,665,915 tokens
+- split: 99.0% train / 0.5% validation / 0.5% holdout by source group
+- final holdout text excluded from tokenizer fitting
+- automatic FlyWireModel training export: BLOCKED pending source/evaluation separation
+
+Training schedule:
+
+- 250M: 3,815 steps / 77 warmup
+- 500M: 7,630 steps / 153 warmup
+- 1B: 15,259 steps / 306 warmup
+- global target: 65,536 tokens/update
+
+Qualification:
+
+- full repository pytest: 47 PASS
+- L002 audit: PASS
+- git diff --check: PASS
+- v0.1.0 baseline tests remain included in regression
 
 ## Claims boundary
 
-Current model:
+Current project state:
 
-- is training-ready;
-- starts from random weights;
-- can losslessly tokenize Thai and English;
-- cannot yet converse;
-- does not yet understand Thai or English;
-- does not contain trained FlyWire knowledge;
-- has no language-quality qualification.
+- blank v0.1.0 model is released and training-ready;
+- Base-50M-v1 architecture and training target are defined;
+- a 32K tokenizer candidate is engineering-qualified;
+- Base-50M has NOT been pretrained;
+- Thai/English language understanding is NOT claimed;
+- conversational ability is NOT claimed;
+- conditional-rights data are NOT treated as approved production training data;
+- no trained FlyWire knowledge exists in LLM weights.
 
-## Relationship to FlyWireModel
+## Next stage
 
-`FlyWireModel` remains a separate project and scientific evidence source.
+L003 should acquire and qualify the remaining approximately 441.7M train tokens, add scalable normalization/dedup/PII/provenance processing, freeze production manifests, and perform compute/memory qualification before authorizing Base-50M pretraining.
 
-Future cross-project use must be explicit and provenance-preserving. L001 does
-not import FlyWireModel weights.
-
-## Next candidates
-
-- L002: learned tokenizer benchmark for Thai/English versus UTF-8 byte baseline;
-- L003: scalable pretraining data manifest/deduplication pipeline;
-- L004: larger model profiles and memory/throughput qualification;
-- later: optional FlyWire-informed architecture experiments against the frozen
-  plain Transformer baseline.
+See docs/RESULTS_L002.md, docs/TOKENIZER_L002.md and docs/DATA_PLAN_L002.md.

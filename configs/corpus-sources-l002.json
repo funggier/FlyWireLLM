@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "stage": "L002",
+  "updated": "2026-10-06",
+  "token_budgets": {
+    "minimum": 250000000,
+    "primary": 500000000,
+    "stretch": 1000000000
+  },
+  "target_mix": {
+    "general_thai": 0.4,
+    "general_english": 0.4,
+    "technical_scientific_code": 0.1,
+    "flywire_domain": 0.1
+  },
+  "split": {
+    "train": 0.99,
+    "validation": 0.005,
+    "holdout": 0.005
+  },
+  "policy": {
+    "split_unit": "source_group",
+    "split_seed": "flywirellm-l002-split-v1",
+    "dedup_fingerprint": "SHA-256 over NFC + line-ending normalization + whitespace-collapsed comparison text",
+    "training_text_rewrite_from_dedup_normalization": false,
+    "source_license_required": true,
+    "source_provenance_required": true,
+    "no_source_group_cross_partition": true,
+    "tokenizer_fit_must_exclude_holdout": true,
+    "final_language_holdout_must_exclude_tokenizer_fit": true,
+    "flywire_domain_is_maximum_not_quota": true
+  },
+  "sources": [
+    {
+      "source_id": "tatoeba-sentences",
+      "name": "Tatoeba sentence exports",
+      "categories": [
+        "general_thai",
+        "general_english"
+      ],
+      "languages": [
+        "th",
+        "en"
+      ],
+      "dataset_url": "https://tatoeba.org/en/downloads",
+      "license_name": "CC BY 2.0 FR",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/fr/",
+      "license_audit_status": "approved",
+      "acquisition_status": "pilot_acquired",
+      "source_grouping_key": "Tatoeba sentence id",
+      "content_rights_notes": "Weekly sentence exports are released under CC BY 2.0 FR; a subset is also CC0. Attribution obligations remain.",
+      "pii_risk": "low but not assumed zero; sentence text still requires automated screening before large-scale use",
+      "intended_role": "L002 tokenizer pilot and language-balance diagnostics, not primary 500M-token source"
+    },
+    {
+      "source_id": "mozilla-common-voice",
+      "name": "Mozilla Common Voice",
+      "categories": [
+        "general_thai",
+        "general_english"
+      ],
+      "languages": [
+        "th",
+        "en"
+      ],
+      "dataset_url": "https://commonvoice.mozilla.org/",
+      "license_name": "CC0-1.0 unless otherwise specified",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "license_audit_status": "approved",
+      "acquisition_status": "not_acquired",
+      "source_grouping_key": "sentence/prompt identity with release version",
+      "content_rights_notes": "Mozilla states Common Voice contributions/datasets are made available under CC0 unless otherwise specified.",
+      "pii_risk": "low for scripted text but release-specific review remains required",
+      "intended_role": "supplementary conversational/scripted text; not expected to satisfy the main token budget"
+    },
+    {
+      "source_id": "wikimedia-thwiki",
+      "name": "Thai Wikipedia dumps",
+      "categories": [
+        "general_thai"
+      ],
+      "languages": [
+        "th"
+      ],
+      "dataset_url": "https://dumps.wikimedia.org/thwiki/",
+      "license_name": "CC BY-SA 4.0 and GFDL for contributor-owned text, with project-specific exceptions possible",
+      "license_url": "https://foundation.wikimedia.org/wiki/Terms_of_Use",
+      "license_audit_status": "conditional",
+      "acquisition_status": "not_acquired",
+      "source_grouping_key": "page id + revision id",
+      "content_rights_notes": "Requires attribution/share-alike compliance planning and preservation of page/revision provenance; imported media or quoted text may have separate terms.",
+      "pii_risk": "medium; encyclopedic content can contain personal information",
+      "intended_role": "high-quality Thai reference text and tokenizer coverage"
+    },
+    {
+      "source_id": "wikimedia-enwiki",
+      "name": "English Wikipedia dumps",
+      "categories": [
+        "general_english",
+        "technical_scientific_code"
+      ],
+      "languages": [
+        "en"
+      ],
+      "dataset_url": "https://dumps.wikimedia.org/enwiki/",
+      "license_name": "CC BY-SA 4.0 and GFDL for contributor-owned text, with project-specific exceptions possible",
+      "license_url": "https://foundation.wikimedia.org/wiki/Terms_of_Use",
+      "license_audit_status": "conditional",
+      "acquisition_status": "not_acquired",
+      "source_grouping_key": "page id + revision id",
+      "content_rights_notes": "Requires attribution/share-alike compliance planning and page/revision provenance.",
+      "pii_risk": "medium",
+      "intended_role": "high-quality English reference text and technical/scientific coverage"
+    },
+    {
+      "source_id": "fineweb2-thai",
+      "name": "HuggingFace FineWeb2 Thai subset",
+      "categories": [
+        "general_thai"
+      ],
+      "languages": [
+        "th"
+      ],
+      "dataset_url": "https://huggingface.co/datasets/HuggingFaceFW/fineweb-2",
+      "license_name": "ODC-By 1.0 dataset release",
+      "license_url": "https://opendatacommons.org/licenses/by/1-0/",
+      "license_audit_status": "conditional",
+      "acquisition_status": "not_acquired",
+      "source_grouping_key": "source URL/document id from the released dataset",
+      "content_rights_notes": "Large filtered/deduplicated Common Crawl derivative. Dataset is released ODC-By, while underlying web-document rights and opt-out/PII handling remain heterogeneous.",
+      "pii_risk": "medium-high; web-derived data requires PII/opt-out policy",
+      "intended_role": "primary scale candidate for Thai after policy/provenance qualification"
+    },
+    {
+      "source_id": "fineweb-english",
+      "name": "HuggingFace FineWeb English",
+      "categories": [
+        "general_english",
+        "technical_scientific_code"
+      ],
+      "languages": [
+        "en"
+      ],
+      "dataset_url": "https://huggingface.co/datasets/HuggingFaceFW/fineweb",
+      "license_name": "ODC-By 1.0 dataset release",
+      "license_url": "https://opendatacommons.org/licenses/by/1-0/",
+      "license_audit_status": "conditional",
+      "acquisition_status": "not_acquired",
+      "source_grouping_key": "source URL/document id from the released dataset",
+      "content_rights_notes": "Large filtered/deduplicated Common Crawl derivative. Dataset is released ODC-By, while underlying web-document rights remain heterogeneous.",
+      "pii_risk": "medium-high; web-derived data requires PII/opt-out policy",
+      "intended_role": "primary scale candidate for English after policy/provenance qualification"
+    },
+    {
+      "source_id": "project-gutenberg",
+      "name": "Project Gutenberg selected works",
+      "categories": [
+        "general_english"
+      ],
+      "languages": [
+        "en"
+      ],
+      "dataset_url": "https://www.gutenberg.org/",
+      "license_name": "Per-work public-domain/reuse status plus Project Gutenberg trademark/license terms",
+      "license_url": "https://www.gutenberg.org/policy/license.html",
+      "license_audit_status": "conditional",
+      "acquisition_status": "not_acquired",
+      "source_grouping_key": "ebook id + edition/revision",
+      "content_rights_notes": "Must verify each work and jurisdiction; not every item may be freely reusable outside the United States. Bulk access should use approved mirrors.",
+      "pii_risk": "low",
+      "intended_role": "optional long-form English supplement after per-work rights filtering"
+    },
+    {
+      "source_id": "flywiremodel-curated-export",
+      "name": "Curated FlyWireModel knowledge export",
+      "categories": [
+        "flywire_domain",
+        "technical_scientific_code"
+      ],
+      "languages": [
+        "en",
+        "th",
+        "mixed"
+      ],
+      "dataset_url": "repo://funggier/FlyWireModel",
+      "license_name": "Mixed provenance; export-level audit required",
+      "license_url": "repo://funggier/FlyWireModel/LICENSE",
+      "license_audit_status": "blocked",
+      "acquisition_status": "not_acquired",
+      "source_grouping_key": "source evidence id / document / experiment id",
+      "content_rights_notes": "FlyWireModel repository code may be MIT, but scientific source material and frozen evaluation evidence have separate provenance. No automatic training export is allowed.",
+      "pii_risk": "low",
+      "intended_role": "up to 10 percent domain data only after an explicit export policy excludes frozen evaluation evidence and preserves source provenance"
+    }
+  ]
+}

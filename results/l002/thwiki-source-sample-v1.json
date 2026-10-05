@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "stage": "L002",
+  "sample_id": "thwiki-sample-v1",
+  "source": {
+    "source_id": "wikimedia-thwiki",
+    "snapshot": "latest observed 2026-10-01",
+    "dump_url": "https://dumps.wikimedia.org/thwiki/latest/thwiki-latest-pages-articles.xml.bz2",
+    "raw_dump_bytes": 507192137,
+    "raw_dump_sha256": "1995cb37f27a20349918f8e234694fe700ae748a0b4f4dcc26babfd3cc540522",
+    "extractor": "wikiextractor==3.1.0",
+    "extractor_mode": "--json --processes 4 -b 100M",
+    "license_status": "conditional",
+    "license": "CC BY-SA 4.0 / GFDL source text; project and imported-content exceptions require compliance review"
+  },
+  "sample_policy": {
+    "complete_chunk_prefix": "AA/wiki_00..AA/wiki_07",
+    "use_full_extraction": false,
+    "purpose": "L002 engineering tokenizer candidate only",
+    "pretraining_rights_qualified": false,
+    "final_tokenizer_release_rights_qualified": false
+  },
+  "chunks": [
+    {
+      "path": "AA/wiki_00",
+      "bytes": 104822690,
+      "sha256": "9a1062d736e1f1c5401bbe70d2c5919853ff8b39efde12f5e79f3f8a9a4ca12e"
+    },
+    {
+      "path": "AA/wiki_01",
+      "bytes": 104753043,
+      "sha256": "e4666a11f0f115283594efa7fc68ae18abf321dd2338a5d7a101324291af9197"
+    },
+    {
+      "path": "AA/wiki_02",
+      "bytes": 104802180,
+      "sha256": "c6284a8213c1474b83622648ba4723c57ae1c1aa11537f1cf1567338ce8f1215"
+    },
+    {
+      "path": "AA/wiki_03",
+      "bytes": 104844847,
+      "sha256": "3399d4028b466124161e924386d8e65850ee9209931078e178e4290df4856a64"
+    },
+    {
+      "path": "AA/wiki_04",
+      "bytes": 104853835,
+      "sha256": "3a709c587f2837effada0a93989f2581763c5a6e4c2682a15638f5f9b6eb2308"
+    },
+    {
+      "path": "AA/wiki_05",
+      "bytes": 104693745,
+      "sha256": "7c1113ced30fd730978f70bbd215010d606664c03ad7f54706ab2504c54f3fb6"
+    },
+    {
+      "path": "AA/wiki_06",
+      "bytes": 104856075,
+      "sha256": "279899882b02c0dfa4a67697cc589b7b61218f5d7467160047abb4d04ed7453e"
+    },
+    {
+      "path": "AA/wiki_07",
+      "bytes": 104840638,
+      "sha256": "98cba8db8af78ea5ab0521b13df4cc1b7147b5e71a41d0833f7832ea0d779aad"
+    }
+  ]
+}

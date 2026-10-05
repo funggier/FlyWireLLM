@@ -142,3 +142,34 @@ Every such experiment should:
 6. use held-out language/model evaluations.
 
 This keeps biological inspiration measurable rather than decorative.
+
+## L002 Base-50M-v1 target
+
+L002 freezes the first non-smoke architecture target while preserving the
+v0.1.0 blank model as the regression baseline.
+
+Base-50M-v1:
+
+- vocabulary: 32,000;
+- d_model: 512;
+- layers: 12;
+- query heads: 8;
+- KV heads: 2;
+- head dimension: 64;
+- d_ff: 1,408;
+- context: 1,024 initially;
+- RMSNorm + RoPE + grouped-query attention + SwiGLU;
+- tied embeddings;
+- dropout: 0;
+- initialization std: 0.02.
+
+The exact parameter count implied by the current implementation is 50,213,376.
+The formula is implemented in BlankLLMConfig.exact_parameter_count and is
+regression-tested against the instantiated smoke model.
+
+L002 also adds a SentencePiece Unigram tokenizer candidate with identity
+normalization and byte fallback. The learned tokenizer is not coupled to the
+core model implementation; the released UTF-8 byte tokenizer remains the
+bootstrap/fallback baseline.
+
+No Base-50M language weights have been trained yet.

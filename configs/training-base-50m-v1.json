@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "profile": "base-50m-v1",
+  "objective": "causal_next_token_cross_entropy",
+  "optimizer": {
+    "name": "AdamW",
+    "beta1": 0.9,
+    "beta2": 0.95,
+    "eps": 1e-8,
+    "weight_decay": 0.1,
+    "gradient_clip_norm": 1
+  },
+  "schedule": {
+    "peak_learning_rate": 0.0006,
+    "warmup_fraction": 0.02,
+    "decay": "cosine",
+    "min_learning_rate": 0.00006
+  },
+  "global_tokens_per_update": 65536,
+  "primary_seed": 1234,
+  "precision": {
+    "preferred": "bf16",
+    "correctness_fallback": "fp32"
+  },
+  "token_budgets": [
+    250000000,
+    500000000,
+    1000000000
+  ],
+  "primary_token_budget": 500000000,
+  "validation_reporting": [
+    "th",
+    "en",
+    "mixed",
+    "flywire_domain"
+  ]
+}

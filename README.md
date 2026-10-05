@@ -64,6 +64,25 @@ The smoke training script performs a deterministic optimizer step on a tiny
 Thai/English fixture. Its loss is only an engineering sanity check, not a model
 quality metric.
 
+
+## Base-50M direction
+
+After the v0.1.0 blank baseline, L002 defines Base-50M-v1:
+
+- exactly 50,213,376 parameters;
+- 32K SentencePiece Unigram tokenizer target;
+- Thai + English first-class data;
+- 500M-token primary pretraining budget;
+- source-grouped train/validation/holdout;
+- explicit license/provenance states.
+
+The L002 32K engineering tokenizer is lossless on its 10,150-case benchmark,
+but Base-50M has **not** been pretrained yet. Current acquired/deduplicated data
+cover 58,334,085 train tokens, so production data acquisition/qualification is
+the next gate.
+
+See docs/RESULTS_L002.md.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).

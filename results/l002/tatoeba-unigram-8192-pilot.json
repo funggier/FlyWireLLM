@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "stage": "L002",
+  "pilot_id": "tatoeba-balanced-unigram-8192",
+  "source_snapshot": {
+    "source_id": "tatoeba-sentences-2026-10-03",
+    "snapshot_date": "2026-10-03",
+    "license": "CC BY 2.0 FR",
+    "raw_sha256": {
+      "th": "d03a70b0189cf410e3b6ce4d6e0daa4062a01518d71ed1efd2fbed619669e5a4",
+      "en": "5f7ebf552bd3925dfd33236ccb6a210c5ba02b365e4a39964fb658e1209e87d9"
+    },
+    "raw_records": {
+      "th": 6851,
+      "en": 2038137
+    }
+  },
+  "split": {
+    "method": "deterministic SHA-256 source-group split",
+    "group": "dedup_fingerprint",
+    "seed": "flywirellm-l002-split-v1",
+    "partition_counts": {
+      "train": {
+        "th": 6780,
+        "en": 2017760
+      },
+      "validation": {
+        "th": 41,
+        "en": 10090
+      },
+      "holdout": {
+        "th": 30,
+        "en": 10287
+      }
+    },
+    "holdout_materialized": false
+  },
+  "fit": {
+    "records": {
+      "th": 6780,
+      "en": 10962
+    },
+    "utf8_bytes": {
+      "th": 440701,
+      "en": 440710
+    },
+    "fit_sha256": "472bc65ce6f15a4591784f1b29fe42a40a20f5acd5c4c54fa768b35999a40507"
+  },
+  "tokenizer": {
+    "implementation": "sentencepiece",
+    "version": "0.2.2",
+    "model_type": "unigram",
+    "requested_vocab_size": 8192,
+    "actual_vocab_size": 8192,
+    "normalization": "identity",
+    "byte_fallback": true,
+    "model_sha256": "d2763d509a3b2edf67889640deedf05b54228d2b2f7c85d1fb72101c1eecc5ff",
+    "vocab_sha256": "04573e567e1e6755e01098c1cf02bec82e72c1c0c34e5229a1cb139086021716",
+    "final_base50m_tokenizer": false
+  },
+  "benchmark": {
+    "cases": 115,
+    "roundtrip_failures": 0,
+    "unk_tokens": 0,
+    "compression_vs_byte_overall": 4.729007633587786,
+    "compression_vs_byte_thai": 11.734939759036145,
+    "compression_vs_byte_english": 3.4179829890643987,
+    "compression_vs_byte_mixed": 1.9327731092436975,
+    "validation_sha256": "4ce7df2e89fe4850a40240631ade5c37d70d92028d21e753bc3c737d17ab43c2"
+  },
+  "decision": "PILOT GREEN / UNIGRAM + IDENTITY NORMALIZATION + BYTE FALLBACK RETAINED AS BASE-50M TOKENIZER CANDIDATE / 32K FINAL VOCAB NOT YET QUALIFIED"
+}

@@ -60,3 +60,29 @@ L001 proves only that:
 - future corpora can label their language and source consistently.
 
 Language capability must be evaluated after training.
+
+## L002 scale contract
+
+L002 extends the bootstrap JSONL contract with a source inventory and
+deterministic source-group split.
+
+Primary pretraining target: 500M tokens.
+
+Target mixture:
+
+- 40% general Thai;
+- 40% general English;
+- 10% technical/scientific/code;
+- up to 10% FlyWire/neuroscience domain.
+
+The frozen split is 99.0% train / 0.5% validation / 0.5% holdout using
+source-group identities after conservative deduplication.
+
+Source audit states are explicit: approved, conditional, or blocked.
+Conditional data are not silently promoted to production training data.
+
+The current acquired/deduplicated engineering inventory contains 58,334,085
+train tokens under the 32K candidate, leaving 441,665,915 tokens to the 500M
+primary target.
+
+See docs/DATA_PLAN_L002.md and configs/corpus-sources-l002.json.

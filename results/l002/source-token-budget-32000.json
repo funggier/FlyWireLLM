@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "stage": "L002",
+  "tokenizer_vocab_size": 32000,
+  "deduplication": {
+    "thai_duplicates_removed": 9,
+    "english_duplicates_removed": 0
+  },
+  "total": {
+    "records": 2099784,
+    "utf8_bytes": 502254561,
+    "tokens": 58940143
+  },
+  "by_language": {
+    "th": {
+      "records": 61647,
+      "utf8_bytes": 420333968,
+      "tokens": 38718101
+    },
+    "en": {
+      "records": 2038137,
+      "utf8_bytes": 81920593,
+      "tokens": 20222042
+    }
+  },
+  "by_partition": {
+    "train": {
+      "records": 2078791,
+      "utf8_bytes": 497046317,
+      "tokens": 58334085
+    },
+    "validation": {
+      "records": 10373,
+      "utf8_bytes": 2279225,
+      "tokens": 274895
+    },
+    "holdout": {
+      "records": 10620,
+      "utf8_bytes": 2929019,
+      "tokens": 331163
+    }
+  },
+  "partition_language": {
+    "train": {
+      "th": {
+        "records": 61031,
+        "utf8_bytes": 415936257,
+        "tokens": 38312940
+      },
+      "en": {
+        "records": 2017760,
+        "utf8_bytes": 81110060,
+        "tokens": 20021145
+      }
+    },
+    "validation": {
+      "th": {
+        "records": 283,
+        "utf8_bytes": 1879721,
+        "tokens": 175783
+      },
+      "en": {
+        "records": 10090,
+        "utf8_bytes": 399504,
+        "tokens": 99112
+      }
+    },
+    "holdout": {
+      "th": {
+        "records": 333,
+        "utf8_bytes": 2517990,
+        "tokens": 229378
+      },
+      "en": {
+        "records": 10287,
+        "utf8_bytes": 411029,
+        "tokens": 101785
+      }
+    }
+  },
+  "primary_target_tokens": 500000000,
+  "train_fraction_of_primary_target": 0.11666817,
+  "train_gap_to_primary_target": 441665915
+}

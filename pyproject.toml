@@ -17,6 +17,12 @@ dependencies = [
 dev = [
   "pytest>=8.3"
 ]
+tokenizer = [
+  "sentencepiece==0.2.2"
+]
+data = [
+  "wikiextractor==3.1.0"
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]
