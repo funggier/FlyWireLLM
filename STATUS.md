@@ -35,6 +35,19 @@ Current development state:
 - wheel includes MIT LICENSE: PASS
 - full L001 regression: 26 tests PASS
 
+## v0.1.0 release baseline
+
+- release purpose: qualified blank/random-initialized LLM engineering baseline;
+- release profile: smoke model, 109,120 parameters;
+- package version: 0.1.0;
+- license: MIT;
+- blank checkpoint seed: 1234;
+- pretrained weights: none;
+- language-quality claim: none;
+- release assets: source/release ZIP, documentation ZIP, blank checkpoint and SHA-256 manifest.
+
+See docs/releases/v0.1.0.md.
+
 ## Claims boundary
 
 Current model:
