@@ -48,6 +48,6 @@ A task file should correspond to one GitHub Issue whenever practical.
 | L001 Blank LLM foundation | DONE | #1 | Random-initialized training-ready baseline |
 | R001 v0.1.0 release | DONE | #2 | First MIT release |
 | L002 Base-50M/tokenizer/data contract | DONE | #3 | Base-50M + 32K tokenizer engineering gate |
-| L003 production corpus readiness | ACTIVE | #4 | Rights lanes, screened scale corpus, global manifest work |
+| L003 production corpus readiness | DONE | #4 | 500M research-only corpus qualified; pretraining lineage authorized |
 
 For the exact current action, read [CURRENT.md](CURRENT.md).

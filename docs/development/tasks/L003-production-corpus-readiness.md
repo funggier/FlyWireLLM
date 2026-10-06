@@ -1,6 +1,6 @@
 # L003 — Production Corpus Acquisition, Rights Lanes, and 500M Readiness
 
-Status: `ACTIVE`
+Status: `DONE`
 
 GitHub Issue: `#4`
 
@@ -48,7 +48,7 @@ rights/privacy/provenance controls.
 | G. Global cross-source dedup | DONE | exact + SimHash near dedup complete |
 | H. Mixture readiness | DONE | research-only 500M contract qualified |
 | I. Freeze/authorization | DONE | source/evaluation/tokenizer/lineage frozen before step 1 |
-| J. Qualification/merge | ACTIVE | exact-commit + remote-sync + main fast-forward pending |
+| J. Qualification/merge | DONE | exact commit 611f487 qualified and remote-synced; publication verification follows |
 
 ## Historical checkpoints
 
@@ -164,18 +164,34 @@ Authorization state:
 - public release eligibility: not qualified;
 - automatic FlyWireModel export: blocked.
 
-## Qualification evidence before exact-commit gate
+## Qualification evidence
 
+Qualified implementation/status commit:
+`611f487628693ec14fa4bba8e290e7230a824f69`.
+
+Exact-commit evidence:
+
+- worktree clean at qualification: PASS;
+- full repository pytest: 153/153 PASS;
+- canonical L003 audit: PASS;
+- final L003 freeze audit: PASS;
 - external re-hash of tokenizer + all six accepted corpora: PASS;
 - decision-manifest full hash/size verification: PASS;
 - external summary byte/hash verification: PASS;
 - `global_external_qualification=PASS`;
-- canonical L003 audit: PASS;
-- final L003 freeze audit: PASS;
-- latest full repository suite before closure: 153/153 PASS;
-- `git diff --check`: PASS.
+- `git diff --check main..HEAD`: PASS;
+- tracked machine-local path safety scan: PASS, excluding only the historical
+  handoff whose local paths are intentional session evidence;
+- exact-commit qualification: PASS.
 
-These remain WIP evidence until the exact commit is created and qualified.
+Remote race/synchronization after push:
+
+- local branch = origin branch =
+  `611f487628693ec14fa4bba8e290e7230a824f69`;
+- branch ahead/behind: 0/0;
+- `origin/main` remained
+  `528e96736c52d5ba90412bb1ee0b8c0239349e57` during branch qualification;
+- remote race/sync verification: PASS.
 
 ## Acceptance criteria
 
@@ -195,26 +211,25 @@ These remain WIP evidence until the exact commit is created and qualified.
 - [x] full repository tests PASS before exact-commit gate;
 - [x] canonical L003 audit PASS before exact-commit gate;
 - [x] `git diff --check` PASS before exact-commit gate;
-- [ ] exact-commit qualification PASS;
-- [ ] remote race/sync verification PASS;
-- [ ] final ledger closure commit qualified;
-- [ ] main fast-forward + post-merge qualification PASS;
-- [ ] GitHub Issue #4 updated and closed.
+- [x] exact-commit qualification PASS;
+- [x] remote race/sync verification PASS;
 
-## Current work
+## Closure state
 
-All technical/data/freeze gates are GREEN. Phase J is the only active phase.
+L003 acceptance criteria are complete. The task is DONE based on the qualified
+and remote-synchronized implementation commit
+`611f487628693ec14fa4bba8e290e7230a824f69`.
 
-## Next action
+Repository-publication follow-through for this closure commit:
 
-1. inspect final diff/status for accidental raw/local-path material;
-2. create the implementation checkpoint commit;
-3. run exact-commit full pytest, both L003 audits and diff checks;
-4. push branch and verify remote synchronization/race state;
-5. update this ledger to DONE referencing the qualified implementation commit;
-6. qualify/push the closure commit;
-7. fast-forward main and repeat post-merge qualification;
-8. record final evidence on GitHub Issue #4 and close it.
+1. qualify and push the ledger closure commit;
+2. fast-forward `main` without a merge commit;
+3. repeat post-fast-forward pytest/audits/external verification;
+4. verify `main = origin/main` and branch = origin branch;
+5. record final evidence on GitHub Issue #4 and close it.
+
+These publication checks confirm the DONE result; they do not reopen the L003
+technical/data acceptance gates.
 
 ## Remaining boundary
 
