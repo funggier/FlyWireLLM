@@ -11,7 +11,7 @@ from flywire_llm.rights import load_rights_policy
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_tracked_thai_fineweb2_derived_registry_is_frozen():
+def test_tracked_web_derived_registry_is_frozen():
     inventory = load_corpus_inventory(
         ROOT / "configs" / "corpus-sources-l002.json"
     )
@@ -31,24 +31,45 @@ def test_tracked_thai_fineweb2_derived_registry_is_frozen():
         rights_policy=rights,
         artifact_ledger=ledger,
     )
-    assert len(corpora) == 1
-    corpus = corpora[0]
-    assert corpus.derived_id == (
+    assert len(corpora) == 2
+    by_id = {corpus.derived_id: corpus for corpus in corpora}
+
+    thai = by_id[
         "fineweb2-thai-train-005-00002-sample1000000-v1"
-    )
-    assert corpus.source_id == "fineweb2-thai"
-    assert corpus.rights_lane == "research_only"
-    assert corpus.primary_category == "general_thai"
-    assert corpus.summary_sha256 == (
+    ]
+    assert thai.source_id == "fineweb2-thai"
+    assert thai.rights_lane == "research_only"
+    assert thai.primary_category == "general_thai"
+    assert thai.summary_sha256 == (
         "b450aad95eadbe0e82c0787147dcc08ddd4dcb6cbeb7a46accff8fde068c7020"
     )
-    assert corpus.accepted_sha256 == (
+    assert thai.accepted_sha256 == (
         "7b22cccde21f195ee3fc6585af2abd8ba8c3a4f63aa3ed082930a07d9ee0e633"
     )
-    assert corpus.accepted_bytes == 3_072_938_059
-    assert corpus.train_tokens == 293_826_034
-    assert corpus.validation_tokens == 1_449_071
-    assert corpus.holdout_tokens == 1_479_220
-    assert corpus.accepted_records == 339_058
-    assert corpus.global_manifest_authorized is False
-    assert corpus.pretraining_authorized is False
+    assert thai.accepted_bytes == 3_072_938_059
+    assert thai.train_tokens == 293_826_034
+    assert thai.validation_tokens == 1_449_071
+    assert thai.holdout_tokens == 1_479_220
+    assert thai.accepted_records == 339_058
+
+    english = by_id[
+        "fineweb-english-10bt-014-00000-sample600000-v1"
+    ]
+    assert english.source_id == "fineweb-english"
+    assert english.rights_lane == "research_only"
+    assert english.primary_category == "general_english"
+    assert english.summary_sha256 == (
+        "e23be2af32cb8ddc7e4b0db417e16acc0f29945f164a2258e9108d92dccd1b81"
+    )
+    assert english.accepted_sha256 == (
+        "13526d486bf90e06b6a3f2cdfb6ae0f653541f6c55876da0ca052f3d3d4ad803"
+    )
+    assert english.accepted_bytes == 603_547_565
+    assert english.train_tokens == 120_975_441
+    assert english.validation_tokens == 539_655
+    assert english.holdout_tokens == 685_017
+    assert english.accepted_records == 163_676
+
+    for corpus in corpora:
+        assert corpus.global_manifest_authorized is False
+        assert corpus.pretraining_authorized is False

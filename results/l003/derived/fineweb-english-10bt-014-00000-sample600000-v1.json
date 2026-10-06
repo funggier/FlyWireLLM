@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "stage": "L003",
+  "derived_id": "fineweb-english-10bt-014-00000-sample600000-v1",
+  "source_id": "fineweb-english",
+  "artifact_id": "fineweb-english-10bt-014-00000",
+  "rights_lane": "research_only",
+  "source_local_training_eligible": true,
+  "global_manifest_authorized": false,
+  "global_cross_source_dedup_pending": true,
+  "selection": {
+    "algorithm": "sha256_id_bucket_v1",
+    "seed": "flywirellm-l003-fineweb-english-sample-v1",
+    "parts_per_million": 600000
+  },
+  "canonical_processing_order": {
+    "source": "parquet_file_row_number",
+    "duckdb_threads": 1,
+    "monotonic_sequence_asserted": true,
+    "raw_artifact_sha256": "7168f92a680b3e28155a6b654ebf235b19bf4d2ab35f91dbab3fb47cbd629a8e"
+  },
+  "screening": {
+    "policy": "flywire_llm.quality.screen_text",
+    "review_action": "exclude_and_quarantine_metadata_only",
+    "reject_action": "exclude_metadata_only",
+    "raw_excluded_text_persisted": false
+  },
+  "deduplication": {
+    "exact": "sha256_over_conservative_normalized_text",
+    "near": "simhash64+4x16bit-lsh+hamming<=3",
+    "scope": "within_this_derived_shard",
+    "near_distance_counts": {
+      "1": 2
+    }
+  },
+  "counts": {
+    "rows_total": 281664,
+    "rows_processed": 281664,
+    "rows_selected": 168721,
+    "rows_not_selected": 112943,
+    "rows_missing_id": 0,
+    "rows_missing_text": 0,
+    "exact_duplicates": 3,
+    "near_duplicates": 2,
+    "accept_records": 163676,
+    "quarantine_records": 4809,
+    "reject_records": 231
+  },
+  "accepted": {
+    "records_by_partition": {
+      "train": 162037,
+      "validation": 807,
+      "holdout": 832
+    },
+    "tokens_by_partition": {
+      "train": 120975441,
+      "validation": 539655,
+      "holdout": 685017
+    },
+    "tokens_total": 122200113
+  },
+  "excluded": {
+    "quarantine_tokens": 5448971,
+    "reject_tokens": 1069665,
+    "findings": {
+      "excess_unicode_replacement": 16,
+      "possible_email": 4533,
+      "possible_ipv4": 317,
+      "possible_payment_card": 215,
+      "suspicious_repeated_character_runs": 10
+    }
+  },
+  "files": {
+    "accepted": {
+      "path": "accepted.jsonl",
+      "bytes": 603547565,
+      "sha256": "13526d486bf90e06b6a3f2cdfb6ae0f653541f6c55876da0ca052f3d3d4ad803"
+    },
+    "excluded_metadata": {
+      "path": "excluded-metadata.jsonl",
+      "bytes": 1503443,
+      "sha256": "6284a7018fe53e35cdf977eae88c12e4f19c401bc7c42744f66ac586c769bce5"
+    }
+  },
+  "pretraining_authorized": false,
+  "reason_not_authorized": "Global cross-source exact/near deduplication and final mixture manifest are still pending."
+}

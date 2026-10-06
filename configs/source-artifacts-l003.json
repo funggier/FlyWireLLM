@@ -86,6 +86,20 @@
       "raw_redistribution": "not_qualified",
       "local_storage": "external://FlyWireLLM-data/L003/FineWeb/english/sample10BT/014_00000.parquet",
       "immutable": true
+    },
+    {
+      "artifact_id": "fineweb-english-10bt-013-00000",
+      "source_id": "fineweb-english",
+      "snapshot_date": "2026-10-06",
+      "artifact_role": "raw_source",
+      "origin_url": "https://huggingface.co/datasets/HuggingFaceFW/fineweb/resolve/main/sample/10BT/013_00000.parquet",
+      "acquisition_method": "HTTPS download from Hugging Face dataset LFS",
+      "sha256": "48aa6144f665f98139a14cbc1cc28b976c895efc4e4c1df381cff362dbe96993",
+      "bytes": 2148275619,
+      "rights_lane": "research_only",
+      "raw_redistribution": "not_qualified",
+      "local_storage": "external://FlyWireLLM-data/L003/FineWeb/english/sample10BT/013_00000.parquet",
+      "immutable": true
     }
   ]
 }

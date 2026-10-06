@@ -51,3 +51,28 @@ def test_fineweb2_thai_test_calibration_never_authorizes_training():
     assert result["density"]["accepted_tokens_per_compressed_gib"] == (
         415_331_888.65445745
     )
+
+def test_technical_classifier_v2_calibration_is_frozen_and_non_authorizing():
+    english = _load("technical-fineweb-en-014-v2-1pct.json")
+    thai = _load("technical-fineweb2-thai-v2-1pct.json")
+
+    assert english["classifier"] == "technical-heuristic-v2"
+    assert thai["classifier"] == "technical-heuristic-v2"
+    assert english["sample_seed"] == "flywirellm-l003-technical-calibration-v1"
+    assert thai["sample_seed"] == "flywirellm-l003-technical-calibration-v1"
+    assert english["sample_ppm"] == 10_000
+    assert thai["sample_ppm"] == 10_000
+
+    assert english["records_sampled"] == 1_666
+    assert english["tokens_by_category"]["technical_scientific_code"] == 251_069
+    assert english["technical_token_fraction"] == 0.19962233247463665
+
+    assert thai["records_sampled"] == 3_383
+    assert thai["tokens_by_category"]["technical_scientific_code"] == 16_062
+    assert thai["technical_token_fraction"] == 0.005421261592579129
+
+    for report in (english, thai):
+        assert report["training_authorized"] is False
+        assert report["calibration_only"] is True
+        assert report["local_path_recorded"] is False
+        assert report["corpus_storage"].startswith("external://")

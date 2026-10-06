@@ -45,6 +45,7 @@ def test_l003_artifact_ledger_matches_rights_policy():
         "fineweb2-thai-train-005-00002",
         "fineweb2-thai-train-005-00001",
         "fineweb-english-10bt-014-00000",
+        "fineweb-english-10bt-013-00000",
     ]
 
 

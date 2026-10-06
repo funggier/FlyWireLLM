@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "stage": "L003",
+  "classifier": "technical-heuristic-v2",
+  "sample_seed": "flywirellm-l003-technical-calibration-v1",
+  "sample_ppm": 10000,
+  "corpus_sha256": "13526d486bf90e06b6a3f2cdfb6ae0f653541f6c55876da0ca052f3d3d4ad803",
+  "records_total": 163676,
+  "records_sampled": 1666,
+  "records_by_category": {
+    "general": 1582,
+    "technical_scientific_code": 84
+  },
+  "tokens_by_category": {
+    "general": 1006651,
+    "technical_scientific_code": 251069
+  },
+  "technical_token_fraction": 0.19962233247463665,
+  "signals": {
+    "equation": 118,
+    "technical_terms": 114,
+    "units": 73,
+    "code_keywords": 68,
+    "code_symbol_density": 21,
+    "technical_term_density": 11,
+    "thai_technical_terms": 4,
+    "scientific_notation": 2,
+    "thai_technical_term": 1,
+    "doi": 1
+  },
+  "score_histogram": {
+    "0": 1341,
+    "1": 88,
+    "2": 99,
+    "3": 54,
+    "4": 22,
+    "5": 25,
+    "6": 8,
+    "7": 10,
+    "8": 11,
+    "9": 2,
+    "10": 3,
+    "11": 1,
+    "12": 1,
+    "13": 1
+  },
+  "training_authorized": false,
+  "calibration_only": true,
+  "corpus_storage": "external://FlyWireLLM-data/L003/FineWeb/english/derived/014_00000-sample600000-v1/accepted.jsonl",
+  "local_path_recorded": false
+}

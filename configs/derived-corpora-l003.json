@@ -20,6 +20,24 @@
       "global_manifest_authorized": false,
       "pretraining_authorized": false,
       "primary_category": "general_thai"
+    },
+    {
+      "derived_id": "fineweb-english-10bt-014-00000-sample600000-v1",
+      "source_id": "fineweb-english",
+      "artifact_id": "fineweb-english-10bt-014-00000",
+      "rights_lane": "research_only",
+      "summary_path": "results/l003/derived/fineweb-english-10bt-014-00000-sample600000-v1.json",
+      "summary_sha256": "e23be2af32cb8ddc7e4b0db417e16acc0f29945f164a2258e9108d92dccd1b81",
+      "accepted_storage": "external://FlyWireLLM-data/L003/FineWeb/english/derived/014_00000-sample600000-v1/accepted.jsonl",
+      "accepted_bytes": 603547565,
+      "accepted_sha256": "13526d486bf90e06b6a3f2cdfb6ae0f653541f6c55876da0ca052f3d3d4ad803",
+      "train_tokens": 120975441,
+      "validation_tokens": 539655,
+      "holdout_tokens": 685017,
+      "accepted_records": 163676,
+      "global_manifest_authorized": false,
+      "pretraining_authorized": false,
+      "primary_category": "general_english"
     }
   ]
 }

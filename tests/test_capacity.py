@@ -65,7 +65,7 @@ def test_release_safe_capacity_excludes_all_research_only_data():
     assert capacity.planning_only is True
 
 
-def test_research_capacity_includes_thai_derived_but_is_not_ready():
+def test_research_capacity_includes_thai_and_english_derived_but_is_not_ready():
     plan, derived, mixture = _context()
     capacity = calculate_lane_capacity(
         plan,
@@ -74,12 +74,12 @@ def test_research_capacity_includes_thai_derived_but_is_not_ready():
         mixture_contract=mixture,
     )
     assert capacity.by_category["general_thai"] == 332_040_366
-    assert capacity.by_category["general_english"] == 20_019_410
+    assert capacity.by_category["general_english"] == 140_994_851
     assert capacity.by_category["technical_scientific_code"] == 0
     assert capacity.by_category["flywire_domain"] == 0
-    assert capacity.total_train_tokens == 352_059_776
+    assert capacity.total_train_tokens == 473_035_217
     assert capacity.mixture.thai_gap == 0
-    assert capacity.mixture.english_gap == 179_980_590
+    assert capacity.mixture.english_gap == 59_005_149
     assert capacity.mixture.technical_gap == 100_000_000
     assert capacity.mixture.ready is False
     assert capacity.planning_only is True
@@ -94,5 +94,5 @@ def test_thai_overage_does_not_reduce_english_or_technical_gap():
         mixture_contract=mixture,
     )
     assert capacity.by_category["general_thai"] > 200_000_000
-    assert capacity.mixture.english_gap == 179_980_590
+    assert capacity.mixture.english_gap == 59_005_149
     assert capacity.mixture.technical_gap == 100_000_000
