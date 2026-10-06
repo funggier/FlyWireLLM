@@ -6,16 +6,19 @@ Status: `ACTIVE`
 
 GitHub Issue: `#4`
 
-Latest committed checkpoint at this update:
+Latest technical implementation checkpoint before the current work:
 `e143c3e23fed5c328422f2e92551d12a123e1ccb`
+
+The branch may contain newer documentation/checkpoint commits. Always verify
+live Git status before resuming.
 
 ## Resume here
 
 Do **not** reset the worktree.
 
-The active work after the checkpoint is:
+The active work is:
 
-- repair/freeze Thai technical routing;
+- freeze a trustworthy Thai/English technical-routing classifier;
 - materialize screened baseline corpora;
 - complete cross-source global exact/near dedup;
 - recompute the authoritative post-dedup 500M mixture budget.
