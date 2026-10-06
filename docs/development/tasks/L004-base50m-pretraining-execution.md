@@ -400,17 +400,62 @@ Tracked evidence hashes:
 - comparison:
   `937012b1586cbe583d9fe20463a156bc98dd0e14f4dabf3f6027d2035bf4b50f`.
 
+## Phase K second bounded continuation
+
+Validation gate commit:
+`2151b1199346bbc26da944f731b01b84556e3ed3`.
+
+- exact qualification: PASS;
+- full pytest: 188/188 PASS;
+- L004 audit: PASS;
+- first tranche verification: PASS;
+- validation verification: PASS;
+- remote branch sync after push: 0/0.
+
+Second-tranche runner commit:
+`3143792ebd041d9675d4711b42d0c85af591e3f8`.
+
+- continuation guardrail regression: 5/5 PASS;
+- full repository regression: 193 tests PASS;
+- validation gate remains PASS;
+- exact runner qualification: PASS;
+- remote branch sync after push: 0/0.
+
+Second bounded authorization candidate:
+`configs/pretraining-tranche-l004-v2.json`.
+
+- authorization id: `base50m-second-tranche-v1`;
+- source optimizer step: 4;
+- source checkpoint SHA-256:
+  `d4ab8703cf723600e1fa6606d28674b06638284dd1f50ea2b771d6a96f947266`;
+- source supervised tokens: 262,144;
+- maximum additional optimizer updates: 4;
+- authorized end step: 8;
+- additional supervised-token cap: 262,144;
+- cumulative supervised-token cap: 524,288;
+- checkpoint cadence: every optimizer update;
+- new run root:
+  `external://FlyWireLLM-data/L004/Runs/base50m-second-tranche-v1`;
+- authorization candidate SHA-256:
+  `458cf90c0d0f38f407bc01d3a5e4af70706497610a3610347ce0cd75bcfff30d`.
+
+A post-tranche validation gate is predeclared before step 5: evaluate the same
+validation pack at step 8, require finite losses, combined loss no worse than
+step 4, and no category relative regression greater than 0.5%. Final holdout
+must remain untouched.
+
 ## Current work
 
-Phase J validation implementation is GREEN on WIP. Exact-commit qualification
-and remote synchronization are pending before authorization expansion.
+Exact-qualify and commit the second bounded authorization. No step 5 has been
+started under this authorization yet.
 
 ## Next action
 
-1. run full regression, L003/L004 audits, first-tranche verification and
-   validation verification on the complete validation WIP;
-2. create and exact-qualify a validation-gate checkpoint commit;
-3. push and verify remote synchronization;
-4. design a second bounded authorization beginning from optimizer step 4;
-5. keep the expansion bounded and checkpointed; do not authorize the remaining
-   500M run wholesale.
+1. commit the authorization candidate and updated ledger;
+2. exact-qualify the authorization commit with full tests, L004 audit,
+   validation verification and continuation `--validate-only`;
+3. push and confirm remote synchronization;
+4. execute only optimizer steps 5-8 with checkpoint-every-update;
+5. verify all step5-8 checkpoint/metric hashes and final step8 resume state;
+6. re-evaluate the unchanged validation pack at step8 before any further
+   authorization expansion.
