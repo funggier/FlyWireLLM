@@ -1,0 +1,63 @@
+{
+  "available": {
+    "general_english": {
+      "records": 2800304,
+      "tokens": 522373720
+    },
+    "general_thai": {
+      "records": 399008,
+      "tokens": 316825768
+    },
+    "technical_scientific_code": {
+      "records": 44930,
+      "tokens": 130501732
+    }
+  },
+  "checkpoint_lane": "research_only",
+  "decision_manifest": {
+    "sha256": "018aa08f347ebfd747f3aa11cada563bbd27918b469c7c5f11abe0289df7770a",
+    "storage": "external://FlyWireLLM-data/L003/Global/global-manifest-v2/decisions.jsonl"
+  },
+  "partial_records": 3,
+  "partition": "train",
+  "pretraining_authorized": false,
+  "production_optimizer_steps_recorded": 0,
+  "record_boundary_policy": "prefix_truncate_final_record",
+  "schema_version": 1,
+  "seed": 1234,
+  "selected_records": 1358839,
+  "selected_records_by_artifact": {
+    "fineweb-english-10bt-013-00000": 222799,
+    "fineweb-english-10bt-014-00000": 108754,
+    "fineweb2-thai-train-005-00002": 211655,
+    "tatoeba-eng-sentences-2026-10-03": 772747,
+    "tatoeba-tha-sentences-2026-10-03": 4300,
+    "thwiki-pages-articles-2026-10-01": 38584
+  },
+  "selected_records_by_category": {
+    "general_english": 1073263,
+    "general_thai": 251203,
+    "technical_scientific_code": 34373
+  },
+  "selected_tokens": {
+    "general_english": 200000000,
+    "general_thai": 200000000,
+    "technical_scientific_code": 100000000
+  },
+  "selection_id": "base50m-500m-research-v1",
+  "selection_key": "sha256(seed_decimal + '|' + canonical_id)",
+  "selection_manifest": {
+    "bytes": 580186273,
+    "contains_raw_text": false,
+    "sha256": "7729f79a0447238289de55a9ada52390a7e0a7291ab49f714b53b14e7da90268",
+    "storage": "external://FlyWireLLM-data/L004/Selection/base50m-500m-research-v1/selection.jsonl"
+  },
+  "stage": "L004",
+  "targets": {
+    "flywire_domain": 0,
+    "general_english": 200000000,
+    "general_thai": 200000000,
+    "technical_scientific_code": 100000000
+  },
+  "total_selected_tokens": 500000000
+}

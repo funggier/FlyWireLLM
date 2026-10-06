@@ -1,0 +1,23 @@
+{
+  "block_order": {
+    "blocks": 489609,
+    "bytes": 1958436,
+    "complete_permutation": true,
+    "dtype": "uint32_le",
+    "key": "sha256('block|' + seed_decimal + '|' + block_index_decimal)",
+    "seed": 1234,
+    "sha256": "146f12fdccd0d2694f0e81e3f85f2a786cb4d72fc47b4302990d6c8696eecc6d",
+    "storage": "external://FlyWireLLM-data/L004/Packed/base50m-packed-u16-v1/block-order.u32"
+  },
+  "order_id": "base50m-block-order-v1",
+  "packing_id": "base50m-packed-u16-v1",
+  "pretraining_authorized": false,
+  "production_optimizer_steps_recorded": 0,
+  "schema_version": 1,
+  "source_block_index": {
+    "bytes": 98684449,
+    "sha256": "dd1ebd08a69eff0f44b0714b16eb5c257feb6d3e9879489d7d5e05f4c8dcf0d9",
+    "storage": "external://FlyWireLLM-data/L004/Packed/base50m-packed-u16-v1/blocks.jsonl"
+  },
+  "stage": "L004"
+}

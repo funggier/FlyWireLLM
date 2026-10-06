@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "stage": "L004",
+  "packing_id": "base50m-packed-u16-v1",
+  "selection": {
+    "storage": "external://FlyWireLLM-data/L004/Selection/base50m-500m-research-v1/selection.jsonl",
+    "sha256": "7729f79a0447238289de55a9ada52390a7e0a7291ab49f714b53b14e7da90268",
+    "records": 1358839,
+    "content_tokens": 500000000
+  },
+  "record_order": "global_manifest_registry_order_then_accepted_file_order",
+  "block_order": {
+    "seed": 1234,
+    "key": "sha256('block|' + seed_decimal + '|' + block_index_decimal)",
+    "storage": "external://FlyWireLLM-data/L004/Packed/base50m-packed-u16-v1/block-order.u32",
+    "dtype": "uint32_le"
+  },
+  "tokenizer": {
+    "candidate_id": "base50m-unigram-32000-v1",
+    "sha256": "998bc75f058e554d4f50b6cbc77c52898e3446e516c3b25a126b99b113513818",
+    "vocab_size": 32000,
+    "eos_id": 2
+  },
+  "stream": {
+    "storage": "external://FlyWireLLM-data/L004/Packed/base50m-packed-u16-v1/tokens.u16",
+    "block_index_storage": "external://FlyWireLLM-data/L004/Packed/base50m-packed-u16-v1/blocks.jsonl",
+    "dtype": "uint16_le",
+    "record_separator": "eos",
+    "separator_after_every_record": true,
+    "separator_tokens_count_toward_content_budget": false,
+    "expected_physical_tokens": 501358839
+  },
+  "loss": {
+    "target_shift": 1,
+    "ignore_index": -100,
+    "mask_target_at_eos_input_positions": true,
+    "content_last_token_targets_eos": true,
+    "expected_supervised_positions": 500000000
+  },
+  "attention": {
+    "policy": "standard_causal_across_eos_boundaries",
+    "segment_attention_reset": false
+  },
+  "blocks": {
+    "max_physical_sequence_length": 1024,
+    "global_supervised_tokens_per_update": 65536,
+    "optimizer_steps": 7630,
+    "full_updates": 7629,
+    "final_update_supervised_tokens": 25856
+  },
+  "raw_text_in_packed_stream": false,
+  "production_optimizer_steps_recorded": 0,
+  "pretraining_authorized": false
+}

@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "stage": "L004",
+  "profile": "base-50m-v1",
+  "checkpoint_lane": "research_only",
+  "l003_freeze": {
+    "path": "configs/pretraining-freeze-l003.json",
+    "sha256": "0787ea71043c33dd23e94bb53f536c0bf105072e552949ca919b5aaf08e77a9e"
+  },
+  "model_config": {
+    "path": "configs/base-50m-v1.json",
+    "sha256": "60e7a5f02ef7a01a18bcfbf7346a292f8997e488db5dfa899eafc282eaf20861",
+    "exact_parameters": 50213376
+  },
+  "training_config": {
+    "path": "configs/training-base-50m-v1.json",
+    "sha256": "4a5a0fdaa711c9a8fff3bd532fadca55bcc1307d41f8c4082aced2f23708c3c2"
+  },
+  "tokenizer": {
+    "candidate_id": "base50m-unigram-32000-v1",
+    "storage": "external://FlyWireLLM-data/L002/Tokenizer32K/base50m-unigram-32000.model",
+    "sha256": "998bc75f058e554d4f50b6cbc77c52898e3446e516c3b25a126b99b113513818",
+    "vocab_size": 32000
+  },
+  "training_contract": {
+    "objective": "causal_next_token_cross_entropy",
+    "primary_token_budget": 500000000,
+    "global_tokens_per_update": 65536,
+    "primary_seed": 1234,
+    "fit_partitions": [
+      "train"
+    ],
+    "validation_partition": "validation",
+    "final_holdout_partition": "holdout"
+  },
+  "checkpoint_format": "flywire-base50m-pretraining-v1",
+  "public_release_eligibility": "not_qualified",
+  "data_runtime": {
+    "path": "configs/pretraining-data-runtime-l004.json",
+    "sha256": "2d99c61c84fbfffb0ba5f23434bf6e8b92a92b3f588d7716238c0ebc76ee424b"
+  }
+}

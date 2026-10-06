@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "stage": "L004",
+  "data_runtime_id": "base50m-packed-runtime-v1",
+  "packing_summary": {
+    "path": "results/l004/pretraining-packing-v1.json",
+    "sha256": "e5f078d145d3eaabfc513f9e832530215dd7c2f6295237cef8d8c64af6d36727"
+  },
+  "block_order_summary": {
+    "path": "results/l004/pretraining-block-order-v1.json",
+    "sha256": "8c3d211ec6e98ed73ff63c0f09da776b565e8bd1d125a101bef15d130d38c50e"
+  },
+  "token_stream": {
+    "storage": "external://FlyWireLLM-data/L004/Packed/base50m-packed-u16-v1/tokens.u16",
+    "bytes": 1002717678,
+    "sha256": "07a0faf43c241f3e232a6200bc1732381d18e9ef1b2cd77c185d2fb4c4296a15",
+    "dtype": "uint16_le",
+    "physical_tokens": 501358839,
+    "input_positions": 501358838
+  },
+  "block_order": {
+    "storage": "external://FlyWireLLM-data/L004/Packed/base50m-packed-u16-v1/block-order.u32",
+    "bytes": 1958436,
+    "sha256": "146f12fdccd0d2694f0e81e3f85f2a786cb4d72fc47b4302990d6c8696eecc6d",
+    "dtype": "uint32_le",
+    "blocks": 489609
+  },
+  "max_physical_sequence_length": 1024,
+  "eos_id": 2,
+  "ignore_index": -100,
+  "global_supervised_tokens_per_update": 65536,
+  "final_update_supervised_tokens": 25856,
+  "total_supervised_tokens": 500000000,
+  "production_optimizer_steps_recorded": 0,
+  "pretraining_authorized": false
+}

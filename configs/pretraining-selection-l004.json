@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "stage": "L004",
+  "selection_id": "base50m-500m-research-v1",
+  "checkpoint_lane": "research_only",
+  "decision_manifest": {
+    "storage": "external://FlyWireLLM-data/L003/Global/global-manifest-v2/decisions.jsonl",
+    "sha256": "018aa08f347ebfd747f3aa11cada563bbd27918b469c7c5f11abe0289df7770a"
+  },
+  "selection_output": "external://FlyWireLLM-data/L004/Selection/base50m-500m-research-v1/selection.jsonl",
+  "seed": 1234,
+  "selection_key": "sha256(seed_decimal + '|' + canonical_id)",
+  "status": "accept",
+  "partition": "train",
+  "allowed_rights_lanes": [
+    "release_safe",
+    "research_only"
+  ],
+  "category_targets": {
+    "general_thai": 200000000,
+    "general_english": 200000000,
+    "technical_scientific_code": 100000000,
+    "flywire_domain": 0
+  },
+  "record_boundary_policy": "prefix_truncate_final_record",
+  "total_target_tokens": 500000000,
+  "raw_text_in_selection": false,
+  "pretraining_authorized": false
+}

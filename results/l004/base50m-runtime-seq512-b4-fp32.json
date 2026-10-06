@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "stage": "L004",
+  "qualification_only": true,
+  "production_optimizer_steps_recorded": 0,
+  "platform": "Windows-10-10.0.19045-SP0",
+  "torch_version": "2.14.1+cpu",
+  "device": "cpu",
+  "precision": "fp32",
+  "threads": 14,
+  "mkldnn_available": true,
+  "process_memory": {
+    "working_set_bytes": 1902223360,
+    "peak_working_set_bytes": 3157651456,
+    "private_bytes": 2911645696,
+    "peak_pagefile_bytes": 4495687680
+  },
+  "model_parameters": 50213376,
+  "sequence_length": 512,
+  "batch_size": 4,
+  "microbatches": 1,
+  "tokens_processed": 2048,
+  "model_init_seconds": 0.3555750000232365,
+  "update_seconds": 1.2662635000015143,
+  "tokens_per_second": 1617.3568929354362,
+  "mean_loss": 10.440546989440918,
+  "gradient_norm": 14.095555305480957,
+  "learning_rate": 3.92156862745098e-06,
+  "checkpoint_lane": "research_only",
+  "tokenizer_sha256": "998bc75f058e554d4f50b6cbc77c52898e3446e516c3b25a126b99b113513818",
+  "global_manifest_report_sha256": "30a792d9fd26d1d4a6a1760aae7a43ae293778926be9044ebda632ec7c5054d5"
+}

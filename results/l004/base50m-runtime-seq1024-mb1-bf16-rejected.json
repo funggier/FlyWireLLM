@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "stage": "L004",
+  "qualification_only": true,
+  "production_optimizer_steps_recorded": 0,
+  "precision": "bf16",
+  "device": "cpu",
+  "sequence_length": 1024,
+  "microbatches": 1,
+  "threads": 14,
+  "status": "rejected_for_local_cpu_runtime",
+  "reason": "qualification update exceeded 32.9 seconds and was terminated; fp32 reference completed in 0.7666226 seconds",
+  "elapsed_seconds_lower_bound": 32.942,
+  "fp32_reference_update_seconds": 0.7666226000001188,
+  "slowdown_lower_bound_vs_fp32": 42.965,
+  "observed_working_set_bytes": 2233520128,
+  "tokenizer_sha256": "998bc75f058e554d4f50b6cbc77c52898e3446e516c3b25a126b99b113513818",
+  "global_manifest_report_sha256": "30a792d9fd26d1d4a6a1760aae7a43ae293778926be9044ebda632ec7c5054d5"
+}

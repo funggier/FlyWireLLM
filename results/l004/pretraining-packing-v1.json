@@ -1,0 +1,116 @@
+{
+  "attention_contract": {
+    "policy": "standard_causal_across_eos_boundaries",
+    "segment_attention_reset": false
+  },
+  "block_index": {
+    "blocks": 489609,
+    "bytes": 98684449,
+    "eos_input_positions": 1358838,
+    "input_positions": 501358838,
+    "order_key": "sha256('block|' + seed_decimal + '|' + block_index_decimal)",
+    "order_seed": 1234,
+    "sha256": "dd1ebd08a69eff0f44b0714b16eb5c257feb6d3e9879489d7d5e05f4c8dcf0d9",
+    "storage": "external://FlyWireLLM-data/L004/Packed/base50m-packed-u16-v1/blocks.jsonl",
+    "supervised_positions": 500000000
+  },
+  "checkpoint_lane": "research_only",
+  "loss_contract": {
+    "content_last_token_targets_eos": true,
+    "ignore_index": -100,
+    "mask_target_at_eos_input_positions": true,
+    "supervised_positions": 500000000
+  },
+  "materialization_seconds": 136.1003866000101,
+  "packing_id": "base50m-packed-u16-v1",
+  "pretraining_authorized": false,
+  "production_optimizer_steps_recorded": 0,
+  "schedule_contract": {
+    "final_update_supervised_tokens": 25856,
+    "full_updates": 7629,
+    "global_supervised_tokens_per_update": 65536,
+    "optimizer_steps": 7630
+  },
+  "schema_version": 1,
+  "selected_records_by_artifact": {
+    "fineweb-english-10bt-013-00000": 222799,
+    "fineweb-english-10bt-014-00000": 108754,
+    "fineweb2-thai-train-005-00002": 211655,
+    "tatoeba-eng-sentences-2026-10-03": 772747,
+    "tatoeba-tha-sentences-2026-10-03": 4300,
+    "thwiki-pages-articles-2026-10-01": 38584
+  },
+  "selected_tokens_by_category": {
+    "general_english": 200000000,
+    "general_thai": 200000000,
+    "technical_scientific_code": 100000000
+  },
+  "selection_manifest": {
+    "bytes": 580186273,
+    "content_tokens": 500000000,
+    "records": 1358839,
+    "sha256": "7729f79a0447238289de55a9ada52390a7e0a7291ab49f714b53b14e7da90268",
+    "storage": "external://FlyWireLLM-data/L004/Selection/base50m-500m-research-v1/selection.jsonl"
+  },
+  "source_verification": {
+    "fineweb-english-10bt-013-00000": {
+      "accepted_bytes": 2074943386,
+      "accepted_sha256": "f26699dc7ea08b874c0065bef39e9df780436c131f43231578e1ac8a4af9e4fe",
+      "scan_seconds": 44.162452899996424,
+      "selected_content_tokens": 189400222,
+      "selected_records": 222799
+    },
+    "fineweb-english-10bt-014-00000": {
+      "accepted_bytes": 1009570294,
+      "accepted_sha256": "60ba2a37d4439bd49888310b4431ec366f38022b264036763eb53afec942c194",
+      "scan_seconds": 20.813622099987697,
+      "selected_content_tokens": 91408995,
+      "selected_records": 108754
+    },
+    "fineweb2-thai-train-005-00002": {
+      "accepted_bytes": 3072938059,
+      "accepted_sha256": "7b22cccde21f195ee3fc6585af2abd8ba8c3a4f63aa3ed082930a07d9ee0e633",
+      "scan_seconds": 50.5153641999932,
+      "selected_content_tokens": 186867175,
+      "selected_records": 211655
+    },
+    "tatoeba-eng-sentences-2026-10-03": {
+      "accepted_bytes": 1050473941,
+      "accepted_sha256": "3995909ec3c15bb0700cfce9ea14ec2906b47e63e8d175098d94e96c87bd019d",
+      "scan_seconds": 8.842933899984928,
+      "selected_content_tokens": 7670524,
+      "selected_records": 772747
+    },
+    "tatoeba-tha-sentences-2026-10-03": {
+      "accepted_bytes": 3703026,
+      "accepted_sha256": "2a64b7a9e32f9a059c89a7e8dfe60f20e6c36d39004bdc1537eac74036c1737c",
+      "scan_seconds": 0.03778820001753047,
+      "selected_content_tokens": 26508,
+      "selected_records": 4300
+    },
+    "thwiki-pages-articles-2026-10-01": {
+      "accepted_bytes": 450287094,
+      "accepted_sha256": "05f4cf3577eae401b805fc2eaf2063b3d5fe2b840bcbcacd32064cfc898c5b0f",
+      "scan_seconds": 7.494489600008819,
+      "selected_content_tokens": 24626576,
+      "selected_records": 38584
+    }
+  },
+  "stage": "L004",
+  "token_stream": {
+    "bytes": 1002717678,
+    "contains_raw_text": false,
+    "content_tokens": 500000000,
+    "dtype": "uint16_le",
+    "eos_separator_tokens": 1358839,
+    "physical_tokens": 501358839,
+    "sha256": "07a0faf43c241f3e232a6200bc1732381d18e9ef1b2cd77c185d2fb4c4296a15",
+    "storage": "external://FlyWireLLM-data/L004/Packed/base50m-packed-u16-v1/tokens.u16"
+  },
+  "tokenizer": {
+    "candidate_id": "base50m-unigram-32000-v1",
+    "eos_id": 2,
+    "sha256": "998bc75f058e554d4f50b6cbc77c52898e3446e516c3b25a126b99b113513818",
+    "vocab_size": 32000
+  }
+}

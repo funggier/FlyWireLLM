@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "stage": "L004",
+  "qualification_id": "base50m-runtime-data-foundation-v1",
+  "production_optimizer_steps_recorded": 0,
+  "pretraining_started": false,
+  "checkpoint_lane": "research_only",
+  "selected_local_runtime": {
+    "device": "cpu",
+    "precision": "fp32",
+    "threads": 12,
+    "max_physical_sequence_length": 1024,
+    "micro_batch_size": 1,
+    "reason": "preserve full 1024-context training semantics"
+  },
+  "actual_packed_global_update": {
+    "supervised_tokens": 65536,
+    "physical_input_positions": 65800,
+    "masked_input_positions": 264,
+    "microbatches": 65,
+    "update_seconds": 46.2343142000027,
+    "supervised_tokens_per_second": 1417.475334802223,
+    "peak_working_set_bytes": 2517442560,
+    "peak_pagefile_bytes": 3908108288,
+    "estimated_500m_compute_seconds": 352739.82,
+    "external_hash_verification_performed_in_run": false,
+    "external_hash_verification_reference": "same-qualification-flow L004 audit + selection/packing/block-order verifiers"
+  },
+  "packed_8192_update": {
+    "supervised_tokens": 8192,
+    "physical_input_positions": 8200,
+    "microbatches": 9,
+    "supervised_tokens_per_second": 1373.5135680855183,
+    "external_hash_verification_performed_in_run": true
+  },
+  "faster_512_context_alternative_not_selected": {
+    "tokens": 65536,
+    "tokens_per_second": 1823.6542583044056,
+    "reason": "would reduce training context from 1024 to 512"
+  },
+  "bf16_status": "rejected_for_current_cpu_runtime",
+  "selection": {
+    "content_tokens": 500000000,
+    "general_thai": 200000000,
+    "general_english": 200000000,
+    "technical_scientific_code": 100000000
+  },
+  "packed_data": {
+    "physical_tokens": 501358839,
+    "supervised_tokens": 500000000,
+    "blocks": 489609,
+    "token_stream_sha256": "07a0faf43c241f3e232a6200bc1732381d18e9ef1b2cd77c185d2fb4c4296a15",
+    "block_order_sha256": "146f12fdccd0d2694f0e81e3f85f2a786cb4d72fc47b4302990d6c8696eecc6d"
+  },
+  "checkpoint": {
+    "format": "flywire-base50m-pretraining-v1",
+    "atomic_replace": true,
+    "data_cursor_fields": [
+      "order_position",
+      "block_input_offset",
+      "supervised_tokens_consumed"
+    ],
+    "resume_equivalence": "PASS"
+  },
+  "pins": {
+    "configs/pretraining-execution-l004.json": {
+      "bytes": 1457,
+      "sha256": "f9e533804cb7f10a8eb6e0aa11c3b1c1b3721401961ef5725127f885e24c63bb"
+    },
+    "configs/pretraining-data-runtime-l004.json": {
+      "bytes": 1307,
+      "sha256": "2d99c61c84fbfffb0ba5f23434bf6e8b92a92b3f588d7716238c0ebc76ee424b"
+    },
+    "configs/pretraining-local-runtime-l004.json": {
+      "bytes": 1571,
+      "sha256": "97f689652387deb034c6c21956bf44c6b7fe62e98baafdee442ee78af1ddf626"
+    },
+    "configs/pretraining-selection-l004.json": {
+      "bytes": 966,
+      "sha256": "e2082316283f3bdc8eec2c55b01a711cf4d9f1784f4d7c358bfa3e8ac59bac40"
+    },
+    "configs/pretraining-packing-l004.json": {
+      "bytes": 1912,
+      "sha256": "ca72d4efa51b14971c02e9aa930d35ff32a0393b208c29b59f0829f98a4cd73a"
+    },
+    "results/l004/pretraining-selection-v1.json": {
+      "bytes": 1961,
+      "sha256": "2dca9f405cc72b41948badf51f7a40d6fb6a7ec277c10a4f3caf39f509978bcf"
+    },
+    "results/l004/pretraining-packing-v1.json": {
+      "bytes": 4314,
+      "sha256": "e5f078d145d3eaabfc513f9e832530215dd7c2f6295237cef8d8c64af6d36727"
+    },
+    "results/l004/pretraining-block-order-v1.json": {
+      "bytes": 828,
+      "sha256": "8c3d211ec6e98ed73ff63c0f09da776b565e8bd1d125a101bef15d130d38c50e"
+    },
+    "results/l004/packed-base50m-update-8192-v1.json": {
+      "bytes": 1671,
+      "sha256": "d80bf995db2b0c3763746e170eed13810fc8848492b5703ae8016ee6f9e7dcdd"
+    },
+    "results/l004/packed-base50m-global-update-65536-v1.json": {
+      "bytes": 1802,
+      "sha256": "59886221026d41ba5007b568bdee52b15e9ccbdf9310c361dc02298bee82d1c2"
+    },
+    "results/l004/base50m-runtime-global-update-seq512-b4-mb32-fp32.json": {
+      "bytes": 1060,
+      "sha256": "b07498bf32024bd6bbdbaae42600df98954f6bae70004d172a89dcb15c41c3c3"
+    }
+  },
+  "pretraining_authorized_for_first_bounded_tranche": false
+}
