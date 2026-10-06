@@ -55,7 +55,7 @@ Live Git/GitHub state always overrides this snapshot.
 | C. Quality/privacy gate | DONE | Screen quality/PII/secrets without storing flagged text in reports | Accept/quarantine/reject audit |
 | D. Scale acquisition | ACTIVE | Acquire enough Thai/English capacity | Pinned derived corpora and token counts |
 | E. Technical routing | ACTIVE | Route technical/scientific/code data conservatively | Thai+English calibrated classifier |
-| F. Baseline materialization | ACTIVE | Convert Tatoeba TH/EN + Thai Wiki sample to common accepted JSONL schema | Hash-pinned derived summaries |
+| F. Baseline materialization | ACTIVE | Convert Tatoeba TH/EN + Thai Wiki sample to common accepted JSONL schema | Local materialization is complete; summaries/input registry still require checkpoint commit |
 | G. Global cross-source dedup | ACTIVE | Exact + near dedup across all accepted sources with partition/lane priority | Global manifest and reproducible budget |
 | H. Mixture readiness | PLANNED | Satisfy 200M Thai + 200M English + 100M technical/FlyWire policy | 500M global post-dedup mixture gate |
 | I. Freeze/authorization | PLANNED | Freeze production manifests and lineage | Exact hashes + all authorization gates |
@@ -89,44 +89,58 @@ Screened legacy baseline before global dedup:
 
 ## Current work
 
-The worktree after committed checkpoint `e143c3e` contains active work that
-must be preserved:
+The latest committed technical implementation checkpoint remains
+`e143c3e23fed5c328422f2e92551d12a123e1ccb`. Task-ledger commits
+`e6349f424d4f3c0b525b48d212c392805d6ab7d6` and
+`1521bc60ada867112b6517f0ea22921cc8f603d9` are already pushed.
 
-1. Repair the Thai technical classifier. The previous Thai lexicon had literal
-   question-mark placeholders in source, so its Thai calibration was invalid.
-2. Calibrate the repaired classifier conservatively. A v3 attempt overclassified
-   SEO/gambling/general pages; v4 improved it; current v5 makes one strong Thai
-   technical term insufficient by itself.
-3. Materialize Tatoeba TH, Tatoeba EN and the Thai-Wikipedia sample into the
-   same accepted JSONL/provenance schema used by FineWeb/FineWeb2.
-4. Complete `global_manifest.py` for cross-source exact and SimHash near
-   deduplication with holdout > validation > train priority and release-safe >
-   research-only priority.
-5. Recompute category/language/lane token budgets only after global dedup.
+Active implementation work after those commits must be preserved:
 
-Current technical calibration observations:
-
-- v2 Thai estimate: ~0.54% technical tokens, affected by corrupted Thai terms;
-- v3 Thai estimate: ~9.71%, rejected as too permissive after manual spot check;
-- v4 Thai estimate: ~2.27%, improved but still allowed some single-term false
-  positives;
-- v5 Thai estimate: ~1.79% in the frozen 1% calibration sample;
-- English v5 remains ~19.79% in the same deterministic calibration framework.
-
-v3/v4 are negative/intermediate evidence and should not be silently relabeled as
-qualified. The final current classifier still requires regression + spot-check
-evidence before it is frozen.
+1. Thai technical routing was repaired after discovering literal question-mark
+   placeholders in the v2 source lexicon.
+2. v3 (~9.71% Thai technical tokens) was rejected as too permissive after a
+   manual spot check found SEO/gambling false positives.
+3. v4 (~2.27%) reduced those false positives but still allowed a single strong
+   Thai term to classify some unrelated pages.
+4. v5 is the current candidate. One strong Thai term is insufficient by itself;
+   the deterministic 1% calibration estimates ~1.79% Thai technical tokens and
+   ~19.79% English technical tokens. It is not frozen until its final
+   regression/report checkpoint is committed.
+5. Baseline materialization completed locally:
+   - Tatoeba TH: 6,851 accepted; train 41,836 tokens; accepted SHA-256
+     `2a64b7a9e32f9a059c89a7e8dfe60f20e6c36d39004bdc1537eac74036c1737c`;
+   - Tatoeba EN: 2,038,059 accepted; train 20,019,410 tokens; quarantine 3 /
+     reject 75; accepted SHA-256
+     `3995909ec3c15bb0700cfce9ea14ec2906b47e63e8d175098d94e96c87bd019d`;
+   - Thai-Wikipedia sample: 61,538 accepted; train 38,172,496 tokens;
+     quarantine 23 / reject 86; accepted SHA-256
+     `05f4cf3577eae401b805fc2eaf2063b3d5fe2b840bcbcacd32064cfc898c5b0f`.
+6. The first materialization launch failed before corpus processing because the
+   log-output directory did not yet exist. The directories were created and
+   all three jobs were rerun successfully; this was an orchestration failure,
+   not a corpus/data failure.
+7. A central five-corpus global-manifest input registry is now being validated.
+   Focused baseline/global-input/global-dedup/technical tests currently pass
+   27/27 locally, but this is WIP evidence until an exact commit is qualified.
+8. `global_manifest.py` is being completed for cross-source exact and SimHash
+   near deduplication with holdout > validation > train priority and
+   release-safe > research-only priority. SQLite writes are being batched for
+   multi-million-record scale.
+9. Category/language/lane token budgets will be recomputed only after global
+   dedup.
 
 ## Next action
 
-1. Wait for/verify the three baseline materializations.
-2. Pin their accepted-file hashes and summaries.
-3. Add tests for the baseline materializer and global manifest.
-4. Run global dedup across all five accepted corpora.
-5. Produce the post-dedup budget by partition, rights lane, language and primary
+1. Freeze/sanitize the v5 calibration reports and regression expectations.
+2. Pin the three baseline summaries and central five-corpus input registry.
+3. Complete global-manifest tests and exact source-file verification.
+4. Create the external metadata-only global manifest; do not commit raw corpus
+   text.
+5. Run global exact/near dedup across all five accepted corpora.
+6. Produce the post-dedup budget by partition, rights lane, language and primary
    category.
-6. Evaluate the 500M mixture contract.
-7. Keep L003 open unless all required mixture/rights/evaluation gates pass.
+7. Evaluate the 500M mixture contract.
+8. Keep L003 open unless all required mixture/rights/evaluation gates pass.
 
 ## Acceptance criteria
 
