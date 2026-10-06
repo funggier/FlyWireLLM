@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "stage": "L003",
+  "tokenizer": "base50m-unigram-32000-v1",
+  "technical_classifier": "technical-heuristic-v5",
+  "near_duplicate_hamming_distance": 3,
+  "central_global_manifest_authorization": true,
+  "pretraining_authorized": false,
+  "inputs": [
+    {
+      "input_id": "tatoeba-th-screened-v1",
+      "source_id": "tatoeba-sentences",
+      "artifact_id": "tatoeba-tha-sentences-2026-10-03",
+      "rights_lane": "release_safe",
+      "language": "th",
+      "summary_path": "results/l003/derived/tatoeba-th-screened-v1.json",
+      "summary_sha256": "63a9f102c7ba44044ac75deb2accdebd91d65ea4e618951b399be0edf4782e5c",
+      "accepted_storage": "external://FlyWireLLM-data/L003/Baseline/tatoeba-th-screened-v1/accepted.jsonl",
+      "accepted_bytes": 3703026,
+      "accepted_sha256": "2a64b7a9e32f9a059c89a7e8dfe60f20e6c36d39004bdc1537eac74036c1737c"
+    },
+    {
+      "input_id": "tatoeba-en-screened-v1",
+      "source_id": "tatoeba-sentences",
+      "artifact_id": "tatoeba-eng-sentences-2026-10-03",
+      "rights_lane": "release_safe",
+      "language": "en",
+      "summary_path": "results/l003/derived/tatoeba-en-screened-v1.json",
+      "summary_sha256": "8f0e73b3185c9e1c81943a9ad1ba03b427aca403fe08e9d35aa1a864a2e816d2",
+      "accepted_storage": "external://FlyWireLLM-data/L003/Baseline/tatoeba-en-screened-v1/accepted.jsonl",
+      "accepted_bytes": 1050473941,
+      "accepted_sha256": "3995909ec3c15bb0700cfce9ea14ec2906b47e63e8d175098d94e96c87bd019d"
+    },
+    {
+      "input_id": "thwiki-sample-v1-screened-v1",
+      "source_id": "wikimedia-thwiki",
+      "artifact_id": "thwiki-pages-articles-2026-10-01",
+      "rights_lane": "research_only",
+      "language": "th",
+      "summary_path": "results/l003/derived/thwiki-sample-v1-screened-v1.json",
+      "summary_sha256": "581d6d1e9d29be8be39f0545b79894ae5f79c1055b9b1c6d3d06939c3f53e7c2",
+      "accepted_storage": "external://FlyWireLLM-data/L003/Baseline/thwiki-sample-v1-screened-v1/accepted.jsonl",
+      "accepted_bytes": 450287094,
+      "accepted_sha256": "05f4cf3577eae401b805fc2eaf2063b3d5fe2b840bcbcacd32064cfc898c5b0f"
+    },
+    {
+      "input_id": "fineweb2-thai-train-005-00002-sample1000000-v1",
+      "source_id": "fineweb2-thai",
+      "artifact_id": "fineweb2-thai-train-005-00002",
+      "rights_lane": "research_only",
+      "language": "th",
+      "summary_path": "results/l003/derived/fineweb2-thai-005-00002-full-v1.json",
+      "summary_sha256": "b450aad95eadbe0e82c0787147dcc08ddd4dcb6cbeb7a46accff8fde068c7020",
+      "accepted_storage": "external://FlyWireLLM-data/L003/FineWeb2/tha_Thai/derived/005_00002-full-v1/accepted.jsonl",
+      "accepted_bytes": 3072938059,
+      "accepted_sha256": "7b22cccde21f195ee3fc6585af2abd8ba8c3a4f63aa3ed082930a07d9ee0e633"
+    },
+    {
+      "input_id": "fineweb-english-10bt-014-00000-sample600000-v1",
+      "source_id": "fineweb-english",
+      "artifact_id": "fineweb-english-10bt-014-00000",
+      "rights_lane": "research_only",
+      "language": "en",
+      "summary_path": "results/l003/derived/fineweb-english-10bt-014-00000-sample600000-v1.json",
+      "summary_sha256": "e23be2af32cb8ddc7e4b0db417e16acc0f29945f164a2258e9108d92dccd1b81",
+      "accepted_storage": "external://FlyWireLLM-data/L003/FineWeb/english/derived/014_00000-sample600000-v1/accepted.jsonl",
+      "accepted_bytes": 603547565,
+      "accepted_sha256": "13526d486bf90e06b6a3f2cdfb6ae0f653541f6c55876da0ca052f3d3d4ad803"
+    }
+  ]
+}

@@ -81,8 +81,37 @@ source-group identities after conservative deduplication.
 Source audit states are explicit: approved, conditional, or blocked.
 Conditional data are not silently promoted to production training data.
 
-The current acquired/deduplicated engineering inventory contains 58,334,085
-train tokens under the 32K candidate, leaving 441,665,915 tokens to the 500M
-primary target.
+At L002 close, the acquired/deduplicated engineering inventory contained
+58,334,085 train tokens under the 32K candidate, leaving 441,665,915 tokens to
+the 500M primary target.
 
 See docs/DATA_PLAN_L002.md and configs/corpus-sources-l002.json.
+
+## L003 qualified research-only corpus
+
+L003 adds fail-closed source rights lanes, privacy/quality screening, immutable
+artifact hashes, conservative exact deduplication, SimHash64 near deduplication,
+and a frozen global manifest.
+
+The final post-dedup train capacity is:
+
+- release-safe total: 20,053,464 tokens;
+- research-only eligible total: 969,701,220 tokens;
+- research-only general Thai: 316,825,768 tokens;
+- research-only general English: 522,373,720 tokens;
+- research-only technical/scientific/code: 130,501,732 tokens.
+
+The 500M research-only mixture gate is qualified with zero Thai, English,
+technical and total gap. The release-safe lane is not qualified for 500M.
+
+The frozen checkpoint lane is `research_only`, declared before optimizer step
+1. Training and tokenizer fitting must remain train-only; final holdout remains
+excluded. A research-only checkpoint may not later be promoted to
+release-safe.
+
+This is a data/lineage authorization only. Base-50M pretraining has not started,
+public checkpoint release is not qualified, and automatic FlyWireModel export
+remains blocked.
+
+See docs/RESULTS_L003.md, configs/global-manifest-inputs-l003-v2.json and
+configs/pretraining-freeze-l003.json.

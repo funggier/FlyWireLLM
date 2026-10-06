@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "stage": "L003",
+  "derived_id": "tatoeba-en-screened-v1",
+  "source_id": "tatoeba-sentences",
+  "artifact_id": "tatoeba-eng-sentences-2026-10-03",
+  "rights_lane": "release_safe",
+  "primary_category": "general_english",
+  "tokenizer": "base50m-unigram-32000-v1",
+  "screening": "quality-v1",
+  "counts": {
+    "input_records": 2038137,
+    "accept_records": 2038059,
+    "quarantine_records": 3,
+    "reject_records": 75
+  },
+  "findings": {
+    "excess_control_characters": 75,
+    "possible_email": 2,
+    "possible_ipv4": 1,
+    "suspicious_repeated_character_runs": 1
+  },
+  "accepted": {
+    "tokens_by_partition": {
+      "train": 20019410,
+      "validation": 99112,
+      "holdout": 101785
+    },
+    "text_bytes_by_partition": {
+      "train": 81103601,
+      "validation": 399504,
+      "holdout": 411029
+    }
+  },
+  "files": {
+    "accepted": {
+      "path": "accepted.jsonl",
+      "bytes": 1050473941,
+      "sha256": "3995909ec3c15bb0700cfce9ea14ec2906b47e63e8d175098d94e96c87bd019d",
+      "storage": "external://FlyWireLLM-data/L003/Baseline/tatoeba-en-screened-v1/accepted.jsonl"
+    }
+  },
+  "global_manifest_authorized": false,
+  "pretraining_authorized": false,
+  "raw_flagged_text_persisted": false
+}

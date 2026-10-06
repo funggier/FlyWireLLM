@@ -89,6 +89,24 @@
       "combined_research_eligible": 58233742,
       "release_safe_gap_to_500m": 479938754,
       "combined_research_gap_to_500m": 441766258
+    },
+    "qualified_global_train": {
+      "report": "results/l003/global-manifest-v2.json",
+      "report_sha256": "30a792d9fd26d1d4a6a1760aae7a43ae293778926be9044ebda632ec7c5054d5",
+      "release_safe": {
+        "general_english": 20010764,
+        "general_thai": 41824,
+        "technical_scientific_code": 876,
+        "flywire_domain": 0,
+        "total": 20053464
+      },
+      "research_only": {
+        "general_english": 522373720,
+        "general_thai": 316825768,
+        "technical_scientific_code": 130501732,
+        "flywire_domain": 0,
+        "total": 969701220
+      }
     }
   },
   "pretraining_authorization": {

@@ -7,6 +7,7 @@ from pathlib import Path
 from flywire_llm.artifacts import load_artifact_ledger
 from flywire_llm.calibration import load_calibration_artifacts
 from flywire_llm.data_contract import load_corpus_inventory
+from flywire_llm.pretraining_freeze import load_pretraining_freeze
 from flywire_llm.rights import (
     load_rights_policy,
     token_gap,
@@ -39,6 +40,10 @@ def main() -> None:
     ledger = load_artifact_ledger(
         ROOT / "configs" / "source-artifacts-l003.json",
         rights_policy=rights,
+    )
+    freeze = load_pretraining_freeze(
+        ROOT / "configs" / "pretraining-freeze-l003.json",
+        repo_root=ROOT,
     )
     candidates = load_source_candidates(
         ROOT / "configs" / "source-candidates-l003.json",
@@ -140,14 +145,26 @@ def main() -> None:
         "reject_records="
         f"{quality['overall']['status']['reject']['records']}"
     )
-    print(f"release_safe_tokens={budget['release_safe_tokens']}")
+    print(
+        "screened_baseline_release_safe_tokens="
+        f"{budget['release_safe_tokens']}"
+    )
+    print(
+        "screened_baseline_research_eligible_tokens="
+        f"{budget['combined_research_eligible_tokens']}"
+    )
+    qualified = rights.known_token_accounting["qualified_global_train"]
+    print(
+        "qualified_release_safe_tokens="
+        f"{qualified['release_safe']['total']}"
+    )
+    print(
+        "qualified_research_tokens="
+        f"{qualified['research_only']['total']}"
+    )
     print(
         "release_safe_gap="
         f"{token_gap(rights, checkpoint_lane='release_safe')}"
-    )
-    print(
-        "research_eligible_tokens="
-        f"{budget['combined_research_eligible_tokens']}"
     )
     print(
         "research_gap="
@@ -169,10 +186,18 @@ def main() -> None:
         "near_duplicate_contract="
         "simhash64+4x16bit-lsh+hamming<=3"
     )
+    print(f"checkpoint_lane={freeze.checkpoint_lane}")
     print(
-        "decision=INGESTION SAFETY GREEN / ACQUIRED DATA SCREENED / "
-        "RELEASE-SAFE AND RESEARCH-ONLY 500M BUDGETS NOT READY / "
-        "PRETRAINING BLOCKED"
+        "pretraining_authorized="
+        f"{str(freeze.pretraining_authorized).lower()}"
+    )
+    print("public_release_eligibility=not_qualified")
+    print(
+        "decision=L003 GREEN / INGESTION SAFETY GREEN / "
+        "GLOBAL EXACT+NEAR DEDUP QUALIFIED / "
+        "500M RESEARCH-ONLY MIXTURE QUALIFIED / "
+        "PRETRAINING AUTHORIZED FOR RESEARCH-ONLY LINEAGE / "
+        "PUBLIC RELEASE NOT QUALIFIED"
     )
 
 

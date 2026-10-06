@@ -189,6 +189,57 @@ def load_rights_policy(
             "screened research 500M gap mismatch"
         )
 
+    qualified = accounting.get("qualified_global_train")
+    if not isinstance(qualified, dict):
+        raise RightsPolicyError(
+            "qualified_global_train must be an object"
+        )
+    if qualified.get("report") != "results/l003/global-manifest-v2.json":
+        raise RightsPolicyError("qualified global report path changed")
+    if qualified.get("report_sha256") != (
+        "30a792d9fd26d1d4a6a1760aae7a43ae293778926be9044ebda632ec7c5054d5"
+    ):
+        raise RightsPolicyError("qualified global report hash changed")
+    expected_qualified = {
+        "release_safe": {
+            "general_english": 20_010_764,
+            "general_thai": 41_824,
+            "technical_scientific_code": 876,
+            "flywire_domain": 0,
+            "total": 20_053_464,
+        },
+        "research_only": {
+            "general_english": 522_373_720,
+            "general_thai": 316_825_768,
+            "technical_scientific_code": 130_501_732,
+            "flywire_domain": 0,
+            "total": 969_701_220,
+        },
+    }
+    for lane, expected in expected_qualified.items():
+        observed = qualified.get(lane)
+        if not isinstance(observed, dict):
+            raise RightsPolicyError(
+                f"qualified_global_train {lane} must be an object"
+            )
+        if observed != expected:
+            raise RightsPolicyError(
+                f"qualified_global_train {lane} accounting changed"
+            )
+        component_total = sum(
+            int(observed[name])
+            for name in (
+                "general_english",
+                "general_thai",
+                "technical_scientific_code",
+                "flywire_domain",
+            )
+        )
+        if component_total != int(observed["total"]):
+            raise RightsPolicyError(
+                f"qualified_global_train {lane} total mismatch"
+            )
+
     authorization = payload.get("pretraining_authorization")
     if not isinstance(authorization, dict):
         raise RightsPolicyError(
@@ -272,26 +323,29 @@ def can_promote_checkpoint(
     return False
 
 
+def _qualified_global_tokens(
+    policy: RightsPolicy,
+    *,
+    checkpoint_lane: str,
+) -> int:
+    if checkpoint_lane not in {"release_safe", "research_only"}:
+        raise RightsPolicyError("invalid checkpoint_lane")
+    qualified = policy.known_token_accounting["qualified_global_train"]
+    return int(qualified[checkpoint_lane]["total"])
+
+
 def training_budget_ready(
     policy: RightsPolicy,
     *,
     checkpoint_lane: str,
 ) -> bool:
-    if checkpoint_lane == "release_safe":
-        tokens = int(
-            policy.known_token_accounting["screened_train"][
-                "release_safe"
-            ]["total"]
+    return (
+        _qualified_global_tokens(
+            policy,
+            checkpoint_lane=checkpoint_lane,
         )
-    elif checkpoint_lane == "research_only":
-        tokens = int(
-            policy.known_token_accounting["screened_train"][
-                "combined_research_eligible"
-            ]
-        )
-    else:
-        raise RightsPolicyError("invalid checkpoint_lane")
-    return tokens >= policy.primary_target_tokens
+        >= policy.primary_target_tokens
+    )
 
 
 def token_gap(
@@ -299,18 +353,8 @@ def token_gap(
     *,
     checkpoint_lane: str,
 ) -> int:
-    if checkpoint_lane == "release_safe":
-        tokens = int(
-            policy.known_token_accounting["screened_train"][
-                "release_safe"
-            ]["total"]
-        )
-    elif checkpoint_lane == "research_only":
-        tokens = int(
-            policy.known_token_accounting["screened_train"][
-                "combined_research_eligible"
-            ]
-        )
-    else:
-        raise RightsPolicyError("invalid checkpoint_lane")
+    tokens = _qualified_global_tokens(
+        policy,
+        checkpoint_lane=checkpoint_lane,
+    )
     return max(0, policy.primary_target_tokens - tokens)

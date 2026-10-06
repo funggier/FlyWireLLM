@@ -75,12 +75,17 @@ After the v0.1.0 blank baseline, L002 defines Base-50M-v1:
 - source-grouped train/validation/holdout;
 - explicit license/provenance states.
 
-The L002 32K engineering tokenizer is lossless on its 10,150-case benchmark,
-but Base-50M has **not** been pretrained yet. Current acquired/deduplicated data
-cover 58,334,085 train tokens, so production data acquisition/qualification is
-the next gate.
+The L002 32K engineering tokenizer is lossless on its 10,150-case benchmark.
+L003 has now qualified a globally deduplicated **research-only** corpus with
+969,701,220 available train tokens and a valid 500M Thai/English/technical
+mixture. The research-only checkpoint lineage is frozen and authorized before
+optimizer step 1, but Base-50M has **not** been pretrained yet.
 
-See docs/RESULTS_L002.md.
+This does not make the corpus release-safe: the release-safe lane still has
+only 20,053,464 qualified train tokens, public release eligibility remains
+not qualified, and automatic FlyWireModel export remains blocked.
+
+See docs/RESULTS_L002.md and docs/RESULTS_L003.md.
 
 ## Development task tracking
 

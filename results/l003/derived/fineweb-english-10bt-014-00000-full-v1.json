@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "stage": "L003",
+  "derived_id": "fineweb-english-10bt-014-00000-sample1000000-v1",
+  "source_id": "fineweb-english",
+  "artifact_id": "fineweb-english-10bt-014-00000",
+  "rights_lane": "research_only",
+  "source_local_training_eligible": true,
+  "global_manifest_authorized": false,
+  "global_cross_source_dedup_pending": true,
+  "selection": {
+    "algorithm": "sha256_id_bucket_v1",
+    "seed": "flywirellm-l003-fineweb-english-sample-v1",
+    "parts_per_million": 1000000
+  },
+  "canonical_processing_order": {
+    "source": "parquet_file_row_number",
+    "duckdb_threads": 1,
+    "monotonic_sequence_asserted": true,
+    "raw_artifact_sha256": "7168f92a680b3e28155a6b654ebf235b19bf4d2ab35f91dbab3fb47cbd629a8e"
+  },
+  "screening": {
+    "policy": "flywire_llm.quality.screen_text",
+    "review_action": "exclude_and_quarantine_metadata_only",
+    "reject_action": "exclude_metadata_only",
+    "raw_excluded_text_persisted": false
+  },
+  "deduplication": {
+    "exact": "sha256_over_conservative_normalized_text",
+    "near": "simhash64+4x16bit-lsh+hamming<=3",
+    "scope": "within_this_derived_shard",
+    "near_distance_counts": {
+      "1": 2,
+      "3": 2
+    }
+  },
+  "counts": {
+    "rows_total": 281664,
+    "rows_processed": 281664,
+    "rows_selected": 281664,
+    "rows_not_selected": 0,
+    "rows_missing_id": 0,
+    "rows_missing_text": 0,
+    "exact_duplicates": 7,
+    "near_duplicates": 4,
+    "accept_records": 273338,
+    "quarantine_records": 7920,
+    "reject_records": 395
+  },
+  "accepted": {
+    "records_by_partition": {
+      "train": 270608,
+      "validation": 1365,
+      "holdout": 1365
+    },
+    "tokens_by_partition": {
+      "train": 202353773,
+      "validation": 940676,
+      "holdout": 1079897
+    },
+    "tokens_total": 204374346
+  },
+  "excluded": {
+    "quarantine_tokens": 9057613,
+    "reject_tokens": 1847449,
+    "findings": {
+      "excess_unicode_replacement": 22,
+      "possible_email": 7465,
+      "possible_ipv4": 509,
+      "possible_payment_card": 373,
+      "possible_secret": 1,
+      "suspicious_repeated_character_runs": 16
+    }
+  },
+  "files": {
+    "accepted": {
+      "path": "accepted.jsonl",
+      "bytes": 1009570294,
+      "sha256": "60ba2a37d4439bd49888310b4431ec366f38022b264036763eb53afec942c194",
+      "storage": "external://FlyWireLLM-data/L003/FineWeb/english/derived/10BT-014-full-v1/accepted.jsonl"
+    },
+    "excluded_metadata": {
+      "path": "excluded-metadata.jsonl",
+      "bytes": 2480184,
+      "sha256": "48efe595f797ceef39c089fc97d2991fa58de86baec49634e307571ad31f17f9"
+    }
+  },
+  "pretraining_authorized": false,
+  "reason_not_authorized": "Global cross-source exact/near deduplication and final mixture manifest are still pending."
+}

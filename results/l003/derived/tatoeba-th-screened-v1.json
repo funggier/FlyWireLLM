@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "stage": "L003",
+  "derived_id": "tatoeba-th-screened-v1",
+  "source_id": "tatoeba-sentences",
+  "artifact_id": "tatoeba-tha-sentences-2026-10-03",
+  "rights_lane": "release_safe",
+  "primary_category": "general_thai",
+  "tokenizer": "base50m-unigram-32000-v1",
+  "screening": "quality-v1",
+  "counts": {
+    "input_records": 6851,
+    "accept_records": 6851
+  },
+  "findings": {},
+  "accepted": {
+    "tokens_by_partition": {
+      "train": 41836,
+      "validation": 234,
+      "holdout": 178
+    },
+    "text_bytes_by_partition": {
+      "train": 440701,
+      "validation": 2491,
+      "holdout": 2012
+    }
+  },
+  "files": {
+    "accepted": {
+      "path": "accepted.jsonl",
+      "bytes": 3703026,
+      "sha256": "2a64b7a9e32f9a059c89a7e8dfe60f20e6c36d39004bdc1537eac74036c1737c",
+      "storage": "external://FlyWireLLM-data/L003/Baseline/tatoeba-th-screened-v1/accepted.jsonl"
+    }
+  },
+  "global_manifest_authorized": false,
+  "pretraining_authorized": false,
+  "raw_flagged_text_persisted": false
+}

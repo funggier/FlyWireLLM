@@ -102,7 +102,7 @@ def test_research_lineage_cannot_promote_to_release_safe():
     )
 
 
-def test_known_l003_budget_is_not_ready_in_either_lane():
+def test_known_l003_budget_preserves_baseline_and_uses_final_global_capacity():
     policy = _policy()
     accounting = policy.known_token_accounting
     assert accounting["pre_screen_train"]["release_safe"]["total"] == (
@@ -117,7 +117,10 @@ def test_known_l003_budget_is_not_ready_in_either_lane():
     assert accounting["screened_train"]["research_only"]["total"] == (
         38_172_496
     )
+    qualified = accounting["qualified_global_train"]
+    assert qualified["release_safe"]["total"] == 20_053_464
+    assert qualified["research_only"]["total"] == 969_701_220
     assert not training_budget_ready(policy, checkpoint_lane="release_safe")
-    assert not training_budget_ready(policy, checkpoint_lane="research_only")
-    assert token_gap(policy, checkpoint_lane="release_safe") == 479_938_754
-    assert token_gap(policy, checkpoint_lane="research_only") == 441_766_258
+    assert training_budget_ready(policy, checkpoint_lane="research_only")
+    assert token_gap(policy, checkpoint_lane="release_safe") == 479_946_536
+    assert token_gap(policy, checkpoint_lane="research_only") == 0

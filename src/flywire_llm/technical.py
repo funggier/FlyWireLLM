@@ -58,39 +58,49 @@ _SCIENCE_PATTERNS = (
     ),
 )
 
-_THAI_TECH_TERMS = (
-    "??????????",
-    "?????????",
-    "?????????????",
-    "?????????????????????",
-    "??????????????????",
-    "????????????",
-    "??????????????",
-    "???????????????",
-    "???????????",
-    "??????",
-    "????????",
-    "????????",
-    "?????",
-    "????????",
-    "?????????",
-    "?????????????",
-    "?????",
-    "???????",
-    "????",
-    "????????",
-    "??????????",
-    "??????",
-    "?????",
-    "????????",
-    "??????",
-    "???????????",
-    "????????",
-    "??????????",
-    "??????",
-    "????????????",
-    "????????",
-    "?????????",
+# Thai terms are split by specificity so common words such as "statistics" or
+# "experiment" cannot classify a page by themselves. Distinct-term presence is
+# used instead of occurrence counts to prevent repeated SEO/navigation text
+# from inflating the score.
+_THAI_STRONG_TECH_TERMS = (
+    "อัลกอริทึม",
+    "โครงข่ายประสาท",
+    "ทรานส์ฟอร์เมอร์",
+    "เกรเดียนต์",
+    "เมทริกซ์",
+    "แคลคูลัส",
+    "อินทิกรัล",
+    "ทรานสคริปโตม",
+    "จีโนม",
+    "ไซแนปส์",
+    "ประสาทวิทยา",
+    "วงจรประสาท",
+    "กล้องจุลทรรศน์",
+    "การหาลำดับ",
+)
+
+_THAI_SUPPORT_TECH_TERMS = (
+    "แบบจำลอง",
+    "พารามิเตอร์",
+    "ชุดข้อมูล",
+    "โมเลกุล",
+    "โปรตีน",
+    "ตัวรับ",
+    "สมการ",
+    "การจำลอง",
+    "ฟิสิกส์",
+    "เคมี",
+    "ชีววิทยา",
+    "การถดถอย",
+    "เกณฑ์มาตรฐาน",
+)
+
+_THAI_GENERIC_TECH_TERMS = (
+    "ฐานข้อมูล",
+    "การฝึก",
+    "สถิติ",
+    "การทดลอง",
+    "ความน่าจะเป็น",
 )
 
 _TECH_TERMS = frozenset(
@@ -115,12 +125,16 @@ def _word_tokens(text: str) -> list[str]:
     return re.findall(r"[A-Za-z][A-Za-z0-9_+-]*", text.casefold())
 
 
+def _distinct_present(text: str, terms: tuple[str, ...]) -> int:
+    return sum(term in text for term in terms)
+
+
 def classify_technical_text(
     text: str,
     *,
     technical_threshold: int = 4,
 ) -> TechnicalClassification:
-    """Deterministic, explainable mixture-routing heuristic."""
+    """Deterministic, explainable technical/scientific routing heuristic."""
     if not isinstance(text, str):
         raise TypeError("text must be str")
     if technical_threshold < 1:
@@ -152,16 +166,31 @@ def classify_technical_text(
             signals.append("technical_term_density")
             score += 2
 
-    thai_hits = sum(text.count(term) for term in _THAI_TECH_TERMS)
-    if thai_hits >= 3:
-        signals.append("thai_technical_terms")
-        score += min(6, thai_hits // 2 + 1)
-    elif thai_hits == 2:
-        signals.append("thai_technical_terms")
-        score += 2
-    elif thai_hits == 1:
-        signals.append("thai_technical_term")
-        score += 1
+    strong_hits = _distinct_present(text, _THAI_STRONG_TECH_TERMS)
+    support_hits = _distinct_present(text, _THAI_SUPPORT_TECH_TERMS)
+    generic_hits = _distinct_present(text, _THAI_GENERIC_TECH_TERMS)
+
+    if strong_hits:
+        signals.append("thai_strong_technical_terms")
+        # One strong term is evidence but not sufficient by itself. Two
+        # distinct strong terms, or one strong term plus other signals, can
+        # cross the technical threshold.
+        score += min(6, 2 + strong_hits)
+
+    if support_hits >= 3:
+        signals.append("thai_support_technical_terms")
+        score += min(5, support_hits + 1)
+    elif support_hits:
+        signals.append(
+            "thai_support_technical_terms"
+            if support_hits == 2
+            else "thai_support_technical_term"
+        )
+        score += support_hits
+
+    if generic_hits and (strong_hits or support_hits):
+        signals.append("thai_generic_technical_support")
+        score += min(2, generic_hits)
 
     symbol_count = sum(
         text.count(symbol)

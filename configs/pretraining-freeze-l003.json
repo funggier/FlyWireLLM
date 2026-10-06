@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "stage": "L003",
+  "checkpoint_lane": "research_only",
+  "optimizer_steps_completed": 0,
+  "checkpoint_lane_immutable_after_first_optimizer_step": true,
+  "source_manifest": {
+    "path": "configs/global-manifest-inputs-l003-v2.json",
+    "sha256": "5304c4cc6b302a06650d090d6731f5b0e610fd99ec257c3fd9cc671cf62f79aa",
+    "frozen": true
+  },
+  "global_manifest_report": {
+    "path": "results/l003/global-manifest-v2.json",
+    "sha256": "30a792d9fd26d1d4a6a1760aae7a43ae293778926be9044ebda632ec7c5054d5",
+    "frozen": true
+  },
+  "evaluation_manifest": {
+    "validation_partition": "validation",
+    "final_holdout_partition": "holdout",
+    "pretraining_fit_partitions": [
+      "train"
+    ],
+    "tokenizer_fit_must_exclude_holdout": true,
+    "model_fit_must_exclude_holdout": true,
+    "decisions_sha256": "018aa08f347ebfd747f3aa11cada563bbd27918b469c7c5f11abe0289df7770a",
+    "frozen": true
+  },
+  "tokenizer": {
+    "candidate_id": "base50m-unigram-32000-v1",
+    "model_sha256": "998bc75f058e554d4f50b6cbc77c52898e3446e516c3b25a126b99b113513818"
+  },
+  "flywiremodel_automatic_export_allowed": false,
+  "public_release_eligibility": "not_qualified",
+  "pretraining_authorized": true
+}

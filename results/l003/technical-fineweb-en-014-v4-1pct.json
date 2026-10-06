@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "stage": "L003",
+  "classifier": "technical-heuristic-v4",
+  "sample_seed": "flywirellm-l003-technical-calibration-v1",
+  "sample_ppm": 10000,
+  "corpus_storage": "external://FlyWireLLM-data/L003/FineWeb/english/derived/014_00000-sample600000-v1/accepted.jsonl",
+  "local_path_recorded": false,
+  "corpus_sha256": "13526d486bf90e06b6a3f2cdfb6ae0f653541f6c55876da0ca052f3d3d4ad803",
+  "records_total": 163676,
+  "records_sampled": 1666,
+  "records_by_category": {
+    "general": 1585,
+    "technical_scientific_code": 81
+  },
+  "tokens_by_category": {
+    "general": 1008771,
+    "technical_scientific_code": 248949
+  },
+  "technical_token_fraction": 0.19793674267722547,
+  "signals": {
+    "equation": 118,
+    "technical_terms": 114,
+    "units": 73,
+    "code_keywords": 68,
+    "code_symbol_density": 21,
+    "technical_term_density": 11,
+    "scientific_notation": 2,
+    "doi": 1
+  },
+  "score_histogram": {
+    "0": 1343,
+    "1": 88,
+    "2": 99,
+    "3": 55,
+    "4": 21,
+    "5": 25,
+    "6": 7,
+    "7": 10,
+    "8": 12,
+    "9": 2,
+    "10": 1,
+    "11": 1,
+    "12": 1,
+    "13": 1
+  },
+  "training_authorized": false,
+  "calibration_only": true
+}

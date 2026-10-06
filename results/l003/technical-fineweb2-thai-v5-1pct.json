@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "stage": "L003",
+  "classifier": "technical-heuristic-v5",
+  "sample_seed": "flywirellm-l003-technical-calibration-v1",
+  "sample_ppm": 10000,
+  "corpus_storage": "external://FlyWireLLM-data/L003/FineWeb2/tha_Thai/derived/005_00002-full-v1/accepted.jsonl",
+  "local_path_recorded": false,
+  "corpus_sha256": "7b22cccde21f195ee3fc6585af2abd8ba8c3a4f63aa3ed082930a07d9ee0e633",
+  "records_total": 339058,
+  "records_sampled": 3383,
+  "records_by_category": {
+    "general": 3364,
+    "technical_scientific_code": 19
+  },
+  "tokens_by_category": {
+    "general": 2909685,
+    "technical_scientific_code": 53094
+  },
+  "technical_token_fraction": 0.01792033762896254,
+  "signals": {
+    "thai_support_technical_term": 141,
+    "thai_generic_technical_support": 37,
+    "units": 29,
+    "equation": 28,
+    "thai_support_technical_terms": 22,
+    "technical_term_density": 13,
+    "technical_terms": 11,
+    "thai_strong_technical_terms": 11,
+    "code_keywords": 7,
+    "code_symbol_density": 6,
+    "shell_prompt": 2,
+    "scientific_notation": 1,
+    "doi": 1
+  },
+  "score_histogram": {
+    "0": 3132,
+    "1": 144,
+    "2": 59,
+    "3": 29,
+    "4": 9,
+    "5": 3,
+    "6": 2,
+    "7": 3,
+    "8": 1,
+    "10": 1
+  },
+  "training_authorized": false,
+  "calibration_only": true
+}

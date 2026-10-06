@@ -17,10 +17,31 @@ SEED = "flywirellm-l003-technical-calibration-v1"
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--corpus", required=True)
+    parser.add_argument(
+        "--corpus-storage",
+        required=True,
+        help="Stable external://FlyWireLLM-data/ URI recorded in reports.",
+    )
     parser.add_argument("--model", required=True)
     parser.add_argument("--sample-ppm", type=int, default=10_000)
     parser.add_argument("--output", required=True)
     return parser.parse_args()
+
+
+def report_location_metadata(corpus_storage: str) -> dict[str, object]:
+    prefix = "external://FlyWireLLM-data/"
+    if (
+        not isinstance(corpus_storage, str)
+        or not corpus_storage.startswith(prefix)
+        or corpus_storage == prefix
+    ):
+        raise ValueError(
+            "corpus_storage must use external://FlyWireLLM-data/"
+        )
+    return {
+        "corpus_storage": corpus_storage,
+        "local_path_recorded": False,
+    }
 
 
 def main() -> None:
@@ -66,10 +87,10 @@ def main() -> None:
     payload = {
         "schema_version": 1,
         "stage": "L003",
-        "classifier": "technical-heuristic-v2",
+        "classifier": "technical-heuristic-v5",
         "sample_seed": SEED,
         "sample_ppm": args.sample_ppm,
-        "corpus_path": str(corpus),
+        **report_location_metadata(args.corpus_storage),
         "corpus_sha256": _sha256_file(corpus),
         "records_total": records_total,
         "records_sampled": records_sampled,

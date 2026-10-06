@@ -12,168 +12,215 @@ Build and qualify a source-grouped Thai/English/technical corpus for
 Base-50M-v1, with an explicit 500,000,000-token target and fail-closed
 rights/privacy/provenance controls.
 
-## Why
-
-L002 proved the model/tokenizer contract but did not provide enough qualified
-training data. L003 must close the corpus gap without contaminating
-release-safe checkpoints with research-only sources or leaking final evaluation
-material into training.
-
 ## Authoritative base
 
 - repository: `funggier/FlyWireLLM`;
 - active branch: `research/l003-corpus-rights-readiness`;
-- latest committed checkpoint at this update:
-  `e143c3e23fed5c328422f2e92551d12a123e1ccb`;
-- `main` remains at the completed L002 commit
-  `528e96736c52d5ba90412bb1ee0b8c0239349e57`;
-- L003 is intentionally **not merged** while acceptance is incomplete.
-
-Live Git/GitHub state always overrides this snapshot.
+- L003 base: `528e96736c52d5ba90412bb1ee0b8c0239349e57`;
+- latest pre-final handoff commit:
+  `dcf73905e9fd7c9483d292f2758ac249ad5c2716`;
+- live Git/GitHub/runtime state overrides this snapshot.
 
 ## Guardrails
 
-- no worktree reset to discard active work;
+- never reset/clean away active WIP;
 - release-safe checkpoints may consume only release-safe sources;
 - research-only checkpoints may consume release-safe + research-only sources;
-- a research-only checkpoint lineage cannot be promoted to release-safe;
+- research-only lineage may never promote to release-safe;
+- checkpoint lane is immutable after optimizer step 1;
 - blocked sources enter no training lane;
 - automatic FlyWireModel export remains blocked;
-- final holdout/evaluation material may not be used to fit tokenizer/model
-  components;
-- raw/large corpora remain outside Git; tracked reports contain hashes,
-  provenance, counts and metrics;
-- screening `review` records are quarantined, not silently trained;
-- pretraining remains unauthorized until the global corpus/mixture gates pass.
+- holdout data may not fit tokenizer/model components;
+- raw multi-gigabyte corpora remain outside Git;
+- review records are quarantined rather than silently trained;
+- no language-capability claim is made before actual training/evaluation.
 
-## Phase plan
+## Phase state
 
-| Phase | Status | Goal | Exit condition |
-| --- | --- | --- | --- |
-| A. Rights lanes | DONE | Separate release-safe / research-only / blocked lineage | Fail-closed policy + tests |
-| B. Artifact/provenance ledger | DONE | Pin source files, hashes, acquisition metadata | Artifact validator + immutable hashes |
-| C. Quality/privacy gate | DONE | Screen quality/PII/secrets without storing flagged text in reports | Accept/quarantine/reject audit |
-| D. Scale acquisition | ACTIVE | Acquire enough Thai/English capacity | Pinned derived corpora and token counts |
-| E. Technical routing | ACTIVE | Route technical/scientific/code data conservatively | Thai+English calibrated classifier |
-| F. Baseline materialization | ACTIVE | Convert Tatoeba TH/EN + Thai Wiki sample to common accepted JSONL schema | Local materialization is complete; summaries/input registry still require checkpoint commit |
-| G. Global cross-source dedup | ACTIVE | Exact + near dedup across all accepted sources with partition/lane priority | Global manifest and reproducible budget |
-| H. Mixture readiness | PLANNED | Satisfy 200M Thai + 200M English + 100M technical/FlyWire policy | 500M global post-dedup mixture gate |
-| I. Freeze/authorization | PLANNED | Freeze production manifests and lineage | Exact hashes + all authorization gates |
-| J. Qualification/merge | PLANNED | Exact-commit tests/audit/race-check and merge | Issue #4 closed GREEN |
+| Phase | Status | Result |
+| --- | --- | --- |
+| A. Rights lanes | DONE | release-safe / research-only / blocked enforced |
+| B. Artifact/provenance ledger | DONE | immutable source size/SHA pins |
+| C. Quality/privacy gate | DONE | accept/quarantine/reject fail-closed screening |
+| D. Scale acquisition | DONE | Thai + English scale corpora materialized |
+| E. Technical routing | DONE | technical-heuristic-v5 frozen |
+| F. Baseline materialization | DONE | Tatoeba TH/EN + Thai Wiki common schema |
+| G. Global cross-source dedup | DONE | exact + SimHash near dedup complete |
+| H. Mixture readiness | DONE | research-only 500M contract qualified |
+| I. Freeze/authorization | DONE | source/evaluation/tokenizer/lineage frozen before step 1 |
+| J. Qualification/merge | ACTIVE | exact-commit + remote-sync + main fast-forward pending |
 
-## Completed checkpoints
+## Historical checkpoints
 
 | Checkpoint | Commit | Result |
 | --- | --- | --- |
-| Rights-lane contract | `a915a7315e0c63d663652b824057dcd7d4903a3e` | 53-test exact-commit checkpoint; branch pushed |
-| Screened acquisition pipeline | `4b0cef7` | artifact, quality, ingestion, calibration and materializers added |
-| Source newline normalization | `d29e899` | source file normalization |
-| Thai derived capacity | `9e6f00c` | FineWeb2 Thai derived capacity registered |
-| English capacity + technical calibration | `e143c3e` | FineWeb English capacity registered; technical calibration baseline |
+| Rights-lane contract | `a915a7315e0c63d663652b824057dcd7d4903a3e` | 53-test checkpoint |
+| Screened acquisition pipeline | `4b0cef7` | artifact/quality/ingestion pipeline |
+| Source newline normalization | `d29e899` | tracked source normalization |
+| Thai derived capacity | `9e6f00c` | FineWeb2 Thai capacity |
+| English capacity + calibration baseline | `e143c3e` | FineWeb English + calibration |
+| Task-ledger continuity | `4482265` | active WIP state recorded |
+| Full handoff | `dcf7390` | 130/130 tests before continuation |
 
-## Current capacity before global cross-source dedup
+## Technical-classifier qualification
 
-This is planning capacity only. It must not be treated as final pretraining
-capacity until phase G completes.
+The final classifier is `technical-heuristic-v5`.
 
-Tracked web-derived research-only corpora include:
+Deterministic 1% calibration:
 
-- FineWeb2 Thai accepted train tokens: 293,826,034;
-- FineWeb English accepted train tokens: 120,975,441.
+- FineWeb2 Thai technical tokens: 53,094;
+- FineWeb English 014 technical tokens: 248,949.
 
-Screened legacy baseline before global dedup:
+v3/v4 remain tracked as rejected intermediate evidence. Their reports are
+sanitized and calibration-only.
 
-- release-safe Tatoeba EN train: 20,019,410 tokens;
-- release-safe Tatoeba TH train: 41,836 tokens;
-- research-only Thai-Wikipedia sample train: 38,172,496 tokens.
+## Five-corpus global attempt
 
-## Current work
+The first global manifest completed correctly but did not satisfy the mixture
+contract:
 
-The latest committed technical implementation checkpoint remains
-`e143c3e23fed5c328422f2e92551d12a123e1ccb`. Task-ledger commits
-`e6349f424d4f3c0b525b48d212c392805d6ab7d6` and
-`1521bc60ada867112b6517f0ea22921cc8f603d9` are already pushed.
+- records total: 2,609,182;
+- accepted: 2,608,512;
+- exact duplicates: 3;
+- near duplicates: 667;
+- research total gap: 26,974,429;
+- English gap: 81,481,741;
+- technical gap: 62,326,681.
 
-Active implementation work after those commits must be preserved:
+Thresholds were not weakened. The corpus plan was expanded instead.
 
-1. Thai technical routing was repaired after discovering literal question-mark
-   placeholders in the v2 source lexicon.
-2. v3 (~9.71% Thai technical tokens) was rejected as too permissive after a
-   manual spot check found SEO/gambling false positives.
-3. v4 (~2.27%) reduced those false positives but still allowed a single strong
-   Thai term to classify some unrelated pages.
-4. v5 is the current candidate. One strong Thai term is insufficient by itself;
-   the deterministic 1% calibration estimates ~1.79% Thai technical tokens and
-   ~19.79% English technical tokens. It is not frozen until its final
-   regression/report checkpoint is committed.
-5. Baseline materialization completed locally:
-   - Tatoeba TH: 6,851 accepted; train 41,836 tokens; accepted SHA-256
-     `2a64b7a9e32f9a059c89a7e8dfe60f20e6c36d39004bdc1537eac74036c1737c`;
-   - Tatoeba EN: 2,038,059 accepted; train 20,019,410 tokens; quarantine 3 /
-     reject 75; accepted SHA-256
-     `3995909ec3c15bb0700cfce9ea14ec2906b47e63e8d175098d94e96c87bd019d`;
-   - Thai-Wikipedia sample: 61,538 accepted; train 38,172,496 tokens;
-     quarantine 23 / reject 86; accepted SHA-256
-     `05f4cf3577eae401b805fc2eaf2063b3d5fe2b840bcbcacd32064cfc898c5b0f`.
-6. The first materialization launch failed before corpus processing because the
-   log-output directory did not yet exist. The directories were created and
-   all three jobs were rerun successfully; this was an orchestration failure,
-   not a corpus/data failure.
-7. A central five-corpus global-manifest input registry is now being validated.
-   Focused baseline/global-input/global-dedup/technical tests currently pass
-   27/27 locally, but this is WIP evidence until an exact commit is qualified.
-8. `global_manifest.py` is being completed for cross-source exact and SimHash
-   near deduplication with holdout > validation > train priority and
-   release-safe > research-only priority. SQLite writes are being batched for
-   multi-million-record scale.
-9. Category/language/lane token budgets will be recomputed only after global
-   dedup.
+## Final expanded global manifest
 
-## Next action
+Final registry: `configs/global-manifest-inputs-l003-v2.json`.
 
-1. Freeze/sanitize the v5 calibration reports and regression expectations.
-2. Pin the three baseline summaries and central five-corpus input registry.
-3. Complete global-manifest tests and exact source-file verification.
-4. Create the external metadata-only global manifest; do not commit raw corpus
-   text.
-5. Run global exact/near dedup across all five accepted corpora.
-6. Produce the post-dedup budget by partition, rights lane, language and primary
-   category.
-7. Evaluate the 500M mixture contract.
-8. Keep L003 open unless all required mixture/rights/evaluation gates pass.
+The six unique artifacts are:
+
+1. Tatoeba Thai screened baseline;
+2. Tatoeba English screened baseline;
+3. Thai-Wikipedia screened sample;
+4. FineWeb2 Thai full derived shard;
+5. FineWeb English 013 deterministic 55% derived shard;
+6. FineWeb English 014 full derived shard.
+
+The earlier 014 60% sample is replaced by the full 014 artifact and is not
+double-counted.
+
+Global result:
+
+- records total: 3,277,753;
+- accepted: 3,277,015;
+- excluded: 738;
+- exact duplicates: 61;
+- near duplicates: 677;
+- global report:
+  `results/l003/global-manifest-v2.json`;
+- metadata-only decision manifest bytes: 1,678,379,943;
+- decision manifest SHA-256:
+  `018aa08f347ebfd747f3aa11cada563bbd27918b469c7c5f11abe0289df7770a`.
+
+## Final qualified train capacity
+
+Release-safe:
+
+- general English: 20,010,764;
+- general Thai: 41,824;
+- technical/scientific/code: 876;
+- total: 20,053,464;
+- gap to 500M: 479,946,536;
+- ready: false.
+
+Research-only eligible:
+
+- general English: 522,373,720;
+- general Thai: 316,825,768;
+- technical/scientific/code: 130,501,732;
+- total available: 969,701,220;
+- Thai gap: 0;
+- English gap: 0;
+- technical gap: 0;
+- total gap: 0;
+- ready: true.
+
+## Frozen authorization
+
+`configs/pretraining-freeze-l003.json` freezes the selected
+`research_only` checkpoint lane before optimizer step 1.
+
+Frozen hashes:
+
+- source registry:
+  `5304c4cc6b302a06650d090d6731f5b0e610fd99ec257c3fd9cc671cf62f79aa`;
+- global manifest report:
+  `30a792d9fd26d1d4a6a1760aae7a43ae293778926be9044ebda632ec7c5054d5`;
+- global decisions:
+  `018aa08f347ebfd747f3aa11cada563bbd27918b469c7c5f11abe0289df7770a`;
+- tokenizer model:
+  `998bc75f058e554d4f50b6cbc77c52898e3446e516c3b25a126b99b113513818`.
+
+Authorization state:
+
+- optimizer steps completed: 0;
+- pretraining authorized for research-only lineage: true;
+- public release eligibility: not qualified;
+- automatic FlyWireModel export: blocked.
+
+## Qualification evidence before exact-commit gate
+
+- external re-hash of tokenizer + all six accepted corpora: PASS;
+- decision-manifest full hash/size verification: PASS;
+- external summary byte/hash verification: PASS;
+- `global_external_qualification=PASS`;
+- canonical L003 audit: PASS;
+- final L003 freeze audit: PASS;
+- latest full repository suite before closure: 153/153 PASS;
+- `git diff --check`: PASS.
+
+These remain WIP evidence until the exact commit is created and qualified.
 
 ## Acceptance criteria
 
 - [x] rights-lane contract and contamination tests;
 - [x] immutable source artifact ledger;
 - [x] quality/privacy screening with quarantine/reject behavior;
-- [x] deterministic 99/0.5/0.5 source-group split;
-- [x] large Thai and English research-only capacity acquired/materialized;
-- [ ] technical classifier frozen with trustworthy Thai/English calibration;
-- [ ] all baseline and derived sources use one verified global-manifest schema;
-- [ ] global exact/near cross-source dedup complete;
-- [ ] final post-dedup token accounting complete;
-- [ ] declared 500M mixture contract satisfied for the selected training lane;
-- [ ] production source/evaluation manifests frozen;
-- [ ] checkpoint lane and corpus lineage frozen before optimizer step 1;
-- [ ] full repository tests PASS;
-- [ ] L003 audit PASS;
-- [ ] `git diff --check` PASS;
+- [x] deterministic source-group partition contract;
+- [x] large Thai and English research-only capacity acquired;
+- [x] technical classifier frozen with Thai/English calibration;
+- [x] baseline and scale sources use verified global-manifest schema;
+- [x] global exact/near cross-source dedup complete;
+- [x] final post-dedup token accounting complete;
+- [x] selected research-only 500M mixture contract satisfied;
+- [x] source/evaluation/tokenizer manifests frozen;
+- [x] checkpoint lane frozen before optimizer step 1;
+- [x] external artifact/hash qualification PASS;
+- [x] full repository tests PASS before exact-commit gate;
+- [x] canonical L003 audit PASS before exact-commit gate;
+- [x] `git diff --check` PASS before exact-commit gate;
 - [ ] exact-commit qualification PASS;
 - [ ] remote race/sync verification PASS;
-- [ ] GitHub Issue #4 updated and closed only when genuinely complete.
+- [ ] final ledger closure commit qualified;
+- [ ] main fast-forward + post-merge qualification PASS;
+- [ ] GitHub Issue #4 updated and closed.
 
-## Blockers / dependencies
+## Current work
 
-- Common Voice metadata is usable for planning, but archive download requires
-  authenticated Mozilla Data Collective access/terms. Do not bypass access
-  controls.
-- Release-safe capacity remains far below 500M; research-only web corpora cannot
-  be reclassified merely to close that gap.
-- Global post-dedup capacity is not yet known.
+All technical/data/freeze gates are GREEN. Phase J is the only active phase.
 
-## Claims boundary
+## Next action
 
-L003 does not itself prove Thai/English language understanding, conversational
-quality, or successful Base-50M pretraining. Corpus capacity before global
-cross-source dedup is planning evidence only.
+1. inspect final diff/status for accidental raw/local-path material;
+2. create the implementation checkpoint commit;
+3. run exact-commit full pytest, both L003 audits and diff checks;
+4. push branch and verify remote synchronization/race state;
+5. update this ledger to DONE referencing the qualified implementation commit;
+6. qualify/push the closure commit;
+7. fast-forward main and repeat post-merge qualification;
+8. record final evidence on GitHub Issue #4 and close it.
+
+## Remaining boundary
+
+Release-safe 500M capacity is still not qualified. This does not block the
+selected research-only pretraining lineage, but it does block any claim that a
+future research-only checkpoint can be publicly released as release-safe.
+
+L003 does not claim Thai/English understanding, conversational quality, or
+successful Base-50M pretraining. Those require later stages.

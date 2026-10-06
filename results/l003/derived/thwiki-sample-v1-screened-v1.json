@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "stage": "L003",
+  "derived_id": "thwiki-sample-v1-screened-v1",
+  "source_id": "wikimedia-thwiki",
+  "artifact_id": "thwiki-pages-articles-2026-10-01",
+  "rights_lane": "research_only",
+  "primary_category": "general_thai",
+  "tokenizer": "base50m-unigram-32000-v1",
+  "screening": "quality-v1",
+  "counts": {
+    "input_records": 61647,
+    "accept_records": 61538,
+    "reject_records": 86,
+    "quarantine_records": 23
+  },
+  "findings": {
+    "excess_control_characters": 67,
+    "possible_email": 5,
+    "possible_ipv4": 18,
+    "possible_payment_card": 19,
+    "suspicious_repeated_character_runs": 2
+  },
+  "accepted": {
+    "tokens_by_partition": {
+      "train": 38172496,
+      "validation": 175783,
+      "holdout": 229378
+    },
+    "text_bytes_by_partition": {
+      "train": 414566614,
+      "validation": 1879721,
+      "holdout": 2517990
+    }
+  },
+  "files": {
+    "accepted": {
+      "path": "accepted.jsonl",
+      "bytes": 450287094,
+      "sha256": "05f4cf3577eae401b805fc2eaf2063b3d5fe2b840bcbcacd32064cfc898c5b0f",
+      "storage": "external://FlyWireLLM-data/L003/Baseline/thwiki-sample-v1-screened-v1/accepted.jsonl"
+    }
+  },
+  "global_manifest_authorized": false,
+  "pretraining_authorized": false,
+  "raw_flagged_text_persisted": false
+}

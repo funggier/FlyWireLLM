@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "stage": "L003",
+  "tokenizer": "base50m-unigram-32000-v1",
+  "technical_classifier": "technical-heuristic-v5",
+  "near_duplicate_hamming_distance": 3,
+  "inputs_verified": [
+    "tatoeba-en-screened-v1",
+    "tatoeba-th-screened-v1",
+    "fineweb-english-10bt-013-00000-sample550000-v1",
+    "fineweb-english-10bt-014-00000-full-v1",
+    "fineweb2-thai-train-005-00002-sample1000000-v1",
+    "thwiki-sample-v1-screened-v1"
+  ],
+  "records": {
+    "total": 3277753,
+    "accepted": 3277015,
+    "excluded": 738,
+    "exact_duplicates": 61,
+    "near_duplicates": 677
+  },
+  "accepted_tokens": {
+    "by_partition": {
+      "holdout": {
+        "release_safe": {
+          "en": {
+            "general_english": 101785
+          },
+          "th": {
+            "general_thai": 178
+          }
+        },
+        "research_only": {
+          "en": {
+            "general_english": 2464757,
+            "technical_scientific_code": 730531
+          },
+          "th": {
+            "general_thai": 1642241,
+            "technical_scientific_code": 66357
+          }
+        }
+      },
+      "train": {
+        "release_safe": {
+          "en": {
+            "general_english": 20010764,
+            "technical_scientific_code": 876
+          },
+          "th": {
+            "general_thai": 41824
+          }
+        },
+        "research_only": {
+          "en": {
+            "general_english": 502362956,
+            "technical_scientific_code": 115296359
+          },
+          "th": {
+            "general_thai": 316783944,
+            "technical_scientific_code": 15204497
+          }
+        }
+      },
+      "validation": {
+        "release_safe": {
+          "en": {
+            "general_english": 99112
+          },
+          "th": {
+            "general_thai": 234
+          }
+        },
+        "research_only": {
+          "en": {
+            "general_english": 2555911,
+            "technical_scientific_code": 570228
+          },
+          "th": {
+            "general_thai": 1551510,
+            "technical_scientific_code": 73344
+          }
+        }
+      }
+    }
+  },
+  "train_capacity": {
+    "release_safe": {
+      "flywire_domain": 0,
+      "general_english": 20010764,
+      "general_thai": 41824,
+      "technical_scientific_code": 876
+    },
+    "research_only": {
+      "flywire_domain": 0,
+      "general_english": 522373720,
+      "general_thai": 316825768,
+      "technical_scientific_code": 130501732
+    }
+  },
+  "decisions": {
+    "path": "decisions.jsonl",
+    "bytes": 1678379943,
+    "sha256": "018aa08f347ebfd747f3aa11cada563bbd27918b469c7c5f11abe0289df7770a",
+    "contains_raw_text": false,
+    "storage": "external://FlyWireLLM-data/L003/Global/global-manifest-v2/decisions.jsonl"
+  },
+  "pretraining_authorized": false,
+  "input_registry": {
+    "path": "configs/global-manifest-inputs-l003-v2.json",
+    "sha256": "5304c4cc6b302a06650d090d6731f5b0e610fd99ec257c3fd9cc671cf62f79aa"
+  },
+  "tokenizer_model": {
+    "candidate_id": "base50m-unigram-32000-v1",
+    "sha256": "998bc75f058e554d4f50b6cbc77c52898e3446e516c3b25a126b99b113513818"
+  },
+  "global_cross_source_dedup_applied": true,
+  "mixture": {
+    "release_safe": {
+      "ready": false,
+      "total_available_tokens": 20053464,
+      "thai_gap": 199958176,
+      "english_gap": 179989236,
+      "technical_required_tokens": 100000000,
+      "technical_gap": 99999124,
+      "flywire_used_tokens": 0,
+      "total_gap": 479946536
+    },
+    "research_only": {
+      "ready": true,
+      "total_available_tokens": 969701220,
+      "thai_gap": 0,
+      "english_gap": 0,
+      "technical_required_tokens": 100000000,
+      "technical_gap": 0,
+      "flywire_used_tokens": 0,
+      "total_gap": 0
+    },
+    "pretraining_authorized": false
+  },
+  "summary_storage": "external://FlyWireLLM-data/L003/Global/global-manifest-v2/summary.json"
+}

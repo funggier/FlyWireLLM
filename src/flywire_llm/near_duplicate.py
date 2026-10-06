@@ -138,6 +138,8 @@ class SQLiteSimhashIndex:
         self,
         record_id: str,
         fingerprint: int,
+        *,
+        commit: bool = True,
     ) -> None:
         if not isinstance(record_id, str) or not record_id.strip():
             raise NearDuplicateIndexError(
@@ -153,7 +155,8 @@ class SQLiteSimhashIndex:
                 "INSERT INTO bands(band_key, record_id) VALUES (?, ?)",
                 ((key, record_id) for key in self._keys(fingerprint)),
             )
-            self._db.commit()
+            if commit:
+                self._db.commit()
         except sqlite3.IntegrityError as exc:
             self._db.rollback()
             raise NearDuplicateIndexError(
@@ -166,6 +169,7 @@ class SQLiteSimhashIndex:
         fingerprint: int,
         *,
         max_hamming_distance: int = 3,
+        commit: bool = True,
     ) -> tuple[bool, tuple[NearDuplicateMatch, ...]]:
         matches = self.find_matches(
             fingerprint,
@@ -173,8 +177,11 @@ class SQLiteSimhashIndex:
         )
         if matches:
             return False, matches
-        self.add(record_id, fingerprint)
+        self.add(record_id, fingerprint, commit=commit)
         return True, ()
+
+    def commit(self) -> None:
+        self._db.commit()
 
     @property
     def record_count(self) -> int:
