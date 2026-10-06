@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "stage": "L004",
+  "qualification_id": "base50m-second-tranche-v1",
+  "authorization_sha256": "458cf90c0d0f38f407bc01d3a5e4af70706497610a3610347ce0cd75bcfff30d",
+  "validation_gate_commit": "2151b1199346bbc26da944f731b01b84556e3ed3",
+  "checkpoint_lane": "research_only",
+  "source_optimizer_step": 4,
+  "source_checkpoint_sha256": "d4ab8703cf723600e1fa6606d28674b06638284dd1f50ea2b771d6a96f947266",
+  "production_optimizer_steps": 8,
+  "additional_optimizer_steps": 4,
+  "supervised_tokens_seen": 524288,
+  "additional_supervised_tokens": 262144,
+  "fraction_of_500m": 0.001048576,
+  "pretraining_started": true,
+  "pretraining_complete": false,
+  "tranche_complete": true,
+  "public_release_eligibility": "not_qualified",
+  "state_sha256": "d86788a7dfd33c13ac3f1bfdacdb648ab8f6fcadc3e0253f0f964043958eca4a",
+  "final_checkpoint": {
+    "file": "checkpoints/step-000008.pt",
+    "bytes": 602706571,
+    "sha256": "2552f503438bf635f0e54a4fc1fc4bdcef3da57ad734c9ea7b0eebd379500e21"
+  },
+  "final_data_state": {
+    "block_input_offset": 400,
+    "order_position": 513,
+    "supervised_tokens_consumed": 524288
+  },
+  "loss_sequence": [
+    10.395489987466135,
+    10.354820998210926,
+    10.30019285196613,
+    10.236181468731957
+  ],
+  "loss_change_step5_to_step8": -0.1593085187341785,
+  "steps": [
+    {
+      "optimizer_step": 5,
+      "supervised_tokens_this_update": 65536,
+      "cumulative_supervised_tokens": 327680,
+      "physical_input_positions_this_update": 65708,
+      "microbatches_this_update": 65,
+      "learning_rate": 1.96078431372549e-05,
+      "mean_loss": 10.395489987466135,
+      "gradient_norm": 1.9886255264282227,
+      "update_seconds": 46.56544020000729,
+      "supervised_tokens_per_second": 1407.3956934265113,
+      "checkpoint_bytes": 602706571,
+      "checkpoint_sha256": "ffb67c03f13d5a63dee1e6d6626265d72eaf6c801dafb209da93c0820aa83f81",
+      "metric_sha256": "b243637319b416c5350db1c96e31090807621b9bc98aaf7fd120a5a72840aad5"
+    },
+    {
+      "optimizer_step": 6,
+      "supervised_tokens_this_update": 65536,
+      "cumulative_supervised_tokens": 393216,
+      "physical_input_positions_this_update": 65597,
+      "microbatches_this_update": 65,
+      "learning_rate": 2.352941176470588e-05,
+      "mean_loss": 10.354820998210926,
+      "gradient_norm": 1.9846501350402832,
+      "update_seconds": 46.09931059999508,
+      "supervised_tokens_per_second": 1421.6264657113331,
+      "checkpoint_bytes": 602706571,
+      "checkpoint_sha256": "88fe5f28903299d01b9ffafe73d9fbea0f7875f3e9f3a43826b9678dec49d2a9",
+      "metric_sha256": "3160376ca053b3dfcd49b950aae4122106102bb48d21c3159fbfeb501c0b7dd5"
+    },
+    {
+      "optimizer_step": 7,
+      "supervised_tokens_this_update": 65536,
+      "cumulative_supervised_tokens": 458752,
+      "physical_input_positions_this_update": 65703,
+      "microbatches_this_update": 66,
+      "learning_rate": 2.745098039215686e-05,
+      "mean_loss": 10.30019285196613,
+      "gradient_norm": 2.1399009227752686,
+      "update_seconds": 46.12053690000903,
+      "supervised_tokens_per_second": 1420.9721830013468,
+      "checkpoint_bytes": 602706571,
+      "checkpoint_sha256": "2176f76c4ef1f4641631738d8aa9079c14dd14935d7282876b0c33c1ae75cc2e",
+      "metric_sha256": "336e8c4a097be2ace142ea87e460e4e6aada5c1446a6135fd9935388432adabc"
+    },
+    {
+      "optimizer_step": 8,
+      "supervised_tokens_this_update": 65536,
+      "cumulative_supervised_tokens": 524288,
+      "physical_input_positions_this_update": 65793,
+      "microbatches_this_update": 65,
+      "learning_rate": 3.137254901960784e-05,
+      "mean_loss": 10.236181468731957,
+      "gradient_norm": 2.2287609577178955,
+      "update_seconds": 46.37319730001036,
+      "supervised_tokens_per_second": 1413.23013757314,
+      "checkpoint_bytes": 602706571,
+      "checkpoint_sha256": "2552f503438bf635f0e54a4fc1fc4bdcef3da57ad734c9ea7b0eebd379500e21",
+      "metric_sha256": "be2a327a7c80683e47190f7191915d96f95c2ddafa023fb0d3613c8519acd466"
+    }
+  ]
+}

@@ -16,6 +16,10 @@ from flywire_llm.pretraining_checkpoint import (
     lineage_from_contract,
     load_pretraining_checkpoint,
 )
+from flywire_llm.pretraining_continuation import (
+    load_continuation_authorization,
+    load_continuation_state,
+)
 from flywire_llm.pretraining_execution import (
     load_pretraining_execution_contract,
 )
@@ -45,7 +49,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--model",
-        choices=("step0", "step4"),
+        choices=("step0", "step4", "step8"),
         required=True,
     )
     parser.add_argument("--output-json", required=True)
@@ -98,33 +102,72 @@ def _load_model(
             "checkpoint_sha256": None,
         }
 
-    step4 = config["step4"]
-    if step4.get("optimizer_steps") != 4:
-        raise RuntimeError("step4 optimizer-step contract changed")
-    if step4.get("supervised_tokens_seen") != 262_144:
-        raise RuntimeError("step4 supervised-token contract changed")
-    checkpoint = resolve_external_storage_uri(
-        step4["checkpoint"],
+    if model_name == "step4":
+        step4 = config["step4"]
+        if step4.get("optimizer_steps") != 4:
+            raise RuntimeError("step4 optimizer-step contract changed")
+        if step4.get("supervised_tokens_seen") != 262_144:
+            raise RuntimeError("step4 supervised-token contract changed")
+        checkpoint = resolve_external_storage_uri(
+            step4["checkpoint"],
+            external_root=external_root,
+        )
+        if checkpoint.stat().st_size != int(step4["bytes"]):
+            raise RuntimeError("step4 checkpoint byte size mismatch")
+        observed_sha = sha256_file(checkpoint)
+        if observed_sha != step4["sha256"]:
+            raise RuntimeError("step4 checkpoint SHA-256 mismatch")
+        loaded = load_pretraining_checkpoint(
+            checkpoint,
+            expected_lineage=lineage_from_contract(execution),
+        )
+        if loaded.progress.optimizer_step != 4:
+            raise RuntimeError("loaded checkpoint is not optimizer step 4")
+        if loaded.progress.supervised_tokens_seen != 262_144:
+            raise RuntimeError(
+                "loaded checkpoint supervised-token count changed"
+            )
+        return loaded.model, {
+            "model": "step4",
+            "optimizer_step": 4,
+            "supervised_tokens_seen": 262_144,
+            "checkpoint_sha256": observed_sha,
+        }
+
+    authorization = load_continuation_authorization(
+        ROOT / "configs" / "pretraining-tranche-l004-v2.json",
+        repo_root=ROOT,
         external_root=external_root,
     )
-    if checkpoint.stat().st_size != int(step4["bytes"]):
-        raise RuntimeError("step4 checkpoint byte size mismatch")
+    state = load_continuation_state(
+        authorization.run_root / "state.json",
+        authorization=authorization,
+        verify_files=True,
+    )
+    if state.optimizer_step != 8:
+        raise RuntimeError("continuation state is not optimizer step 8")
+    if state.supervised_tokens_seen != 524_288:
+        raise RuntimeError("step8 supervised-token progress changed")
+    checkpoint = authorization.run_root / state.checkpoint_file
     observed_sha = sha256_file(checkpoint)
-    if observed_sha != step4["sha256"]:
-        raise RuntimeError("step4 checkpoint SHA-256 mismatch")
+    if observed_sha != state.checkpoint_sha256:
+        raise RuntimeError("step8 checkpoint SHA-256 mismatch")
     loaded = load_pretraining_checkpoint(
         checkpoint,
         expected_lineage=lineage_from_contract(execution),
     )
-    if loaded.progress.optimizer_step != 4:
-        raise RuntimeError("loaded checkpoint is not optimizer step 4")
-    if loaded.progress.supervised_tokens_seen != 262_144:
-        raise RuntimeError("loaded checkpoint supervised-token count changed")
+    if loaded.progress.optimizer_step != 8:
+        raise RuntimeError("loaded checkpoint is not optimizer step 8")
+    if loaded.progress.supervised_tokens_seen != 524_288:
+        raise RuntimeError("loaded step8 supervised-token count changed")
     return loaded.model, {
-        "model": "step4",
-        "optimizer_step": 4,
-        "supervised_tokens_seen": 262_144,
+        "model": "step8",
+        "optimizer_step": 8,
+        "supervised_tokens_seen": 524_288,
         "checkpoint_sha256": observed_sha,
+        "continuation_authorization_sha256": (
+            authorization.authorization_sha256
+        ),
     }
 
 

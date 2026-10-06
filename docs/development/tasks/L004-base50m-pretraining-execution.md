@@ -421,8 +421,11 @@ Second-tranche runner commit:
 - exact runner qualification: PASS;
 - remote branch sync after push: 0/0.
 
-Second bounded authorization candidate:
+Second bounded authorization:
 `configs/pretraining-tranche-l004-v2.json`.
+
+Authorization commit:
+`9c0df1e53c17090c1c019373397b88f77832fd84`.
 
 - authorization id: `base50m-second-tranche-v1`;
 - source optimizer step: 4;
@@ -434,28 +437,73 @@ Second bounded authorization candidate:
 - additional supervised-token cap: 262,144;
 - cumulative supervised-token cap: 524,288;
 - checkpoint cadence: every optimizer update;
-- new run root:
+- run root:
   `external://FlyWireLLM-data/L004/Runs/base50m-second-tranche-v1`;
-- authorization candidate SHA-256:
-  `458cf90c0d0f38f407bc01d3a5e4af70706497610a3610347ce0cd75bcfff30d`.
+- authorization SHA-256:
+  `458cf90c0d0f38f407bc01d3a5e4af70706497610a3610347ce0cd75bcfff30d`;
+- exact authorization qualification: PASS;
+- remote sync before execution: 0/0.
 
-A post-tranche validation gate is predeclared before step 5: evaluate the same
-validation pack at step 8, require finite losses, combined loss no worse than
-step 4, and no category relative regression greater than 0.5%. Final holdout
-must remain untouched.
+The post-tranche validation gate was predeclared before step 5: evaluate the
+same validation pack at step 8, require finite losses, combined loss no worse
+than step 4, and no category relative regression greater than 0.5%. Final
+holdout must remain untouched.
+
+Second bounded production result:
+
+| Step | LR | Mean loss | Checkpoint SHA-256 |
+| ---: | ---: | ---: | --- |
+| 5 | 0.0000196078 | 10.395490 | `ffb67c03f13d5a63dee1e6d6626265d72eaf6c801dafb209da93c0820aa83f81` |
+| 6 | 0.0000235294 | 10.354821 | `88fe5f28903299d01b9ffafe73d9fbea0f7875f3e9f3a43826b9678dec49d2a9` |
+| 7 | 0.0000274510 | 10.300193 | `2176f76c4ef1f4641631738d8aa9079c14dd14935d7282876b0c33c1ae75cc2e` |
+| 8 | 0.0000313725 | 10.236181 | `2552f503438bf635f0e54a4fc1fc4bdcef3da57ad734c9ea7b0eebd379500e21` |
+
+Cumulative production progress after step 8:
+
+- optimizer steps: 8;
+- supervised tokens seen: 524,288;
+- fraction of 500M budget: 0.1048576%;
+- final data cursor: order position 513 / block offset 400;
+- state SHA-256:
+  `d86788a7dfd33c13ac3f1bfdacdb648ab8f6fcadc3e0253f0f964043958eca4a`;
+- tracked result SHA-256:
+  `06ce67caa95a153798398cdd4784f3bb8c6c6e0194eb8ba573ebd86e79cb5a29`;
+- pretraining complete: false;
+- public release eligibility: not qualified.
+
+All step5-8 checkpoint/metric hashes were re-verified and the final step8
+checkpoint/cursor loaded successfully.
+
+Post-step8 validation on the byte-identical 300k-token validation pack:
+
+| Category | Step 4 loss | Step 8 loss | Relative change |
+| --- | ---: | ---: | ---: |
+| general English | 10.371749212 | 10.102311081 | -2.597808% |
+| general Thai | 10.407552466 | 10.250705522 | -1.507049% |
+| technical/scientific/code | 10.381440011 | 10.121698719 | -2.501977% |
+| combined | 10.386913896 | 10.158238441 | -2.201573% |
+
+Post-tranche gate: **PASS**. All categories improved, the combined loss
+improved, the validation packs are byte-identical to the step4 gate, and final
+holdout remains untouched.
+
+Tracked evidence hashes:
+
+- step8 validation:
+  `f596b4df0e5cad3acf669cefcf54007d3916e427ab1cf854e873587585c39c1f`;
+- step4-to-step8 comparison:
+  `a1564c28fbcb0a0c90c940b69fc91a38123c418caae551759633e7165dee475f`.
 
 ## Current work
 
-Exact-qualify and commit the second bounded authorization. No step 5 has been
-started under this authorization yet.
+Record and exact-qualify the second bounded-tranche + post-step8 validation
+evidence before any further training authorization.
 
 ## Next action
 
-1. commit the authorization candidate and updated ledger;
-2. exact-qualify the authorization commit with full tests, L004 audit,
-   validation verification and continuation `--validate-only`;
+1. full-regression the complete step8 evidence WIP;
+2. commit and exact-qualify the second-tranche evidence;
 3. push and confirm remote synchronization;
-4. execute only optimizer steps 5-8 with checkpoint-every-update;
-5. verify all step5-8 checkpoint/metric hashes and final step8 resume state;
-6. re-evaluate the unchanged validation pack at step8 before any further
-   authorization expansion.
+4. design the next bounded authorization from the verified step8 checkpoint;
+5. continue to require an unchanged validation pack and untouched final holdout
+   before each subsequent expansion.

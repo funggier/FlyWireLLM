@@ -21,42 +21,55 @@ First bounded runner:
 First bounded authorization:
 `674354ea572532f3d8d5c0be856a43078b2e10ae`
 
-First bounded-tranche evidence:
-`65218c7` — 4 optimizer steps / 262,144 supervised tokens.
+First bounded evidence:
+`65218c7` — step4 / 262,144 supervised tokens.
 
 Validation gate:
 `2151b1199346bbc26da944f731b01b84556e3ed3`
 
-- identical 300k-token validation pack;
-- English / Thai / technical all improved at step4 vs step0;
-- combined loss: 10.477063405 -> 10.386913896 (-0.860446%);
-- final holdout touched: false.
-
-Second bounded continuation runner:
+Second continuation runner:
 `3143792ebd041d9675d4711b42d0c85af591e3f8`
 
-- exact qualification: PASS;
-- remote sync: 0/0.
+Second bounded authorization:
+`9c0df1e53c17090c1c019373397b88f77832fd84`
 
-## Active authorization candidate
+Authorization SHA-256:
+`458cf90c0d0f38f407bc01d3a5e4af70706497610a3610347ce0cd75bcfff30d`
 
-`configs/pretraining-tranche-l004-v2.json`
+## Production progress
 
-- source: qualified optimizer step 4 checkpoint;
-- authorized updates: step 5 through step 8 only;
-- additional supervised-token cap: 262,144;
-- cumulative cap after tranche: 524,288;
-- checkpoint every update;
-- research-only lineage unchanged;
-- public release eligibility: not qualified;
-- authorization candidate SHA-256:
-  `458cf90c0d0f38f407bc01d3a5e4af70706497610a3610347ce0cd75bcfff30d`.
+Second bounded tranche completed exactly at optimizer step 8.
 
-Post-tranche validation is predeclared before step5: reuse the exact same
-validation pack at step8, require combined loss not worse than step4 and no
-category relative regression above 0.5%. Final holdout remains untouched.
+- cumulative supervised tokens: 524,288;
+- fraction of 500M budget: 0.1048576%;
+- step8 checkpoint SHA-256:
+  `2552f503438bf635f0e54a4fc1fc4bdcef3da57ad734c9ea7b0eebd379500e21`;
+- step8 state SHA-256:
+  `d86788a7dfd33c13ac3f1bfdacdb648ab8f6fcadc3e0253f0f964043958eca4a`;
+- pretraining complete: false;
+- public release eligibility: not qualified.
+
+Training loss step5 -> step8:
+10.395490 -> 10.236181.
+
+## Post-step8 validation
+
+The exact same 300k-token validation pack was reused.
+
+- English: 10.371749212 -> 10.102311081 (-2.597808% vs step4);
+- Thai: 10.407552466 -> 10.250705522 (-1.507049%);
+- technical: 10.381440011 -> 10.121698719 (-2.501977%);
+- combined: 10.386913896 -> 10.158238441 (-2.201573%);
+- same validation pack: true;
+- final holdout touched: false;
+- predeclared post-tranche gate: PASS.
+
+No further training tranche is authorized yet.
 
 ## Active phase
 
-Commit and exact-qualify the second bounded authorization, push/synchronize it,
-then execute only step5-8. Do not authorize the remaining 500M run wholesale.
+Exact-qualify and commit the step8 production + validation evidence, push and
+synchronize it, then design the next bounded authorization from the verified
+step8 checkpoint.
+
+Do not authorize the remaining 500M run wholesale.
