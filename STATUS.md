@@ -22,11 +22,16 @@ Updated: 2026-10-06
 ### v0.2.0
 
 - milestone: Research Pretraining Readiness
+- tag/release commit: `fc9e0fc2f64be4574b70021226ffd97f61fd9320`
+- release URL: https://github.com/funggier/FlyWireLLM/releases/tag/v0.2.0
 - Base-50M architecture/tokenizer contract: qualified
 - L003 research-only 500M mixture: qualified
 - research-only lineage frozen before optimizer step 1
 - Base-50M pretrained weights: none
 - public checkpoint release eligibility: not qualified
+- release ZIP SHA-256: `de495e36ff3c9d95be0869caa624049771a2b92e608863487baf22c77bfd537f`
+- document ZIP SHA-256: `b0545edb1fb5fbac751f8b35350504d1b9f3662a51698a2aa484fe0343de7da1`
+- release qualification: GREEN
 
 ## Base-50M-v1
 
