@@ -87,7 +87,7 @@ The blank-checkpoint provenance contract is not weakened.
 | F. Mixture selection/materialization | DONE | exact 500M selected, packed, shuffled, verified |
 | G. Base-50M micro qualification | DONE | real forward/backward/update with frozen tokenizer + packed data |
 | H. Throughput/memory qualification | DONE | fp32 local runtime selected; bf16 rejected |
-| I. First bounded training tranche | PENDING | starts only after exact-commit foundation qualification |
+| I. First bounded training tranche | AUTHORIZATION | 4 updates / 262,144 supervised tokens; production step 1 not yet run |
 
 ## Phase F — exact 500M selection
 
@@ -265,21 +265,61 @@ other operational overhead.
 - [x] Base-50M packed-data 65,536-token update passes;
 - [x] local throughput/memory qualification completed;
 - [x] full repository regression on final foundation WIP passes: 182/182;
-- [ ] exact foundation commit qualification passes;
-- [ ] remote branch synchronization passes.
+- [x] exact foundation commit qualification passes: `c216937868d0b8391fe9ed91c4ceb8269de7e93b`;
+- [x] remote branch synchronization passes: 0/0 at `c216937868d0b8391fe9ed91c4ceb8269de7e93b`.
+
+## Qualified foundation and runner
+
+Runtime/data foundation commit:
+`c216937868d0b8391fe9ed91c4ceb8269de7e93b`.
+
+- exact qualification: PASS;
+- full pytest: 182/182 PASS;
+- L003/L004 audits: PASS;
+- selection/packing/block-order external verification: PASS;
+- remote branch sync after push: 0/0.
+
+Bounded-runner implementation commit:
+`6b5c2946ea7b8b452e6d317de7ccd438bd23a091`.
+
+- exact qualification: PASS;
+- full pytest: 188/188 PASS;
+- runner unit/authorization/state tests: PASS;
+- remote branch sync after push: 0/0.
+
+## First bounded-tranche authorization candidate
+
+`configs/pretraining-tranche-l004-v1.json` authorizes only:
+
+- optimizer updates: 4;
+- supervised tokens: 262,144;
+- checkpoint: every update;
+- checkpoint lane: research_only;
+- external run root:
+  `external://FlyWireLLM-data/L004/Runs/base50m-first-tranche-v1`;
+- public release eligibility: not qualified;
+- automatic FlyWireModel export: blocked.
+
+Authorization SHA-256 candidate:
+`a8ed92f59480f7e922b8973e62be9a8e40f7a4afec5629d4008f7e3d5db9eb2f`.
+
+The authorization pins the qualified foundation/runner commits and exact hashes
+of execution/data/local-runtime/qualification and production runtime modules.
+The external run root was confirmed absent before authorization commit.
+
+Production optimizer step count remains **zero**.
 
 ## Current work
 
-Freeze and qualify the runtime/data foundation checkpoint. Production optimizer
-step count remains zero.
+Qualify and remote-sync the bounded authorization commit.
 
 ## Next action
 
-1. refresh runtime qualification summary hashes after final code/config edits;
-2. run full pytest + L003/L004 audits + selection/packing/order verifiers;
-3. run diff/path/raw-artifact safety checks;
-4. create and qualify an exact foundation commit;
-5. push and verify remote branch synchronization;
-6. create a separate bounded-tranche authorization pinned to that qualified
-   foundation;
-7. only then execute production optimizer step 1.
+1. commit the bounded authorization + ledger;
+2. run exact 188-test qualification and `--validate-only` against the clean
+   authorization commit;
+3. push and verify remote synchronization;
+4. execute production update 1 only;
+5. verify checkpoint/state/metric hashes and resume from step 1;
+6. execute the remaining three authorized updates;
+7. qualify the four-update checkpoint before deciding any larger tranche.

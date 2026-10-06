@@ -10,45 +10,54 @@ GitHub Issue: #6
 Branch:
 research/l004-base50m-pretraining
 
-Base commit:
-aa8a00e7ee5c3e8827072a47d5466f1fbbaf7997
+## Qualified checkpoints
 
-## Current state
+Runtime/data foundation:
+c216937868d0b8391fe9ed91c4ceb8269de7e93b
 
-Runtime/data foundation phases A-H are technically GREEN in the worktree.
+- 182/182 tests PASS;
+- L003/L004 audits PASS;
+- selection/packing/block-order external verification PASS;
+- remote sync 0/0.
 
-Key facts:
+Bounded runner:
+6b5c2946ea7b8b452e6d317de7ccd438bd23a091
 
-- production optimizer steps recorded: 0;
+- 188/188 tests PASS;
+- exact runner qualification PASS;
+- remote sync 0/0.
+
+## Current authorization candidate
+
+File:
+configs/pretraining-tranche-l004-v1.json
+
+SHA-256:
+a8ed92f59480f7e922b8973e62be9a8e40f7a4afec5629d4008f7e3d5db9eb2f
+
+Hard limits:
+
 - checkpoint lane: research_only;
-- exact selected content tokens: 500,000,000;
-- packed physical tokens: 501,358,839;
-- token-stream SHA-256:
-  07a0faf43c241f3e232a6200bc1732381d18e9ef1b2cd77c185d2fb4c4296a15;
-- shuffled block-order SHA-256:
-  146f12fdccd0d2694f0e81e3f85f2a786cb4d72fc47b4302990d6c8696eecc6d;
-- selected production-local context: 1024 / fp32 / CPU / 12 threads;
-- actual packed-data global update qualification:
-  65,536 supervised tokens in 46.2343 s (~1,417.5 tok/s);
-- projected pure compute for 500M: ~98.0 h before operational overhead;
-- deterministic mid-block checkpoint/resume equivalence: PASS.
+- start optimizer step: 0;
+- maximum updates: 4;
+- supervised tokens: 262,144;
+- checkpoint every update;
+- external run root:
+  external://FlyWireLLM-data/L004/Runs/base50m-first-tranche-v1;
+- public release eligibility: not qualified;
+- automatic FlyWireModel export: blocked.
 
-The faster seq512/batch4 result is evidence only and is not selected because
-the first production run must preserve 1024-context training semantics.
+Production optimizer steps recorded remain **0**.
 
 ## Resume here
 
-Do not reset or clean the worktree.
+Do not run production step 1 until the authorization commit itself has:
 
-Before production optimizer step 1:
+1. clean-worktree exact qualification;
+2. 188/188 tests PASS;
+3. L004 audit PASS;
+4. runner --validate-only PASS;
+5. remote branch synchronization 0/0.
 
-1. regenerate runtime-qualification summary hashes after final edits;
-2. run full pytest;
-3. run L003 final audit and L004 audit;
-4. re-run selection, packing and deterministic block-order verifiers;
-5. run diff/path/raw-artifact safety checks;
-6. create and qualify the exact L004 foundation commit;
-7. push and verify remote branch synchronization;
-8. create a separate first-bounded-tranche authorization pinned to that commit.
-
-Only after those gates may Phase I execute a real optimizer step.
+After those pass, execute only update 1, verify its checkpoint/state/metric, then
+resume for the remaining three authorized updates.
