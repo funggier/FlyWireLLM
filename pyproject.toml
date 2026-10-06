@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "flywire-llm"
-version = "0.1.0"
-description = "Blank training-ready language model foundation for future FlyWire-informed experiments"
+version = "0.2.0"
+description = "Training-ready language model foundation with a qualified research pretraining corpus and frozen lineage"
 readme = "README.md"
 requires-python = ">=3.11,<3.15"
 license = {text = "MIT"}

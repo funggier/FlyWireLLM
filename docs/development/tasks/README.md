@@ -49,5 +49,6 @@ A task file should correspond to one GitHub Issue whenever practical.
 | R001 v0.1.0 release | DONE | #2 | First MIT release |
 | L002 Base-50M/tokenizer/data contract | DONE | #3 | Base-50M + 32K tokenizer engineering gate |
 | L003 production corpus readiness | DONE | #4 | 500M research-only corpus qualified; pretraining lineage authorized |
+| R002 v0.2.0 release | ACTIVE | #5 | Research pretraining readiness release |
 
 For the exact current action, read [CURRENT.md](CURRENT.md).

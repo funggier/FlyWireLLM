@@ -9,13 +9,24 @@ Updated: 2026-10-06
 - license: MIT
 - portable repository state: no machine-local workspace path is required
 
-## Released baseline
+## Release milestones
 
-- v0.1.0: blank/random-initialized LLM engineering baseline
+### v0.1.0
+
+- blank/random-initialized LLM engineering baseline
 - tag commit: `2ec2f502c8a4c5caa6c1f5262333e05dcacaf0a5`
 - smoke parameters: 109,120
 - pretrained weights: none
 - release qualification: GREEN
+
+### v0.2.0
+
+- milestone: Research Pretraining Readiness
+- Base-50M architecture/tokenizer contract: qualified
+- L003 research-only 500M mixture: qualified
+- research-only lineage frozen before optimizer step 1
+- Base-50M pretrained weights: none
+- public checkpoint release eligibility: not qualified
 
 ## Base-50M-v1
 

@@ -4,6 +4,7 @@ import json
 import tomllib
 from pathlib import Path
 
+from flywire_llm import __version__
 from flywire_llm.config import BlankLLMConfig
 
 
@@ -31,3 +32,10 @@ def test_tracked_model_profiles_are_valid_and_scalable():
     assert small.d_model > smoke.d_model
     assert small.n_layers > smoke.n_layers
     assert small.max_seq_len > smoke.max_seq_len
+
+
+def test_package_version_matches_release_metadata():
+    pyproject = tomllib.loads(
+        (ROOT / "pyproject.toml").read_text(encoding="utf-8")
+    )
+    assert pyproject["project"]["version"] == __version__ == "0.2.0"

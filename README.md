@@ -87,6 +87,19 @@ not qualified, and automatic FlyWireModel export remains blocked.
 
 See docs/RESULTS_L002.md and docs/RESULTS_L003.md.
 
+## v0.2.0 release milestone
+
+v0.2.0 is the Research Pretraining Readiness milestone. It packages the
+qualified source/config/test/metadata state needed to begin a future Base-50M
+research-only pretraining run.
+
+It does not ship pretrained Base-50M weights, raw research corpora, the
+external global decision manifest, or the tokenizer binary. Public release
+eligibility for a checkpoint trained on the research-only lineage remains not
+qualified.
+
+See docs/releases/v0.2.0.md.
+
 ## Development task tracking
 
 Active and completed engineering work is tracked in

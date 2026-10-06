@@ -1,37 +1,21 @@
 # Current Development Task
 
-Current task: none.
+Current task:
+R002 — Release v0.2.0 Research Pretraining Readiness
 
-Latest completed task:
-[L003 — Production Corpus Acquisition, Rights Lanes, and 500M Readiness](L003-production-corpus-readiness.md)
+Status: ACTIVE
 
-Status: `DONE`
+GitHub Issue: #5
 
-GitHub Issue: `#4` — CLOSED / completed
+Authoritative base:
 
-Qualified L003 implementation/status commit:
-`611f487628693ec14fa4bba8e290e7230a824f69`.
+- main base commit:
+  e65d0f1b2991673bab50c2344db2e2ad3d1329f6;
+- active branch: release/v0.2.0;
+- intended tag: v0.2.0.
 
-Qualified task-closure / fast-forward commit:
-`c47cb9e9acfc4cc27ae5256dd7a9af53185e3a6f`.
+The release packages the completed L002/L003 engineering and corpus-readiness
+milestone. It must not publish raw corpora, the external decision manifest,
+the tokenizer binary, or a new/pretrained model checkpoint.
 
-L003 result:
-
-- research-only available train capacity: 969,701,220 tokens;
-- 500M Thai/English/technical mixture: qualified with zero gaps;
-- checkpoint lane: `research_only`, frozen before optimizer step 1;
-- pretraining authorization: true for that frozen research-only lineage;
-- public release eligibility: not qualified;
-- Base-50M pretraining itself: not started.
-
-Repository publication verification is complete:
-
-- exact-commit full pytest: 153/153 PASS;
-- closure exact-commit qualification: PASS;
-- post-fast-forward full pytest: 153/153 PASS;
-- canonical and final L003 audits: PASS;
-- external corpus/decision/summary re-hash: PASS;
-- GitHub Actions runs: 0; no CI run is claimed;
-- Issue #4: closed / completed.
-
-No next development stage is ACTIVE yet.
+Read R002-v0.2.0-release.md before continuing.
