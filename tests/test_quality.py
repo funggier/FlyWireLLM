@@ -98,4 +98,3 @@ def test_simhash_candidate_keys_are_stable_and_band_scoped():
         "2",
         "3",
     ]
-

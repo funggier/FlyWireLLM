@@ -285,4 +285,3 @@ def resolve_external_storage_uri(
             "external storage URI escapes external_root"
         ) from exc
     return resolved
-

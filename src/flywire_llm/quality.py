@@ -298,4 +298,3 @@ def simhash_candidate_keys(
             bands=bands,
         )
     )
-

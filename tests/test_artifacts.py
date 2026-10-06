@@ -144,4 +144,3 @@ def test_external_storage_uri_rejects_traversal(tmp_path):
             "external://FlyWireLLM-data/../secret.txt",
             external_root=tmp_path,
         )
-
