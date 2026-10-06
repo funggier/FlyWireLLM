@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "stage": "L003",
+  "primary_target_tokens": 500000000,
+  "categories": {
+    "general_thai": {
+      "target_tokens": 200000000,
+      "minimum_tokens": 200000000
+    },
+    "general_english": {
+      "target_tokens": 200000000,
+      "minimum_tokens": 200000000
+    },
+    "technical_scientific_code": {
+      "base_target_tokens": 50000000
+    },
+    "flywire_domain": {
+      "target_tokens": 50000000,
+      "maximum_tokens": 50000000
+    }
+  },
+  "fallback_policy": {
+    "unused_flywire_domain_moves_to": "technical_scientific_code",
+    "general_language_overage_cannot_substitute_other_categories": true,
+    "category_assignment_must_be_single_primary_category": true
+  },
+  "authorization": {
+    "total_target_must_be_met": true,
+    "thai_minimum_must_be_met": true,
+    "english_minimum_must_be_met": true,
+    "technical_plus_flywire_must_total": 100000000
+  }
+}

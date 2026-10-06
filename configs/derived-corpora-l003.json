@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "stage": "L003",
+  "updated": "2026-10-06",
+  "corpora": [
+    {
+      "derived_id": "fineweb2-thai-train-005-00002-sample1000000-v1",
+      "source_id": "fineweb2-thai",
+      "artifact_id": "fineweb2-thai-train-005-00002",
+      "rights_lane": "research_only",
+      "summary_path": "results/l003/derived/fineweb2-thai-005-00002-full-v1.json",
+      "summary_sha256": "b450aad95eadbe0e82c0787147dcc08ddd4dcb6cbeb7a46accff8fde068c7020",
+      "accepted_storage": "external://FlyWireLLM-data/L003/FineWeb2/tha_Thai/derived/005_00002-full-v1/accepted.jsonl",
+      "accepted_bytes": 3072938059,
+      "accepted_sha256": "7b22cccde21f195ee3fc6585af2abd8ba8c3a4f63aa3ed082930a07d9ee0e633",
+      "train_tokens": 293826034,
+      "validation_tokens": 1449071,
+      "holdout_tokens": 1479220,
+      "accepted_records": 339058,
+      "global_manifest_authorized": false,
+      "pretraining_authorized": false,
+      "primary_category": "general_thai"
+    }
+  ]
+}

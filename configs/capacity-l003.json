@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "stage": "L003",
+  "tokenizer": "base50m-unigram-32000-v1",
+  "quality_audit": "results/l003/acquired-quality-audit.json",
+  "quality_audit_sha256": "f7e6c3ed4e3d5e915ecc319fc7cec00ea0132e40c9a1ea31769397126f309988",
+  "global_cross_source_dedup_applied": false,
+  "baseline": [
+    {
+      "capacity_id": "tatoeba-th-screened-train",
+      "source_id": "tatoeba-sentences",
+      "rights_lane": "release_safe",
+      "primary_category": "general_thai",
+      "train_tokens": 41836
+    },
+    {
+      "capacity_id": "tatoeba-en-screened-train",
+      "source_id": "tatoeba-sentences",
+      "rights_lane": "release_safe",
+      "primary_category": "general_english",
+      "train_tokens": 20019410
+    },
+    {
+      "capacity_id": "thwiki-sample-v1-screened-train",
+      "source_id": "wikimedia-thwiki",
+      "rights_lane": "research_only",
+      "primary_category": "general_thai",
+      "train_tokens": 38172496
+    }
+  ]
+}
