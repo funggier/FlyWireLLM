@@ -1,0 +1,50 @@
+{
+  "categories": {
+    "general_english": {
+      "absolute_change": -0.11188171668052682,
+      "gate_pass": true,
+      "relative_change": -0.010672038861426762,
+      "step0_loss": 10.483630928754806,
+      "step4_loss": 10.37174921207428
+    },
+    "general_thai": {
+      "absolute_change": -0.053306516504287416,
+      "gate_pass": true,
+      "relative_change": -0.005095806815862499,
+      "step0_loss": 10.460858982791901,
+      "step4_loss": 10.407552466287614
+    },
+    "technical_scientific_code": {
+      "absolute_change": -0.10526029380798363,
+      "gate_pass": true,
+      "relative_change": -0.010037503766442885,
+      "step0_loss": 10.486700304899216,
+      "step4_loss": 10.381440011091232
+    }
+  },
+  "combined": {
+    "absolute_change": -0.09014950899759988,
+    "gate_pass": true,
+    "relative_change": -0.00860446343680906,
+    "step0_loss": 10.477063405481974,
+    "step4_loss": 10.386913896484375
+  },
+  "comparison": "step0_vs_step4",
+  "evaluation_id": "base50m-validation-v1",
+  "final_holdout_touched": false,
+  "gate_contract": {
+    "combined_loss_must_not_increase": true,
+    "max_category_relative_loss_increase": 0.005,
+    "require_all_losses_finite": true
+  },
+  "gate_pass": true,
+  "larger_tranche_may_be_considered": true,
+  "partition": "validation",
+  "pretraining_complete": false,
+  "production_optimizer_steps": 4,
+  "public_release_eligibility": "not_qualified",
+  "schema_version": 1,
+  "stage": "L004",
+  "supervised_training_tokens_seen": 262144,
+  "validation_supervised_tokens_per_model": 300000
+}

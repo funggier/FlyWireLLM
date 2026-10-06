@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "stage": "L004",
+  "evaluation_id": "base50m-validation-v1",
+  "evaluation_only": true,
+  "partition": "validation",
+  "final_holdout_touched": false,
+  "decision_manifest": {
+    "storage": "external://FlyWireLLM-data/L003/Global/global-manifest-v2/decisions.jsonl",
+    "sha256": "018aa08f347ebfd747f3aa11cada563bbd27918b469c7c5f11abe0289df7770a"
+  },
+  "global_input_registry": {
+    "path": "configs/global-manifest-inputs-l003-v2.json",
+    "sha256": "5304c4cc6b302a06650d090d6731f5b0e610fd99ec257c3fd9cc671cf62f79aa"
+  },
+  "selection": {
+    "seed": 4321,
+    "key": "sha256(seed_decimal + '|' + canonical_id)",
+    "storage": "external://FlyWireLLM-data/L004/Validation/base50m-validation-v1/selection.jsonl",
+    "category_targets": {
+      "general_english": 100000,
+      "general_thai": 100000,
+      "technical_scientific_code": 100000
+    },
+    "record_boundary_policy": "prefix_truncate_final_record",
+    "raw_text_in_selection": false
+  },
+  "packing": {
+    "directory": "external://FlyWireLLM-data/L004/Validation/base50m-validation-v1",
+    "dtype": "uint16_le",
+    "record_separator": "eos",
+    "eos_id": 2,
+    "ignore_index": -100,
+    "max_physical_sequence_length": 1024,
+    "mask_target_at_eos_input_positions": true,
+    "segment_attention_reset": false
+  },
+  "evaluation_runtime": {
+    "device": "cpu",
+    "precision": "fp32",
+    "threads": 12,
+    "batch_size": 4
+  },
+  "step0": {
+    "seed": 1234,
+    "optimizer_steps": 0
+  },
+  "step4": {
+    "checkpoint": "external://FlyWireLLM-data/L004/Runs/base50m-first-tranche-v1/checkpoints/step-000004.pt",
+    "bytes": 602706571,
+    "sha256": "d4ab8703cf723600e1fa6606d28674b06638284dd1f50ea2b771d6a96f947266",
+    "optimizer_steps": 4,
+    "supervised_tokens_seen": 262144
+  },
+  "gate": {
+    "combined_loss_must_not_increase": true,
+    "max_category_relative_loss_increase": 0.005,
+    "require_all_losses_finite": true
+  },
+  "pretraining_authorized": false,
+  "production_optimizer_steps_recorded": 4,
+  "public_release_eligibility": "not_qualified"
+}

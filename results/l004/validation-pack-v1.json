@@ -1,0 +1,131 @@
+{
+  "available": {
+    "general_english": {
+      "records": 14052,
+      "tokens": 2655023
+    },
+    "general_thai": {
+      "records": 1980,
+      "tokens": 1551744
+    },
+    "technical_scientific_code": {
+      "records": 213,
+      "tokens": 643572
+    }
+  },
+  "evaluation_id": "base50m-validation-v1",
+  "evaluation_only": true,
+  "final_holdout_touched": false,
+  "loss_contract": {
+    "ignore_index": -100,
+    "mask_target_at_eos_input_positions": true,
+    "max_physical_sequence_length": 1024,
+    "segment_attention_reset": false
+  },
+  "materialization_seconds": 7.478292400017381,
+  "packs": {
+    "general_english": {
+      "bytes": 201194,
+      "contains_raw_text": false,
+      "content_tokens": 100000,
+      "dtype": "uint16_le",
+      "eos_separator_tokens": 597,
+      "physical_tokens": 100597,
+      "records": 597,
+      "sha256": "b1d143aa16a5ffc347a7a956b7c66124f4c772128e8ff962a0ba4c10ba5fd6f7",
+      "storage": "external://FlyWireLLM-data/L004/Validation/base50m-validation-v1/general_english.u16",
+      "supervised_positions": 100000
+    },
+    "general_thai": {
+      "bytes": 200260,
+      "contains_raw_text": false,
+      "content_tokens": 100000,
+      "dtype": "uint16_le",
+      "eos_separator_tokens": 130,
+      "physical_tokens": 100130,
+      "records": 130,
+      "sha256": "42144c77105c3c05f09e153fb2516b7ea41e9e258bf961e7e084be2d3ec5b6f6",
+      "storage": "external://FlyWireLLM-data/L004/Validation/base50m-validation-v1/general_thai.u16",
+      "supervised_positions": 100000
+    },
+    "technical_scientific_code": {
+      "bytes": 200052,
+      "contains_raw_text": false,
+      "content_tokens": 100000,
+      "dtype": "uint16_le",
+      "eos_separator_tokens": 26,
+      "physical_tokens": 100026,
+      "records": 26,
+      "sha256": "c62792991671ad7dbe2121fccfa533475d6db6211c47d3111cfcc4a38af00747",
+      "storage": "external://FlyWireLLM-data/L004/Validation/base50m-validation-v1/technical_scientific_code.u16",
+      "supervised_positions": 100000
+    }
+  },
+  "partial_records_by_category": {
+    "general_english": 1,
+    "general_thai": 1,
+    "technical_scientific_code": 1
+  },
+  "partition": "validation",
+  "pretraining_authorized": false,
+  "production_optimizer_steps_recorded": 4,
+  "schema_version": 1,
+  "seed": 4321,
+  "selected_records_by_category": {
+    "general_english": 597,
+    "general_thai": 130,
+    "technical_scientific_code": 26
+  },
+  "selection_manifest": {
+    "bytes": 321869,
+    "contains_raw_text": false,
+    "records": 753,
+    "sha256": "90b7727239d487d1eef5bcf000865dd9df33122bc28b754ead394cc9cd99ba25",
+    "storage": "external://FlyWireLLM-data/L004/Validation/base50m-validation-v1/selection.jsonl"
+  },
+  "source_verification": {
+    "fineweb-english-10bt-013-00000": {
+      "accepted_bytes": 2074943386,
+      "accepted_sha256": "f26699dc7ea08b874c0065bef39e9df780436c131f43231578e1ac8a4af9e4fe",
+      "selected_records": 146
+    },
+    "fineweb-english-10bt-014-00000": {
+      "accepted_bytes": 1009570294,
+      "accepted_sha256": "60ba2a37d4439bd49888310b4431ec366f38022b264036763eb53afec942c194",
+      "selected_records": 49
+    },
+    "fineweb2-thai-train-005-00002": {
+      "accepted_bytes": 3072938059,
+      "accepted_sha256": "7b22cccde21f195ee3fc6585af2abd8ba8c3a4f63aa3ed082930a07d9ee0e633",
+      "selected_records": 109
+    },
+    "tatoeba-eng-sentences-2026-10-03": {
+      "accepted_bytes": 1050473941,
+      "accepted_sha256": "3995909ec3c15bb0700cfce9ea14ec2906b47e63e8d175098d94e96c87bd019d",
+      "selected_records": 427
+    },
+    "tatoeba-tha-sentences-2026-10-03": {
+      "accepted_bytes": 3703026,
+      "accepted_sha256": "2a64b7a9e32f9a059c89a7e8dfe60f20e6c36d39004bdc1537eac74036c1737c",
+      "selected_records": 2
+    },
+    "thwiki-pages-articles-2026-10-01": {
+      "accepted_bytes": 450287094,
+      "accepted_sha256": "05f4cf3577eae401b805fc2eaf2063b3d5fe2b840bcbcacd32064cfc898c5b0f",
+      "selected_records": 20
+    }
+  },
+  "stage": "L004",
+  "targets": {
+    "general_english": 100000,
+    "general_thai": 100000,
+    "technical_scientific_code": 100000
+  },
+  "tokenizer": {
+    "candidate_id": "base50m-unigram-32000-v1",
+    "eos_id": 2,
+    "sha256": "998bc75f058e554d4f50b6cbc77c52898e3446e516c3b25a126b99b113513818",
+    "vocab_size": 32000
+  },
+  "total_selected_content_tokens": 300000
+}

@@ -341,17 +341,76 @@ successfully. An attempted step 5 was rejected and the state hash remained
 unchanged. The falling training loss is operational evidence only, not a
 language-quality claim.
 
+## Phase J validation gate
+
+Validation-only materialization uses the frozen global decision manifest with
+partition `validation` only. Final holdout was not read.
+
+Deterministic validation pack:
+
+- selection seed: 4321;
+- total supervised validation tokens: 300,000;
+- general English: 100,000 tokens / 597 records;
+- general Thai: 100,000 tokens / 130 records;
+- technical/scientific/code: 100,000 tokens / 26 records;
+- selection records: 753;
+- selection SHA-256:
+  `90b7727239d487d1eef5bcf000865dd9df33122bc28b754ead394cc9cd99ba25`;
+- raw text stored in tracked metadata: false;
+- final holdout touched: false.
+
+Validation pack hashes:
+
+- English:
+  `b1d143aa16a5ffc347a7a956b7c66124f4c772128e8ff962a0ba4c10ba5fd6f7`;
+- Thai:
+  `42144c77105c3c05f09e153fb2516b7ea41e9e258bf961e7e084be2d3ec5b6f6`;
+- technical:
+  `c62792991671ad7dbe2121fccfa533475d6db6211c47d3111cfcc4a38af00747`.
+
+Identical validation data was evaluated on deterministic step 0 and the
+qualified step-4 checkpoint:
+
+| Category | Step 0 loss | Step 4 loss | Relative change |
+| --- | ---: | ---: | ---: |
+| general English | 10.483630929 | 10.371749212 | -1.067204% |
+| general Thai | 10.460858983 | 10.407552466 | -0.509581% |
+| technical/scientific/code | 10.486700305 | 10.381440011 | -1.003750% |
+| combined | 10.477063405 | 10.386913896 | -0.860446% |
+
+Predeclared validation gate:
+
+- combined loss must not increase;
+- no category may regress by more than 0.5% relative;
+- all losses must remain finite.
+
+Result: **PASS**. All three categories improved and combined loss improved by
+0.860446%.
+
+Tracked evidence hashes:
+
+- validation config:
+  `1909c06ae22d39848b1f9e81dcd0618203fb4c5308fcc5004a0f639770f19648`;
+- validation pack summary:
+  `527d2a6d2b1d08e52d1b4c5cfe6d9bbda265fc39c962bad57fe63ccf8b948458`;
+- step-0 result:
+  `3bedb956dedeb837ef6ab2cde87dba2ffb71989169dc152222f42de9d259378a`;
+- step-4 result:
+  `8d4f6bb17fdcad70f9bfa771f4a77cef058c0d350ab2e696638118806e1e20f9`;
+- comparison:
+  `937012b1586cbe583d9fe20463a156bc98dd0e14f4dabf3f6027d2035bf4b50f`.
+
 ## Current work
 
-Phase J validation gate. No larger training tranche is authorized yet.
+Phase J validation implementation is GREEN on WIP. Exact-commit qualification
+and remote synchronization are pending before authorization expansion.
 
 ## Next action
 
-1. select validation-only Thai/English/technical records deterministically;
-2. keep final holdout completely untouched;
-3. materialize and verify a small external evaluation pack;
-4. evaluate identical validation data on deterministic step 0 and checkpoint
-   step 4;
-5. compare category and combined validation loss;
-6. authorize a larger tranche only if validation/runtime evidence remains
-   healthy.
+1. run full regression, L003/L004 audits, first-tranche verification and
+   validation verification on the complete validation WIP;
+2. create and exact-qualify a validation-gate checkpoint commit;
+3. push and verify remote synchronization;
+4. design a second bounded authorization beginning from optimizer step 4;
+5. keep the expansion bounded and checkpointed; do not authorize the remaining
+   500M run wholesale.
