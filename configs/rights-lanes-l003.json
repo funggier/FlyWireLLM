@@ -62,18 +62,34 @@
   },
   "known_token_accounting": {
     "tokenizer": "base50m-unigram-32000-v1",
-    "release_safe_train": {
-      "tatoeba-sentences-en": 20021145,
-      "tatoeba-sentences-th": 41836,
-      "total": 20062981
+    "quality_audit": "results/l003/acquired-quality-audit.json",
+    "quality_audit_sha256": "f7e6c3ed4e3d5e915ecc319fc7cec00ea0132e40c9a1ea31769397126f309988",
+    "pre_screen_train": {
+      "release_safe": {
+        "tatoeba-sentences-en": 20021145,
+        "tatoeba-sentences-th": 41836,
+        "total": 20062981
+      },
+      "research_only": {
+        "wikimedia-thwiki-sample-v1": 38312940,
+        "total": 38312940
+      },
+      "combined_research_eligible": 58375921
     },
-    "research_only_train": {
-      "wikimedia-thwiki-sample-v1": 38312940,
-      "total": 38312940
-    },
-    "combined_research_eligible_train": 58375921,
-    "release_safe_gap_to_500m": 479937019,
-    "combined_research_gap_to_500m": 441624079
+    "screened_train": {
+      "release_safe": {
+        "tatoeba-sentences-en": 20019410,
+        "tatoeba-sentences-th": 41836,
+        "total": 20061246
+      },
+      "research_only": {
+        "wikimedia-thwiki-sample-v1": 38172496,
+        "total": 38172496
+      },
+      "combined_research_eligible": 58233742,
+      "release_safe_gap_to_500m": 479938754,
+      "combined_research_gap_to_500m": 441766258
+    }
   },
   "pretraining_authorization": {
     "release_safe_requires_tokens": 500000000,

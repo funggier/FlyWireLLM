@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "stage": "L003",
+  "updated": "2026-10-06",
+  "artifacts": [
+    {
+      "artifact_id": "tatoeba-tha-sentences-2026-10-03",
+      "source_id": "tatoeba-sentences",
+      "snapshot_date": "2026-10-03",
+      "artifact_role": "raw_source",
+      "origin_url": "https://downloads.tatoeba.org/exports/per_language/tha/tha_sentences.tsv.bz2",
+      "acquisition_method": "HTTPS download from official Tatoeba weekly export",
+      "sha256": "d03a70b0189cf410e3b6ce4d6e0daa4062a01518d71ed1efd2fbed619669e5a4",
+      "bytes": 72082,
+      "rights_lane": "release_safe",
+      "raw_redistribution": "allowed_with_attribution",
+      "local_storage": "external://FlyWireLLM-data/L002/Tatoeba/tha_sentences.tsv.bz2",
+      "immutable": true
+    },
+    {
+      "artifact_id": "tatoeba-eng-sentences-2026-10-03",
+      "source_id": "tatoeba-sentences",
+      "snapshot_date": "2026-10-03",
+      "artifact_role": "raw_source",
+      "origin_url": "https://downloads.tatoeba.org/exports/per_language/eng/eng_sentences.tsv.bz2",
+      "acquisition_method": "HTTPS download from official Tatoeba weekly export",
+      "sha256": "5f7ebf552bd3925dfd33236ccb6a210c5ba02b365e4a39964fb658e1209e87d9",
+      "bytes": 24894467,
+      "rights_lane": "release_safe",
+      "raw_redistribution": "allowed_with_attribution",
+      "local_storage": "external://FlyWireLLM-data/L002/Tatoeba/eng_sentences.tsv.bz2",
+      "immutable": true
+    },
+    {
+      "artifact_id": "thwiki-pages-articles-2026-10-01",
+      "source_id": "wikimedia-thwiki",
+      "snapshot_date": "2026-10-01",
+      "artifact_role": "raw_source",
+      "origin_url": "https://dumps.wikimedia.org/thwiki/latest/thwiki-latest-pages-articles.xml.bz2",
+      "acquisition_method": "HTTPS download from official Wikimedia dump service",
+      "sha256": "1995cb37f27a20349918f8e234694fe700ae748a0b4f4dcc26babfd3cc540522",
+      "bytes": 507192137,
+      "rights_lane": "research_only",
+      "raw_redistribution": "not_qualified",
+      "local_storage": "external://FlyWireLLM-data/L002/Wikimedia/thwiki-latest-pages-articles.xml.bz2",
+      "immutable": true
+    },
+    {
+      "artifact_id": "fineweb2-thai-train-005-00002",
+      "source_id": "fineweb2-thai",
+      "snapshot_date": "2026-10-06",
+      "artifact_role": "raw_source",
+      "origin_url": "https://huggingface.co/datasets/HuggingFaceFW/fineweb-2/resolve/main/data/tha_Thai/train/005_00002.parquet",
+      "acquisition_method": "HTTPS download from Hugging Face dataset LFS",
+      "sha256": "6f1873d0dcac113f2507d6faeb3bd0174e76e997a00975785d9769baf8ef65dc",
+      "bytes": 732083541,
+      "rights_lane": "research_only",
+      "raw_redistribution": "not_qualified",
+      "local_storage": "external://FlyWireLLM-data/L003/FineWeb2/tha_Thai/train/005_00002.parquet",
+      "immutable": true
+    },
+    {
+      "artifact_id": "fineweb2-thai-train-005-00001",
+      "source_id": "fineweb2-thai",
+      "snapshot_date": "2026-10-06",
+      "artifact_role": "raw_source",
+      "origin_url": "https://huggingface.co/datasets/HuggingFaceFW/fineweb-2/resolve/main/data/tha_Thai/train/005_00001.parquet",
+      "acquisition_method": "HTTPS download from Hugging Face dataset LFS",
+      "sha256": "e8f97a55623f03e00b43c34e15ff6c4442fa17cc41b2346d033fca68615c85ea",
+      "bytes": 811395331,
+      "rights_lane": "research_only",
+      "raw_redistribution": "not_qualified",
+      "local_storage": "external://FlyWireLLM-data/L003/FineWeb2/tha_Thai/train/005_00001.parquet",
+      "immutable": true
+    },
+    {
+      "artifact_id": "fineweb-english-10bt-014-00000",
+      "source_id": "fineweb-english",
+      "snapshot_date": "2026-10-06",
+      "artifact_role": "raw_source",
+      "origin_url": "https://huggingface.co/datasets/HuggingFaceFW/fineweb/resolve/main/sample/10BT/014_00000.parquet",
+      "acquisition_method": "HTTPS download from Hugging Face dataset LFS",
+      "sha256": "7168f92a680b3e28155a6b654ebf235b19bf4d2ab35f91dbab3fb47cbd629a8e",
+      "bytes": 574962194,
+      "rights_lane": "research_only",
+      "raw_redistribution": "not_qualified",
+      "local_storage": "external://FlyWireLLM-data/L003/FineWeb/english/sample10BT/014_00000.parquet",
+      "immutable": true
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "stage": "L003",
+  "updated": "2026-10-06",
+  "candidates": [
+    {
+      "candidate_id": "common-voice-27-th",
+      "source_id": "mozilla-common-voice",
+      "rights_lane": "release_safe",
+      "dataset_id": "cmu5x5tj000f2nq0755h8qcy5",
+      "slug": "common-voice-scripted-speech-27-0-thai-3aa1b7de",
+      "name": "Common Voice Scripted Speech 27.0 - Thai",
+      "locale": "th",
+      "release_date": "2026-09-17",
+      "license": "CC0-1.0",
+      "size_bytes": 9003250825,
+      "archive_sha256": "f049ca3a3c2e8ce4bfc09dfcff9135a4f9d5678a15e4ad0873d71c90fd39f4f8",
+      "filename": "common-voice-scripted-speech-27-0-thai-3aa1b7de.tar.gz",
+      "dataset_url": "https://mozilladatacollective.com/datasets/cmu5x5tj000f2nq0755h8qcy5",
+      "access_status": "metadata_verified_download_requires_authenticated_mdc_access",
+      "raw_redistribution": "do_not_mirror",
+      "ingestion_scope": {
+        "validated_sentences_tsv": true,
+        "audio": false,
+        "clip_rows": false,
+        "client_id": false,
+        "speaker_demographics": false,
+        "unvalidated_sentences": false
+      },
+      "privacy_constraints": [
+        "do not attempt speaker identification",
+        "do not ingest speaker metadata for FlyWireLLM text pretraining"
+      ]
+    },
+    {
+      "candidate_id": "common-voice-27-en",
+      "source_id": "mozilla-common-voice",
+      "rights_lane": "release_safe",
+      "dataset_id": "cmu5jplf300nwmh07iqvk9leo",
+      "slug": "common-voice-scripted-speech-27-0-englis-e4a13e08",
+      "name": "Common Voice Scripted Speech 27.0 - English",
+      "locale": "en",
+      "release_date": "2026-09-17",
+      "license": "CC0-1.0",
+      "size_bytes": 94956262763,
+      "archive_sha256": "2fbc16e9811e0a727c7fde5c71158a9295a2aa5e26f9ec21b305f0a8368a10c7",
+      "filename": "common-voice-scripted-speech-27-0-englis-e4a13e08.tar.gz",
+      "dataset_url": "https://mozilladatacollective.com/datasets/cmu5jplf300nwmh07iqvk9leo",
+      "access_status": "metadata_verified_download_requires_authenticated_mdc_access",
+      "raw_redistribution": "do_not_mirror",
+      "ingestion_scope": {
+        "validated_sentences_tsv": true,
+        "audio": false,
+        "clip_rows": false,
+        "client_id": false,
+        "speaker_demographics": false,
+        "unvalidated_sentences": false
+      },
+      "privacy_constraints": [
+        "do not attempt speaker identification",
+        "do not ingest speaker metadata for FlyWireLLM text pretraining"
+      ]
+    }
+  ]
+}

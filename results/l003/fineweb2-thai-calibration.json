@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "stage": "L003",
+  "calibration_id": "fineweb2-thai-test-calibration-v1",
+  "source_id": "fineweb2-thai",
+  "source_split": "test",
+  "purpose": "schema_quality_token_density_calibration_only",
+  "partition_isolation": {
+    "never_train": true,
+    "never_validation": true,
+    "never_holdout": true
+  },
+  "artifact": {
+    "bytes": 51285472,
+    "sha256": "34102d27b6068605a62a69e7fae8f7d3f4e67165720afd8fb685a2eb5e85ff1b"
+  },
+  "tooling": {
+    "duckdb_version": "1.5.6",
+    "tokenizer": "base50m-unigram-32000-v1",
+    "near_duplicate": "simhash64+4x16bit-lsh+hamming<=3"
+  },
+  "schema": [
+    {
+      "name": "text",
+      "type": "VARCHAR",
+      "nullable": "YES"
+    },
+    {
+      "name": "id",
+      "type": "VARCHAR",
+      "nullable": "YES"
+    },
+    {
+      "name": "dump",
+      "type": "VARCHAR",
+      "nullable": "YES"
+    },
+    {
+      "name": "url",
+      "type": "VARCHAR",
+      "nullable": "YES"
+    },
+    {
+      "name": "date",
+      "type": "VARCHAR",
+      "nullable": "YES"
+    },
+    {
+      "name": "file_path",
+      "type": "VARCHAR",
+      "nullable": "YES"
+    },
+    {
+      "name": "language",
+      "type": "VARCHAR",
+      "nullable": "YES"
+    },
+    {
+      "name": "language_score",
+      "type": "DOUBLE",
+      "nullable": "YES"
+    },
+    {
+      "name": "language_script",
+      "type": "VARCHAR",
+      "nullable": "YES"
+    },
+    {
+      "name": "minhash_cluster_size",
+      "type": "BIGINT",
+      "nullable": "YES"
+    },
+    {
+      "name": "top_langs",
+      "type": "VARCHAR",
+      "nullable": "YES"
+    }
+  ],
+  "rows": {
+    "total": 24037,
+    "null_text": 0,
+    "null_id": 0,
+    "processed": 24037
+  },
+  "language": {
+    "counts": {
+      "tha": 24037
+    },
+    "score": {
+      "min": 0.9015784859657288,
+      "p01": 0.9926311500428345,
+      "p05": 0.9992805433876828,
+      "p50": 0.9999892610773078,
+      "p95": 1.0000075477525605,
+      "p99": 1.0000092537168472,
+      "max": 1.0000100135803223,
+      "mean": 0.9996148665306319
+    }
+  },
+  "content": {
+    "characters": 72077969,
+    "utf8_bytes": 199994162,
+    "tokens": 20573344,
+    "tokens_per_text_utf8_byte": 0.10286972276720757
+  },
+  "screening": {
+    "status": {
+      "accept": {
+        "records": 23656,
+        "tokens": 19837629,
+        "utf8_bytes": 193223650
+      },
+      "quarantine": {
+        "records": 359,
+        "tokens": 668405,
+        "utf8_bytes": 6155492
+      },
+      "reject": {
+        "records": 22,
+        "tokens": 67310,
+        "utf8_bytes": 615020
+      }
+    },
+    "findings": {
+      "excess_unicode_replacement": 3,
+      "possible_email": 321,
+      "possible_ipv4": 45,
+      "possible_payment_card": 19,
+      "suspicious_repeated_character_runs": 5
+    },
+    "accepted_token_fraction": 0.9642394060975211,
+    "accepted_record_fraction": 0.9841494362857262
+  },
+  "deduplication": {
+    "exact_duplicate_records": 0,
+    "exact_duplicate_tokens": 0,
+    "near_duplicate_records_after_exact": 0,
+    "near_duplicate_tokens_after_exact": 0,
+    "near_duplicate_distance_counts": {}
+  },
+  "density": {
+    "accepted_tokens_per_parquet_byte": 0.38680796386157856,
+    "accepted_tokens_per_compressed_gib": 415331888.65445745,
+    "accepted_tokens_per_text_utf8_byte": 0.10266667149699325
+  },
+  "training_authorized": false,
+  "calibration_only": true
+}

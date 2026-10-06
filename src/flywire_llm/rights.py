@@ -121,30 +121,73 @@ def load_rights_policy(
     accounting = payload.get("known_token_accounting")
     if not isinstance(accounting, dict):
         raise RightsPolicyError("known_token_accounting must be an object")
-    release = accounting.get("release_safe_train")
-    research = accounting.get("research_only_train")
+    if accounting.get("tokenizer") != "base50m-unigram-32000-v1":
+        raise RightsPolicyError("token accounting tokenizer changed")
+    if accounting.get("quality_audit") != (
+        "results/l003/acquired-quality-audit.json"
+    ):
+        raise RightsPolicyError("quality audit path changed")
+    if accounting.get("quality_audit_sha256") != (
+        "f7e6c3ed4e3d5e915ecc319fc7cec00ea0132e40c9a1ea31769397126f309988"
+    ):
+        raise RightsPolicyError("quality audit hash changed")
+
+    pre_screen = accounting.get("pre_screen_train")
+    screened = accounting.get("screened_train")
+    if not isinstance(pre_screen, dict) or not isinstance(screened, dict):
+        raise RightsPolicyError(
+            "pre_screen_train and screened_train must be objects"
+        )
+
+    pre_release = pre_screen.get("release_safe")
+    pre_research = pre_screen.get("research_only")
+    if not isinstance(pre_release, dict) or not isinstance(pre_research, dict):
+        raise RightsPolicyError("pre-screen lane accounting must be objects")
+    if int(pre_release.get("total", -1)) != 20_062_981:
+        raise RightsPolicyError(
+            "pre-screen release-safe baseline token count changed"
+        )
+    if int(pre_research.get("total", -1)) != 38_312_940:
+        raise RightsPolicyError(
+            "pre-screen research-only baseline token count changed"
+        )
+    if pre_screen.get("combined_research_eligible") != 58_375_921:
+        raise RightsPolicyError(
+            "pre-screen combined research token count changed"
+        )
+
+    release = screened.get("release_safe")
+    research = screened.get("research_only")
     if not isinstance(release, dict) or not isinstance(research, dict):
-        raise RightsPolicyError("lane token accounting must be objects")
+        raise RightsPolicyError("screened lane accounting must be objects")
     release_total = int(release.get("total", -1))
     research_total = int(research.get("total", -1))
-    if release_total != 20_062_981:
-        raise RightsPolicyError("release-safe baseline token count changed")
-    if research_total != 38_312_940:
-        raise RightsPolicyError("research-only baseline token count changed")
-    if accounting.get("combined_research_eligible_train") != (
+    if release_total != 20_061_246:
+        raise RightsPolicyError(
+            "screened release-safe token count changed"
+        )
+    if research_total != 38_172_496:
+        raise RightsPolicyError(
+            "screened research-only token count changed"
+        )
+    if screened.get("combined_research_eligible") != (
         release_total + research_total
     ):
         raise RightsPolicyError(
-            "combined research-eligible token accounting mismatch"
+            "screened combined research token accounting mismatch"
         )
-    if accounting.get("release_safe_gap_to_500m") != (
+    if screened.get("release_safe_gap_to_500m") != (
         500_000_000 - release_total
     ):
-        raise RightsPolicyError("release-safe 500M gap mismatch")
-    if accounting.get("combined_research_gap_to_500m") != (
+        raise RightsPolicyError(
+            "screened release-safe 500M gap mismatch"
+        )
+    if screened.get("combined_research_gap_to_500m") != (
         500_000_000 - release_total - research_total
     ):
-        raise RightsPolicyError("research 500M gap mismatch")
+        raise RightsPolicyError(
+            "screened research 500M gap mismatch"
+        )
 
     authorization = payload.get("pretraining_authorization")
     if not isinstance(authorization, dict):
@@ -236,12 +279,14 @@ def training_budget_ready(
 ) -> bool:
     if checkpoint_lane == "release_safe":
         tokens = int(
-            policy.known_token_accounting["release_safe_train"]["total"]
+            policy.known_token_accounting["screened_train"][
+                "release_safe"
+            ]["total"]
         )
     elif checkpoint_lane == "research_only":
         tokens = int(
-            policy.known_token_accounting[
-                "combined_research_eligible_train"
+            policy.known_token_accounting["screened_train"][
+                "combined_research_eligible"
             ]
         )
     else:
@@ -256,12 +301,14 @@ def token_gap(
 ) -> int:
     if checkpoint_lane == "release_safe":
         tokens = int(
-            policy.known_token_accounting["release_safe_train"]["total"]
+            policy.known_token_accounting["screened_train"][
+                "release_safe"
+            ]["total"]
         )
     elif checkpoint_lane == "research_only":
         tokens = int(
-            policy.known_token_accounting[
-                "combined_research_eligible_train"
+            policy.known_token_accounting["screened_train"][
+                "combined_research_eligible"
             ]
         )
     else:

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "stage": "L003",
+  "updated": "2026-10-06",
+  "artifacts": [
+    {
+      "calibration_id": "fineweb2-thai-test-calibration-v1",
+      "source_id": "fineweb2-thai",
+      "rights_lane": "research_only",
+      "dataset_repo": "HuggingFaceFW/fineweb-2",
+      "source_path": "data/tha_Thai/test/000_00000.parquet",
+      "source_split": "test",
+      "purpose": "schema_quality_token_density_calibration_only",
+      "never_train": true,
+      "never_validation": true,
+      "never_holdout": true,
+      "bytes": 51285472,
+      "sha256": "34102d27b6068605a62a69e7fae8f7d3f4e67165720afd8fb685a2eb5e85ff1b",
+      "acquisition_method": "HTTPS download from Hugging Face dataset LFS",
+      "local_storage": "external://FlyWireLLM-data/L003/FineWeb2/tha_Thai/calibration/000_00000.parquet",
+      "deletion_after_calibration": false,
+      "notes": "Official FineWeb2 test split. It is calibration-only and must never enter FlyWireLLM train, validation, holdout, tokenizer fit, or model evaluation.",
+      "report_path": "results/l003/fineweb2-thai-calibration.json",
+      "report_sha256": "416754193b01528b6957bee6ca37bba8e692249a39863fe539be2d47d4fe2acd",
+      "observed_rows": 24037,
+      "observed_tokens": 20573344,
+      "accepted_tokens": 19837629,
+      "accepted_token_fraction": 0.9642394060975211,
+      "accepted_tokens_per_compressed_gib": 415331888.65445745
+    }
+  ]
+}

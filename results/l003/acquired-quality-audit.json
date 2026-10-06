@@ -1,0 +1,513 @@
+{
+  "schema_version": 1,
+  "stage": "L003",
+  "tokenizer": "base50m-unigram-32000-v1",
+  "screening_policy": {
+    "accept": "eligible for the next manifest gate",
+    "review": "quarantine and exclude from automatic training",
+    "reject": "exclude from training",
+    "raw_flagged_text_persisted_in_report": false
+  },
+  "overall": {
+    "records": 2106635,
+    "characters": 232952034,
+    "utf8_bytes": 502699765,
+    "tokens": 58982391,
+    "status": {
+      "accept": {
+        "records": 2106448,
+        "tokens": 58840212
+      },
+      "quarantine": {
+        "records": 26,
+        "tokens": 59348
+      },
+      "reject": {
+        "records": 161,
+        "tokens": 82831
+      }
+    },
+    "findings": {
+      "excess_control_characters": 142,
+      "possible_email": 7,
+      "possible_ipv4": 19,
+      "possible_payment_card": 19,
+      "suspicious_repeated_character_runs": 3
+    },
+    "accepted_token_fraction": 0.9975894669987183,
+    "accepted_record_fraction": 0.9999112328428987
+  },
+  "dimensions": {
+    "lane:release_safe": {
+      "records": 2044988,
+      "characters": 82031281,
+      "utf8_bytes": 82365797,
+      "tokens": 20264290,
+      "status": {
+        "accept": {
+          "records": 2044910,
+          "tokens": 20262555
+        },
+        "quarantine": {
+          "records": 3,
+          "tokens": 107
+        },
+        "reject": {
+          "records": 75,
+          "tokens": 1628
+        }
+      },
+      "findings": {
+        "excess_control_characters": 75,
+        "possible_email": 2,
+        "possible_ipv4": 1,
+        "suspicious_repeated_character_runs": 1
+      },
+      "accepted_token_fraction": 0.9999143814068986,
+      "accepted_record_fraction": 0.9999618579668927
+    },
+    "lane:release_safe|partition:holdout|language:en": {
+      "records": 10287,
+      "characters": 410861,
+      "utf8_bytes": 411029,
+      "tokens": 101785,
+      "status": {
+        "accept": {
+          "records": 10287,
+          "tokens": 101785
+        },
+        "quarantine": {
+          "records": 0,
+          "tokens": 0
+        },
+        "reject": {
+          "records": 0,
+          "tokens": 0
+        }
+      },
+      "findings": {},
+      "accepted_token_fraction": 1.0,
+      "accepted_record_fraction": 1.0
+    },
+    "lane:release_safe|partition:holdout|language:th": {
+      "records": 30,
+      "characters": 674,
+      "utf8_bytes": 2012,
+      "tokens": 178,
+      "status": {
+        "accept": {
+          "records": 30,
+          "tokens": 178
+        },
+        "quarantine": {
+          "records": 0,
+          "tokens": 0
+        },
+        "reject": {
+          "records": 0,
+          "tokens": 0
+        }
+      },
+      "findings": {},
+      "accepted_token_fraction": 1.0,
+      "accepted_record_fraction": 1.0
+    },
+    "lane:release_safe|partition:train|language:en": {
+      "records": 2017760,
+      "characters": 81071454,
+      "utf8_bytes": 81110060,
+      "tokens": 20021145,
+      "status": {
+        "accept": {
+          "records": 2017682,
+          "tokens": 20019410
+        },
+        "quarantine": {
+          "records": 3,
+          "tokens": 107
+        },
+        "reject": {
+          "records": 75,
+          "tokens": 1628
+        }
+      },
+      "findings": {
+        "excess_control_characters": 75,
+        "possible_email": 2,
+        "possible_ipv4": 1,
+        "suspicious_repeated_character_runs": 1
+      },
+      "accepted_token_fraction": 0.9999133416195727,
+      "accepted_record_fraction": 0.9999613432717469
+    },
+    "lane:release_safe|partition:train|language:th": {
+      "records": 6780,
+      "characters": 148111,
+      "utf8_bytes": 440701,
+      "tokens": 41836,
+      "status": {
+        "accept": {
+          "records": 6780,
+          "tokens": 41836
+        },
+        "quarantine": {
+          "records": 0,
+          "tokens": 0
+        },
+        "reject": {
+          "records": 0,
+          "tokens": 0
+        }
+      },
+      "findings": {},
+      "accepted_token_fraction": 1.0,
+      "accepted_record_fraction": 1.0
+    },
+    "lane:release_safe|partition:validation|language:en": {
+      "records": 10090,
+      "characters": 399346,
+      "utf8_bytes": 399504,
+      "tokens": 99112,
+      "status": {
+        "accept": {
+          "records": 10090,
+          "tokens": 99112
+        },
+        "quarantine": {
+          "records": 0,
+          "tokens": 0
+        },
+        "reject": {
+          "records": 0,
+          "tokens": 0
+        }
+      },
+      "findings": {},
+      "accepted_token_fraction": 1.0,
+      "accepted_record_fraction": 1.0
+    },
+    "lane:release_safe|partition:validation|language:th": {
+      "records": 41,
+      "characters": 835,
+      "utf8_bytes": 2491,
+      "tokens": 234,
+      "status": {
+        "accept": {
+          "records": 41,
+          "tokens": 234
+        },
+        "quarantine": {
+          "records": 0,
+          "tokens": 0
+        },
+        "reject": {
+          "records": 0,
+          "tokens": 0
+        }
+      },
+      "findings": {},
+      "accepted_token_fraction": 1.0,
+      "accepted_record_fraction": 1.0
+    },
+    "lane:research_only": {
+      "records": 61647,
+      "characters": 150920753,
+      "utf8_bytes": 420333968,
+      "tokens": 38718101,
+      "status": {
+        "accept": {
+          "records": 61538,
+          "tokens": 38577657
+        },
+        "quarantine": {
+          "records": 23,
+          "tokens": 59241
+        },
+        "reject": {
+          "records": 86,
+          "tokens": 81203
+        }
+      },
+      "findings": {
+        "excess_control_characters": 67,
+        "possible_email": 5,
+        "possible_ipv4": 18,
+        "possible_payment_card": 19,
+        "suspicious_repeated_character_runs": 2
+      },
+      "accepted_token_fraction": 0.9963726526773614,
+      "accepted_record_fraction": 0.9982318685418593
+    },
+    "lane:research_only|partition:holdout|language:th": {
+      "records": 333,
+      "characters": 903097,
+      "utf8_bytes": 2517990,
+      "tokens": 229378,
+      "status": {
+        "accept": {
+          "records": 333,
+          "tokens": 229378
+        },
+        "quarantine": {
+          "records": 0,
+          "tokens": 0
+        },
+        "reject": {
+          "records": 0,
+          "tokens": 0
+        }
+      },
+      "findings": {},
+      "accepted_token_fraction": 1.0,
+      "accepted_record_fraction": 1.0
+    },
+    "lane:research_only|partition:train|language:th": {
+      "records": 61031,
+      "characters": 149338691,
+      "utf8_bytes": 415936257,
+      "tokens": 38312940,
+      "status": {
+        "accept": {
+          "records": 60922,
+          "tokens": 38172496
+        },
+        "quarantine": {
+          "records": 23,
+          "tokens": 59241
+        },
+        "reject": {
+          "records": 86,
+          "tokens": 81203
+        }
+      },
+      "findings": {
+        "excess_control_characters": 67,
+        "possible_email": 5,
+        "possible_ipv4": 18,
+        "possible_payment_card": 19,
+        "suspicious_repeated_character_runs": 2
+      },
+      "accepted_token_fraction": 0.9963342933223084,
+      "accepted_record_fraction": 0.9982140223820681
+    },
+    "lane:research_only|partition:validation|language:th": {
+      "records": 283,
+      "characters": 678965,
+      "utf8_bytes": 1879721,
+      "tokens": 175783,
+      "status": {
+        "accept": {
+          "records": 283,
+          "tokens": 175783
+        },
+        "quarantine": {
+          "records": 0,
+          "tokens": 0
+        },
+        "reject": {
+          "records": 0,
+          "tokens": 0
+        }
+      },
+      "findings": {},
+      "accepted_token_fraction": 1.0,
+      "accepted_record_fraction": 1.0
+    },
+    "language:en": {
+      "records": 2038137,
+      "characters": 81881661,
+      "utf8_bytes": 81920593,
+      "tokens": 20222042,
+      "status": {
+        "accept": {
+          "records": 2038059,
+          "tokens": 20220307
+        },
+        "quarantine": {
+          "records": 3,
+          "tokens": 107
+        },
+        "reject": {
+          "records": 75,
+          "tokens": 1628
+        }
+      },
+      "findings": {
+        "excess_control_characters": 75,
+        "possible_email": 2,
+        "possible_ipv4": 1,
+        "suspicious_repeated_character_runs": 1
+      },
+      "accepted_token_fraction": 0.9999142025320688,
+      "accepted_record_fraction": 0.999961729756145
+    },
+    "language:th": {
+      "records": 68498,
+      "characters": 151070373,
+      "utf8_bytes": 420779172,
+      "tokens": 38760349,
+      "status": {
+        "accept": {
+          "records": 68389,
+          "tokens": 38619905
+        },
+        "quarantine": {
+          "records": 23,
+          "tokens": 59241
+        },
+        "reject": {
+          "records": 86,
+          "tokens": 81203
+        }
+      },
+      "findings": {
+        "excess_control_characters": 67,
+        "possible_email": 5,
+        "possible_ipv4": 18,
+        "possible_payment_card": 19,
+        "suspicious_repeated_character_runs": 2
+      },
+      "accepted_token_fraction": 0.9963766064129093,
+      "accepted_record_fraction": 0.9984087126631435
+    },
+    "partition:holdout": {
+      "records": 10650,
+      "characters": 1314632,
+      "utf8_bytes": 2931031,
+      "tokens": 331341,
+      "status": {
+        "accept": {
+          "records": 10650,
+          "tokens": 331341
+        },
+        "quarantine": {
+          "records": 0,
+          "tokens": 0
+        },
+        "reject": {
+          "records": 0,
+          "tokens": 0
+        }
+      },
+      "findings": {},
+      "accepted_token_fraction": 1.0,
+      "accepted_record_fraction": 1.0
+    },
+    "partition:train": {
+      "records": 2085571,
+      "characters": 230558256,
+      "utf8_bytes": 497487018,
+      "tokens": 58375921,
+      "status": {
+        "accept": {
+          "records": 2085384,
+          "tokens": 58233742
+        },
+        "quarantine": {
+          "records": 26,
+          "tokens": 59348
+        },
+        "reject": {
+          "records": 161,
+          "tokens": 82831
+        }
+      },
+      "findings": {
+        "excess_control_characters": 142,
+        "possible_email": 7,
+        "possible_ipv4": 19,
+        "possible_payment_card": 19,
+        "suspicious_repeated_character_runs": 3
+      },
+      "accepted_token_fraction": 0.9975644238657922,
+      "accepted_record_fraction": 0.9999103363059805
+    },
+    "partition:validation": {
+      "records": 10414,
+      "characters": 1079146,
+      "utf8_bytes": 2281716,
+      "tokens": 275129,
+      "status": {
+        "accept": {
+          "records": 10414,
+          "tokens": 275129
+        },
+        "quarantine": {
+          "records": 0,
+          "tokens": 0
+        },
+        "reject": {
+          "records": 0,
+          "tokens": 0
+        }
+      },
+      "findings": {},
+      "accepted_token_fraction": 1.0,
+      "accepted_record_fraction": 1.0
+    },
+    "source:tatoeba-sentences": {
+      "records": 2044988,
+      "characters": 82031281,
+      "utf8_bytes": 82365797,
+      "tokens": 20264290,
+      "status": {
+        "accept": {
+          "records": 2044910,
+          "tokens": 20262555
+        },
+        "quarantine": {
+          "records": 3,
+          "tokens": 107
+        },
+        "reject": {
+          "records": 75,
+          "tokens": 1628
+        }
+      },
+      "findings": {
+        "excess_control_characters": 75,
+        "possible_email": 2,
+        "possible_ipv4": 1,
+        "suspicious_repeated_character_runs": 1
+      },
+      "accepted_token_fraction": 0.9999143814068986,
+      "accepted_record_fraction": 0.9999618579668927
+    },
+    "source:wikimedia-thwiki": {
+      "records": 61647,
+      "characters": 150920753,
+      "utf8_bytes": 420333968,
+      "tokens": 38718101,
+      "status": {
+        "accept": {
+          "records": 61538,
+          "tokens": 38577657
+        },
+        "quarantine": {
+          "records": 23,
+          "tokens": 59241
+        },
+        "reject": {
+          "records": 86,
+          "tokens": 81203
+        }
+      },
+      "findings": {
+        "excess_control_characters": 67,
+        "possible_email": 5,
+        "possible_ipv4": 18,
+        "possible_payment_card": 19,
+        "suspicious_repeated_character_runs": 2
+      },
+      "accepted_token_fraction": 0.9963726526773614,
+      "accepted_record_fraction": 0.9982318685418593
+    }
+  },
+  "screened_train_budget": {
+    "release_safe_tokens": 20061246,
+    "release_safe_gap_to_500m": 479938754,
+    "research_only_tokens": 38172496,
+    "combined_research_eligible_tokens": 58233742,
+    "combined_research_gap_to_500m": 441766258
+  }
+}

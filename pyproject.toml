@@ -21,6 +21,8 @@ tokenizer = [
   "sentencepiece==0.2.2"
 ]
 data = [
+  "duckdb==1.5.6",
+  "pyarrow==25.0.1",
   "wikiextractor==3.1.0"
 ]
 

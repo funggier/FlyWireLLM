@@ -104,13 +104,20 @@ def test_research_lineage_cannot_promote_to_release_safe():
 
 def test_known_l003_budget_is_not_ready_in_either_lane():
     policy = _policy()
-    assert policy.known_token_accounting["release_safe_train"]["total"] == (
+    accounting = policy.known_token_accounting
+    assert accounting["pre_screen_train"]["release_safe"]["total"] == (
         20_062_981
     )
-    assert policy.known_token_accounting[
-        "research_only_train"
-    ]["total"] == 38_312_940
+    assert accounting["pre_screen_train"]["research_only"]["total"] == (
+        38_312_940
+    )
+    assert accounting["screened_train"]["release_safe"]["total"] == (
+        20_061_246
+    )
+    assert accounting["screened_train"]["research_only"]["total"] == (
+        38_172_496
+    )
     assert not training_budget_ready(policy, checkpoint_lane="release_safe")
     assert not training_budget_ready(policy, checkpoint_lane="research_only")
-    assert token_gap(policy, checkpoint_lane="release_safe") == 479_937_019
-    assert token_gap(policy, checkpoint_lane="research_only") == 441_624_079
+    assert token_gap(policy, checkpoint_lane="release_safe") == 479_938_754
+    assert token_gap(policy, checkpoint_lane="research_only") == 441_766_258
