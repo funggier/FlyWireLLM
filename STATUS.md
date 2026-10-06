@@ -4,91 +4,106 @@ Updated: 2026-10-06
 
 ## Repository
 
-- GitHub: funggier/FlyWireLLM
+- GitHub: `funggier/FlyWireLLM`
 - visibility: private
 - license: MIT
-- local workspace: T:\Space\Projects\ProjectsAI\FlyWireLLM
+- portable repository state: no machine-local workspace path is required
 
 ## Released baseline
 
 - v0.1.0: blank/random-initialized LLM engineering baseline
-- tag commit: 2ec2f502c8a4c5caa6c1f5262333e05dcacaf0a5
+- tag commit: `2ec2f502c8a4c5caa6c1f5262333e05dcacaf0a5`
 - smoke parameters: 109,120
 - pretrained weights: none
 - release qualification: GREEN
 
-## L002 Base-50M-v1
+## Base-50M-v1
 
-Decision:
-
-**TARGET CONTRACT GREEN / TOKENIZER ENGINEERING GREEN / DATA INVENTORY GREEN / 500M CORPUS NOT YET ACQUIRED OR RIGHTS-QUALIFIED / PRETRAINING NOT STARTED**
-
-Frozen architecture:
+Architecture frozen by L002:
 
 - parameters: 50,213,376
-- vocabulary target: 32,000
+- vocabulary: 32,000
 - d_model: 512
 - layers: 12
 - query/KV heads: 8/2
 - d_ff: 1,408
-- context: 1,024 initially; 2,048 later qualification target
+- initial context: 1,024
 - RMSNorm + RoPE + GQA + SwiGLU + tied embeddings
 - random initialization
 
 Tokenizer:
 
-- SentencePiece Unigram 32K candidate trained successfully
-- identity normalization
-- byte fallback
+- SentencePiece 0.2.2 Unigram
+- identity normalization + byte fallback
+- model SHA-256:
+  `998bc75f058e554d4f50b6cbc77c52898e3446e516c3b25a126b99b113513818`
 - benchmark cases: 10,150
 - round-trip failures: 0
 - unknown tokens: 0
-- compression vs v0.1.0 byte tokenizer: overall 6.252x
-- Thai: 10.710x
-- English: 4.031x
-- mixed: 2.570x
-- tokenizer engineering: GREEN
-- tokenizer redistribution/production rights: NOT YET QUALIFIED
 
-Data inventory:
+## L003 production-corpus readiness
 
-- primary budget: 500,000,000 tokens
-- current acquired/deduplicated train tokens: 58,334,085
-- current coverage: 11.666817%
-- gap to primary target: 441,665,915 tokens
-- split: 99.0% train / 0.5% validation / 0.5% holdout by source group
-- final holdout text excluded from tokenizer fitting
-- automatic FlyWireModel training export: BLOCKED pending source/evaluation separation
+Decision:
 
-Training schedule:
+**L003 GREEN / GLOBAL EXACT+NEAR DEDUP QUALIFIED / 500M RESEARCH-ONLY MIXTURE QUALIFIED / PRETRAINING AUTHORIZED FOR RESEARCH-ONLY LINEAGE / PUBLIC RELEASE NOT QUALIFIED**
 
-- 250M: 3,815 steps / 77 warmup
-- 500M: 7,630 steps / 153 warmup
-- 1B: 15,259 steps / 306 warmup
-- global target: 65,536 tokens/update
+Final global manifest:
 
-Qualification:
+- records total: 3,277,753
+- accepted: 3,277,015
+- exact duplicates: 61
+- near duplicates: 677
+- source artifacts: 6 unique global inputs
+- decision manifest contains raw text: false
 
-- full repository pytest: 47 PASS
-- L002 audit: PASS
-- git diff --check: PASS
-- v0.1.0 baseline tests remain included in regression
+Qualified train capacity:
 
-## Claims boundary
+- research-only eligible total: 969,701,220 tokens
+- general English: 522,373,720
+- general Thai: 316,825,768
+- technical/scientific/code: 130,501,732
+- research-only 500M gap: 0
+- release-safe total: 20,053,464
+- release-safe 500M gap: 479,946,536
 
-Current project state:
+Frozen lineage:
 
-- blank v0.1.0 model is released and training-ready;
-- Base-50M-v1 architecture and training target are defined;
-- a 32K tokenizer candidate is engineering-qualified;
-- Base-50M has NOT been pretrained;
-- Thai/English language understanding is NOT claimed;
-- conversational ability is NOT claimed;
-- conditional-rights data are NOT treated as approved production training data;
-- no trained FlyWire knowledge exists in LLM weights.
+- checkpoint lane: `research_only`
+- optimizer steps completed at freeze: 0
+- pretraining authorization: true
+- public release eligibility: not qualified
+- automatic FlyWireModel export: blocked
+
+Frozen hashes:
+
+- source registry:
+  `5304c4cc6b302a06650d090d6731f5b0e610fd99ec257c3fd9cc671cf62f79aa`
+- global report:
+  `30a792d9fd26d1d4a6a1760aae7a43ae293778926be9044ebda632ec7c5054d5`
+- global decisions:
+  `018aa08f347ebfd747f3aa11cada563bbd27918b469c7c5f11abe0289df7770a`
+- tokenizer:
+  `998bc75f058e554d4f50b6cbc77c52898e3446e516c3b25a126b99b113513818`
+
+External qualification re-hashed the tokenizer, all six accepted corpora, the
+global decision manifest and the external summary: PASS.
+
+## Current claims boundary
+
+- Base-50M has **not** been pretrained.
+- Thai/English understanding is not yet claimed.
+- Conversational ability is not yet claimed.
+- Research-only checkpoints may not be promoted to release-safe.
+- Public redistribution of a future research-only checkpoint is not qualified.
+- No trained FlyWire knowledge exists in the LLM weights.
+- Automatic FlyWireModel curated export remains blocked.
 
 ## Next stage
 
-L003 should acquire and qualify the remaining approximately 441.7M train tokens, add scalable normalization/dedup/PII/provenance processing, freeze production manifests, and perform compute/memory qualification before authorizing Base-50M pretraining.
+After L003 exact-commit/merge closure, a later task may execute the first
+Base-50M research-only pretraining run using the frozen L003 corpus and lineage.
+That training stage must preserve the L003 hashes, train-only fit boundary and
+checkpoint-lane immutability.
 
-See docs/RESULTS_L002.md, docs/TOKENIZER_L002.md and docs/DATA_PLAN_L002.md.
+See `docs/RESULTS_L002.md`, `docs/RESULTS_L003.md`,
+`docs/TRAINING_DATA.md` and `configs/pretraining-freeze-l003.json`.
