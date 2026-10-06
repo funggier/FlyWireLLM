@@ -11,9 +11,10 @@ Updated: 2026-10-07
 Implement, qualify, and then execute the first real Base-50M-v1
 research-only pretraining run from the frozen L003 lineage.
 
-L004 has now qualified the runtime/data path, but **no production optimizer
-step has been recorded yet**. The next transition is the first bounded
-production tranche after exact-commit qualification.
+L004 has qualified the runtime/data path and completed the first bounded
+production tranche. Pretraining has started, but only 4 of 7,630 planned
+optimizer updates (262,144 of 500,000,000 supervised tokens) have executed.
+Full Base-50M pretraining is not complete.
 
 ## Authoritative base
 
@@ -87,7 +88,8 @@ The blank-checkpoint provenance contract is not weakened.
 | F. Mixture selection/materialization | DONE | exact 500M selected, packed, shuffled, verified |
 | G. Base-50M micro qualification | DONE | real forward/backward/update with frozen tokenizer + packed data |
 | H. Throughput/memory qualification | DONE | fp32 local runtime selected; bf16 rejected |
-| I. First bounded training tranche | AUTHORIZATION | 4 updates / 262,144 supervised tokens; production step 1 not yet run |
+| I. First bounded training tranche | DONE | 4 updates / 262,144 supervised tokens; checkpoints verified |
+| J. Validation gate | ACTIVE | deterministic step-0 vs step-4 validation before any larger tranche |
 
 ## Phase F — exact 500M selection
 
@@ -244,7 +246,7 @@ other operational overhead.
 - resume must preserve optimizer/RNG/data cursor exactly;
 - checkpoints are written atomically;
 - no unbounded 500M-token process before bounded tranche qualification;
-- exact-commit tests/runtime evidence are required before production step 1.
+- exact-commit tests/runtime evidence are required before every authorization expansion.
 
 ## Acceptance criteria for runtime/data foundation checkpoint
 
@@ -287,39 +289,69 @@ Bounded-runner implementation commit:
 - runner unit/authorization/state tests: PASS;
 - remote branch sync after push: 0/0.
 
-## First bounded-tranche authorization candidate
+## First bounded-tranche authorization
 
-`configs/pretraining-tranche-l004-v1.json` authorizes only:
+Authorization commit:
+`674354ea572532f3d8d5c0be856a43078b2e10ae`.
 
-- optimizer updates: 4;
-- supervised tokens: 262,144;
-- checkpoint: every update;
-- checkpoint lane: research_only;
-- external run root:
-  `external://FlyWireLLM-data/L004/Runs/base50m-first-tranche-v1`;
-- public release eligibility: not qualified;
-- automatic FlyWireModel export: blocked.
-
-Authorization SHA-256 candidate:
+Authorization SHA-256:
 `a8ed92f59480f7e922b8973e62be9a8e40f7a4afec5629d4008f7e3d5db9eb2f`.
 
-The authorization pins the qualified foundation/runner commits and exact hashes
-of execution/data/local-runtime/qualification and production runtime modules.
-The external run root was confirmed absent before authorization commit.
+The authorization pins foundation `c216937868d0b8391fe9ed91c4ceb8269de7e93b`
+and runner `6b5c2946ea7b8b452e6d317de7ccd438bd23a091`, limits execution to 4
+optimizer updates / 262,144 supervised tokens, requires a checkpoint every
+update, preserves the research-only lane, and keeps public release/export
+blocked.
 
-Production optimizer step count remains **zero**.
+Exact authorization qualification: 188/188 tests PASS, L004 audit PASS,
+`--validate-only` PASS, packed-data hashes PASS, remote sync 0/0.
+
+## First bounded-tranche result
+
+Production progress:
+
+- optimizer steps: 4;
+- supervised tokens: 262,144;
+- fraction of 500M budget: 0.0524288%;
+- pretraining started: true;
+- pretraining complete: false;
+- public release eligibility: not qualified.
+
+Per-step training evidence:
+
+| Step | LR | Mean loss | Checkpoint SHA-256 |
+| ---: | ---: | ---: | --- |
+| 1 | 0.0000039216 | 10.474073 | `0e9ab3532c04f9b407dafc68d9c6198b4b387fdeeb5ac1f08c25fa5612fea371` |
+| 2 | 0.0000078431 | 10.464879 | `c3ae2be3456436fd885f695f328954d33e4ad231e1221fa7aab261c571947b83` |
+| 3 | 0.0000117647 | 10.443707 | `bf835df7eb3f9bd994b4896e8d621f6f1b71ac6660f27c4d8a47a8dbb44d579d` |
+| 4 | 0.0000156863 | 10.420443 | `d4ab8703cf723600e1fa6606d28674b06638284dd1f50ea2b771d6a96f947266` |
+
+Each checkpoint is 602,706,571 bytes and remains outside Git.
+
+Final state SHA-256:
+`8be4f6cbe5c6b5ff84095b44aea25d418a44f449c739a5d642b8fcfc377c1c78`.
+
+Tracked result:
+`results/l004/first-bounded-tranche-v1.json`
+SHA-256:
+`fd906c4a7170dc3fcce6a673dc920d352559a9a9760ab31219163c18995d3908`.
+
+All four checkpoint/metric hashes were re-verified and step-4 loaded back
+successfully. An attempted step 5 was rejected and the state hash remained
+unchanged. The falling training loss is operational evidence only, not a
+language-quality claim.
 
 ## Current work
 
-Qualify and remote-sync the bounded authorization commit.
+Phase J validation gate. No larger training tranche is authorized yet.
 
 ## Next action
 
-1. commit the bounded authorization + ledger;
-2. run exact 188-test qualification and `--validate-only` against the clean
-   authorization commit;
-3. push and verify remote synchronization;
-4. execute production update 1 only;
-5. verify checkpoint/state/metric hashes and resume from step 1;
-6. execute the remaining three authorized updates;
-7. qualify the four-update checkpoint before deciding any larger tranche.
+1. select validation-only Thai/English/technical records deterministically;
+2. keep final holdout completely untouched;
+3. materialize and verify a small external evaluation pack;
+4. evaluate identical validation data on deterministic step 0 and checkpoint
+   step 4;
+5. compare category and combined validation loss;
+6. authorize a larger tranche only if validation/runtime evidence remains
+   healthy.
