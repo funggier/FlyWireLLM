@@ -7,10 +7,13 @@ Latest completed task:
 
 Status: `DONE`
 
-GitHub Issue: `#4` (repository-publication closure in progress)
+GitHub Issue: `#4` — CLOSED / completed
 
 Qualified L003 implementation/status commit:
 `611f487628693ec14fa4bba8e290e7230a824f69`.
+
+Qualified task-closure / fast-forward commit:
+`c47cb9e9acfc4cc27ae5256dd7a9af53185e3a6f`.
 
 L003 result:
 
@@ -21,6 +24,14 @@ L003 result:
 - public release eligibility: not qualified;
 - Base-50M pretraining itself: not started.
 
-No next development stage is ACTIVE yet. Finish repository-publication
-verification (closure commit, main fast-forward, post-merge qualification,
-Issue #4 closure) before opening the next task.
+Repository publication verification is complete:
+
+- exact-commit full pytest: 153/153 PASS;
+- closure exact-commit qualification: PASS;
+- post-fast-forward full pytest: 153/153 PASS;
+- canonical and final L003 audits: PASS;
+- external corpus/decision/summary re-hash: PASS;
+- GitHub Actions runs: 0; no CI run is claimed;
+- Issue #4: closed / completed.
+
+No next development stage is ACTIVE yet.

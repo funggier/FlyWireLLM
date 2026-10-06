@@ -220,16 +220,29 @@ L003 acceptance criteria are complete. The task is DONE based on the qualified
 and remote-synchronized implementation commit
 `611f487628693ec14fa4bba8e290e7230a824f69`.
 
-Repository-publication follow-through for this closure commit:
+Qualified ledger-closure / fast-forward commit:
+`c47cb9e9acfc4cc27ae5256dd7a9af53185e3a6f`.
 
-1. qualify and push the ledger closure commit;
-2. fast-forward `main` without a merge commit;
-3. repeat post-fast-forward pytest/audits/external verification;
-4. verify `main = origin/main` and branch = origin branch;
-5. record final evidence on GitHub Issue #4 and close it.
+Repository-publication verification:
 
-These publication checks confirm the DONE result; they do not reopen the L003
-technical/data acceptance gates.
+- closure exact-commit full pytest: 153/153 PASS;
+- closure canonical/final L003 audits: PASS;
+- closure external artifact re-hash: PASS;
+- closure diff check: PASS;
+- closure commit pushed to the research branch: PASS;
+- `main` fast-forwarded without a merge commit to `c47cb9e...`: PASS;
+- `main = origin/main = research branch = origin research branch` at
+  `c47cb9e9acfc4cc27ae5256dd7a9af53185e3a6f`: PASS;
+- post-fast-forward full pytest: 153/153 PASS;
+- post-fast-forward canonical/final L003 audits: PASS;
+- post-fast-forward external artifact re-hash: PASS;
+- post-fast-forward diff check: PASS;
+- GitHub Actions runs observed: 0; no CI run is claimed;
+- GitHub Issue #4 final evidence comment recorded;
+- GitHub Issue #4 closed with state reason `completed`.
+
+The final publication-record commit only records these already-completed facts
+and does not change the frozen corpus, hashes, lineage, or authorization.
 
 ## Remaining boundary
 
