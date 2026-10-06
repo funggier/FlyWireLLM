@@ -64,7 +64,6 @@ The smoke training script performs a deterministic optimizer step on a tiny
 Thai/English fixture. Its loss is only an engineering sanity check, not a model
 quality metric.
 
-
 ## Base-50M direction
 
 After the v0.1.0 blank baseline, L002 defines Base-50M-v1:
@@ -82,6 +81,16 @@ cover 58,334,085 train tokens, so production data acquisition/qualification is
 the next gate.
 
 See docs/RESULTS_L002.md.
+
+## Development task tracking
+
+Active and completed engineering work is tracked in
+[docs/development/tasks/](docs/development/tasks/README.md).
+
+Start with [CURRENT.md](docs/development/tasks/CURRENT.md) when resuming work
+in a new session. Each task records its goal, scope, phase status, acceptance
+criteria, exact checkpoints, current action, and next action. Live Git/GitHub
+state remains authoritative if a task document is stale.
 
 ## License
 
