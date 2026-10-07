@@ -677,16 +677,54 @@ Tracked evidence hashes:
 - step16-to-step32 comparison:
   `7182985f612cf6b708256abc88e12f040f5af82a58db42d1f8b9fa3bdc54ab27`.
 
+## Phase N rolling-checkpoint pilot authorization
+
+Step32 evidence commit:
+`8fa74f72c9ae025b64728b1d6717eab3a7452136`.
+
+Rolling runner commit:
+`3ff63c1cb9199b9e4e0e3449a4837ee10ffa3a07`.
+
+Authorization:
+`configs/pretraining-tranche-l004-v5.json`.
+
+- authorization id: `base50m-fifth-tranche-v1`;
+- authorization SHA-256:
+  `cfff5b502da2a05e21583b8ae71e2151799aab33dc1ce1bd1eca9bb2e508c2b6`;
+- source optimizer step: 32;
+- source checkpoint SHA-256:
+  `136f554d7321be08ec266ac44296ae6870aadc7edb8d468812173ab240b8a463`;
+- maximum additional optimizer updates: 8;
+- authorized end step: 40;
+- additional supervised-token cap: 524,288;
+- cumulative supervised-token cap: 2,621,440;
+- checkpoint creation cadence: every optimizer update;
+- rolling checkpoint retention: latest 1 checkpoint in this tranche;
+- prior checkpoint may be pruned only after the new metric and atomic state
+  commit succeed;
+- run root:
+  `external://FlyWireLLM-data/L004/Runs/base50m-fifth-tranche-v1`;
+- post-tranche validation baseline: step32;
+- candidate validation step: 40;
+- same 300k validation pack required;
+- final holdout must remain untouched;
+- public release eligibility: not qualified.
+
+This pilot exists to prove bounded training remains restart-safe while avoiding
+unbounded checkpoint storage growth.
+
 ## Current work
 
-Record and exact-qualify the fourth bounded-tranche + post-step32 validation
-evidence before any further training authorization.
+Commit and exact-qualify the v5 rolling authorization. No step33 is permitted
+until the authorization commit is clean, remote-synchronized, and
+`--validate-only` passes from the exact commit.
 
 ## Next action
 
-1. full-regression the complete step32 evidence WIP;
-2. commit and exact-qualify the fourth-tranche evidence;
-3. push and confirm remote synchronization;
-4. only after that, design the next bounded expansion from verified step32;
-5. continue to reuse the identical validation pack and keep final holdout
-   untouched before every subsequent expansion.
+1. commit v5 authorization and task ledger;
+2. exact-qualify and push the authorization commit;
+3. run `--validate-only`;
+4. execute at most step33 through step40;
+5. confirm only the latest fifth-tranche checkpoint is retained;
+6. verify metrics/state/final checkpoint and evaluate step40 on the unchanged
+   validation pack before any larger rolling tranche.
