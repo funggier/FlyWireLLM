@@ -43,6 +43,10 @@ from flywire_llm.pretraining_rolling_scaling import (
     load_rolling_scaling_authorization,
     load_rolling_scaling_state,
 )
+from flywire_llm.pretraining_warmup_guard import (
+    load_warmup_guard_authorization,
+    load_warmup_guard_state,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -69,7 +73,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--model",
-        choices=("step0", "step4", "step8", "step16", "step32", "step40", "step56", "step88"),
+        choices=("step0", "step4", "step8", "step16", "step32", "step40", "step56", "step88", "step104"),
         required=True,
     )
     parser.add_argument("--output-json", required=True)
@@ -339,38 +343,75 @@ def _load_model(
             ),
         }
 
-    authorization = load_rolling_scaling_authorization(
-        ROOT / "configs" / "pretraining-tranche-l004-v7.json",
+    if model_name == "step88":
+        authorization = load_rolling_scaling_authorization(
+            ROOT / "configs" / "pretraining-tranche-l004-v7.json",
+            repo_root=ROOT,
+            external_root=external_root,
+        )
+        state = load_rolling_scaling_state(
+            authorization.run_root / "state.json",
+            authorization=authorization,
+            verify_files=True,
+        )
+        if state.optimizer_step != 88:
+            raise RuntimeError("rolling scaling state is not optimizer step 88")
+        if state.supervised_tokens_seen != 5_767_168:
+            raise RuntimeError("step88 supervised-token progress changed")
+        checkpoint = authorization.run_root / state.checkpoint_file
+        observed_sha = sha256_file(checkpoint)
+        if observed_sha != state.checkpoint_sha256:
+            raise RuntimeError("step88 checkpoint SHA-256 mismatch")
+        loaded = load_pretraining_checkpoint(
+            checkpoint,
+            expected_lineage=lineage_from_contract(execution),
+        )
+        if loaded.progress.optimizer_step != 88:
+            raise RuntimeError("loaded checkpoint is not optimizer step 88")
+        if loaded.progress.supervised_tokens_seen != 5_767_168:
+            raise RuntimeError("loaded step88 supervised-token count changed")
+        return loaded.model, {
+            "model": "step88",
+            "optimizer_step": 88,
+            "supervised_tokens_seen": 5_767_168,
+            "checkpoint_sha256": observed_sha,
+            "rolling_scaling_authorization_sha256": (
+                authorization.authorization_sha256
+            ),
+        }
+
+    authorization = load_warmup_guard_authorization(
+        ROOT / "configs" / "pretraining-tranche-l004-v8.json",
         repo_root=ROOT,
         external_root=external_root,
     )
-    state = load_rolling_scaling_state(
+    state = load_warmup_guard_state(
         authorization.run_root / "state.json",
         authorization=authorization,
         verify_files=True,
     )
-    if state.optimizer_step != 88:
-        raise RuntimeError("rolling scaling state is not optimizer step 88")
-    if state.supervised_tokens_seen != 5_767_168:
-        raise RuntimeError("step88 supervised-token progress changed")
+    if state.optimizer_step != 104:
+        raise RuntimeError("warmup guard state is not optimizer step 104")
+    if state.supervised_tokens_seen != 6_815_744:
+        raise RuntimeError("step104 supervised-token progress changed")
     checkpoint = authorization.run_root / state.checkpoint_file
     observed_sha = sha256_file(checkpoint)
     if observed_sha != state.checkpoint_sha256:
-        raise RuntimeError("step88 checkpoint SHA-256 mismatch")
+        raise RuntimeError("step104 checkpoint SHA-256 mismatch")
     loaded = load_pretraining_checkpoint(
         checkpoint,
         expected_lineage=lineage_from_contract(execution),
     )
-    if loaded.progress.optimizer_step != 88:
-        raise RuntimeError("loaded checkpoint is not optimizer step 88")
-    if loaded.progress.supervised_tokens_seen != 5_767_168:
-        raise RuntimeError("loaded step88 supervised-token count changed")
+    if loaded.progress.optimizer_step != 104:
+        raise RuntimeError("loaded checkpoint is not optimizer step 104")
+    if loaded.progress.supervised_tokens_seen != 6_815_744:
+        raise RuntimeError("loaded step104 supervised-token count changed")
     return loaded.model, {
-        "model": "step88",
-        "optimizer_step": 88,
-        "supervised_tokens_seen": 5_767_168,
+        "model": "step104",
+        "optimizer_step": 104,
+        "supervised_tokens_seen": 6_815_744,
         "checkpoint_sha256": observed_sha,
-        "rolling_scaling_authorization_sha256": (
+        "warmup_guard_authorization_sha256": (
             authorization.authorization_sha256
         ),
     }

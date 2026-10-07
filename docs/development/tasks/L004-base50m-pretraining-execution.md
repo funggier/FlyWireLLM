@@ -963,15 +963,65 @@ Rationale: the optimizer is still in the declared 153-step warmup. The
 validation cadence is intentionally tightened to 16 updates while learning
 rate continues to rise.
 
+## Eighth warmup-aware tranche result
+
+Authorization commit:
+`0899b22ec1c403bd9b21edc66e8d3d14a0b0c536`.
+
+Production result:
+
+- optimizer steps: 89 through 104;
+- cumulative optimizer steps: 104 / 7,630;
+- additional supervised tokens: 1,048,576;
+- cumulative supervised tokens: 6,815,744 / 500,000,000;
+- fraction of primary budget: 1.3631488%;
+- training loss step89 to step104: 7.243646 -> 6.987964;
+- final checkpoint SHA-256:
+  `0f61a87d497543af516f3818d2d47ce21412fec009ac7a08492ee4396952726b`;
+- final state SHA-256:
+  `e2a98f2466436c163cc519082ee7e718c1fe55ec1621296337392a5d720cdd89`;
+- tracked eighth-tranche result SHA-256:
+  `caecd23b8b79aba1f6e2e76e1d81152387ff3186be0fe5ba37d0a268dd2ca6e6`;
+- final data cursor: order position 6675 / block offset 745;
+- pretraining complete: false;
+- public release eligibility: not qualified.
+
+Rolling retention:
+
+- full checkpoints retained in eighth-tranche run root: 1;
+- historical checkpoints pruned after atomic state commit: 15;
+- metrics retained and hash-verified: 16 / 16;
+- final checkpoint reload: PASS.
+
+Post-step104 validation on the byte-identical 300k-token validation pack:
+
+| Category | Step 88 loss | Step 104 loss | Relative change |
+| --- | ---: | ---: | ---: |
+| general English | 6.991381387 | 6.776078678 | -3.079545% |
+| general Thai | 7.424897029 | 7.331277076 | -1.260892% |
+| technical/scientific/code | 7.127175571 | 6.907709166 | -3.079290% |
+| combined | 7.181151329 | 7.005021640 | -2.452666% |
+
+Post-tranche gate: **PASS**. Every category improved, combined validation loss
+improved, the validation packs are unchanged, and final holdout remains
+untouched.
+
+Tracked evidence hashes:
+
+- step104 validation:
+  `4652344185a436f3185626859773b78efe49ddf517c373538c87694df935aa60`;
+- step88-to-step104 comparison:
+  `7f03b35b296f2ee23863ad52ccf3f5b480c1be5fed725886a3dd61421e22a109`.
+
 ## Current work
 
-Commit and exact-qualify v8. No step89 is permitted until the authorization
-commit is clean, remote-synchronized, and `--validate-only` passes.
+Record and exact-qualify the eighth warmup-aware tranche + post-step104
+validation evidence before any further training authorization.
 
 ## Next action
 
-1. commit v8 authorization and ledger;
-2. exact-qualify and push;
-3. execute at most step89 through104;
-4. verify retention, metrics/state, and final step104 checkpoint;
-5. evaluate step104 on the unchanged validation pack.
+1. full-regression the step104 evidence WIP;
+2. commit and exact-qualify the evidence;
+3. push and confirm remote synchronization;
+4. only then authorize the next warmup-aware tranche from verified step104;
+5. keep the 16-update cadence while optimizer warmup continues.
