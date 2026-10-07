@@ -1179,16 +1179,49 @@ Tracked evidence hashes:
 - step120-to-step136 comparison:
   `2790a9f846a3c11349c4b9e0bc4a7d8981654c9e36ca9ed6ec6d50404ba0d64b`.
 
+## Phase U exact warmup-boundary authorization
+
+Step136 evidence commit:
+`ead9cbe456a1ac5ce0e92f0d6a8281d93aafe9d0`.
+
+Warmup-boundary runner commit:
+`ee8c36a082cab5e07d0346ff530902e4b6a4136e`.
+
+Authorization:
+`configs/pretraining-tranche-l004-v11.json`.
+
+- authorization id: `base50m-warmup-boundary-v1`;
+- authorization SHA-256:
+  `b8482919369a8cc402f8addaa7c1a122d59a1fd28ce52e9dfe9b78fb78eb1f3b`;
+- source optimizer step: 136;
+- source checkpoint SHA-256:
+  `8ee3cb135acd1058321c3838919dcd6e61b0fa98d37edd8cd2b32fb17d08f3a1`;
+- maximum additional optimizer updates: 17;
+- authorized end step: 153;
+- additional supervised-token cap: 1,114,112;
+- cumulative supervised-token cap: 10,027,008;
+- checkpoint creation cadence: every optimizer update;
+- rolling checkpoint retention: latest 1 checkpoint in this tranche;
+- prune prior checkpoint only after new metric + atomic state commit;
+- post-tranche validation baseline: step136;
+- candidate validation step: 153;
+- same 300k validation pack required;
+- final holdout must remain untouched;
+- public release eligibility: not qualified.
+
+This tranche ends exactly at the declared optimizer warmup boundary. It must
+not execute optimizer step154.
+
 ## Current work
 
-Record and exact-qualify the tenth warmup-aware tranche + post-step136
-validation evidence before any further training authorization.
+Commit and exact-qualify v11. No step137 is permitted until the authorization
+commit is clean, remote-synchronized, and `--validate-only` passes.
 
 ## Next action
 
-1. full-regression the step136 evidence WIP;
-2. commit and exact-qualify the evidence;
-3. push and confirm remote synchronization;
-4. authorize the final warmup-boundary tranche from verified step136 through
-   exact warmup end step153;
-5. keep final holdout untouched.
+1. commit v11 authorization and ledger;
+2. exact-qualify and push;
+3. execute exactly within step137 through153;
+4. verify retention, metrics/state, and final step153 checkpoint;
+5. evaluate step153 on the unchanged validation pack before defining any
+   post-warmup continuation policy.

@@ -7,49 +7,42 @@ Branch: research/l004-base50m-pretraining
 
 ## Verified production progress
 
-Latest verified checkpoint candidate: optimizer step 136.
+Latest exact-qualified checkpoint: optimizer step 136.
 
 - supervised tokens seen: 8,912,896 / 500,000,000
 - fraction of primary budget: 1.7825792%
 - checkpoint SHA-256:
   `8ee3cb135acd1058321c3838919dcd6e61b0fa98d37edd8cd2b32fb17d08f3a1`
-- external state SHA-256:
-  `3c2d16cd47bbff977e52ec7b5a022dcbc5125eb0646227d14e4121c3fa85a5cb`
-- tenth-tranche result SHA-256:
-  `fc762526743473932b628ea50456eb668dc6ed9592b7baaff67edb331c4d2b22`
-- pretraining complete: false
-- public release eligibility: not qualified
-
-## Rolling checkpoint retention
-
-- retained tenth-tranche full checkpoints: 1
-- historical tenth-tranche checkpoints pruned: 15
-- step121-136 metrics retained: 16 / 16
-- final checkpoint reload: PASS
-
-## Post-step136 validation gate
-
-Byte-identical 300k validation pack:
-
-- English: 6.567051706 -> 6.374071930 (-2.938606%)
-- Thai: 7.236243482 -> 7.094012272 (-1.965539%)
-- technical: 6.737619036 -> 6.578042986 (-2.368434%)
-- combined: 6.846971408 -> 6.682042396 (-2.408788%)
+- step136 evidence commit:
+  `ead9cbe456a1ac5ce0e92f0d6a8281d93aafe9d0`
+- post-step136 validation gate: PASS
 - final holdout touched: false
-- gate: PASS
 
-Tracked hashes:
+## Exact warmup-boundary tranche
 
-- validation step136:
-  `a0710642d686aa6cbed38d513eabfc540312f8e8c7fc242a98d65e9e5d90604b`
-- step120-to-step136 comparison:
-  `2790a9f846a3c11349c4b9e0bc4a7d8981654c9e36ca9ed6ec6d50404ba0d64b`
+Qualified runner:
+`ee8c36a082cab5e07d0346ff530902e4b6a4136e`.
 
-## Active work
+Authorization candidate:
+`configs/pretraining-tranche-l004-v11.json`.
 
-Record and exact-qualify the complete step136 evidence before any new training
-authorization.
+Authorization SHA-256:
+`b8482919369a8cc402f8addaa7c1a122d59a1fd28ce52e9dfe9b78fb78eb1f3b`.
 
-Do not execute step137 until the evidence commit is exact-qualified and
-remote-synchronized. The next bounded tranche should end exactly at optimizer
-warmup boundary step153.
+Bound:
+
+- source step: 136
+- maximum additional updates: 17
+- end step: 153
+- additional supervised tokens: 1,114,112
+- cumulative supervised tokens at bound: 10,027,008
+- create checkpoint every update
+- retain latest warmup-boundary checkpoint only
+- prune old checkpoint only after new metric + atomic state commit
+- same 300k validation pack required after step153
+- final holdout must remain untouched
+- public release remains not qualified
+
+Do not execute step137 until v11 is committed, exact-qualified,
+remote-synchronized, and `--validate-only` passes from the clean commit.
+Step154 is outside this authorization.
