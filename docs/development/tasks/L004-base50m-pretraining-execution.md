@@ -530,18 +530,73 @@ validation pack at step 16, require finite losses, combined loss no worse than
 step 8, no category regression greater than 0.5%, and keep final holdout
 untouched.
 
+## Third bounded-tranche result
+
+Authorization commit:
+`45523f8073d66bb60d888b7f818a93959bd0ca01`.
+
+The authorization was exact-qualified, validate-only passed, and the branch
+was remote-synchronized 0/0 before optimizer step 9.
+
+Production result:
+
+| Step | LR | Mean loss | Checkpoint SHA-256 |
+| ---: | ---: | ---: | --- |
+| 9 | 0.0000352941 | 10.176307 | `80ee1e72cc46111bcf33fd8b865d79ebe0b81bec38b7d3b2a6005be87bafddb8` |
+| 10 | 0.0000392157 | 10.082878 | `9a8e0946f00f4acbb2aab70b7c13ec7bcc2e3d62938c8e8c120f87956098410e` |
+| 11 | 0.0000431373 | 10.032805 | `9af4aab0d1892d9077875b664501d46b140b96bd3b90effd4047f6b4161af2a9` |
+| 12 | 0.0000470588 | 9.943532 | `1a38c210ac2ef3e4b5b5c0d81e134407c1ef7d740fabfc3a9df4db6f9c9f4148` |
+| 13 | 0.0000509804 | 9.895436 | `5c54e21860f0a17eca4aefc4cd10c380fa5a1778e009b168df451e87e430ded6` |
+| 14 | 0.0000549020 | 9.866211 | `79426feaf51d303acabd29d39422a9327268b8e20a575aa6fc8ecaa1f4e49b5b` |
+| 15 | 0.0000588235 | 9.765690 | `d2c9eb368ff7c8a3b453de102c8addbca65d32d91d23f1b44498045f1d9ee65d` |
+| 16 | 0.0000627451 | 9.705748 | `07a968b8e4c8a7f6711f24cd3466c46c374e09628c7d7c65848a2166efdcd71d` |
+
+Cumulative progress after step 16:
+
+- optimizer steps: 16 / 7,630;
+- supervised tokens: 1,048,576 / 500,000,000;
+- fraction of primary budget: 0.2097152%;
+- training loss step9 to step16: 10.176307 -> 9.705748;
+- state SHA-256:
+  `ef8c3a15b902e2d65d6fc4597b977cd732d2969931e5926ff6b914d655651107`;
+- tracked third-tranche result SHA-256:
+  `7a87e2adcd326260909f1ddff59d09c82589b13eabb7ccdc6c19ea10f963ddf3`;
+- pretraining complete: false;
+- public release eligibility: not qualified.
+
+All step9-16 checkpoint/metric hashes were re-verified and the final step16
+checkpoint/cursor loaded successfully.
+
+Post-step16 validation on the byte-identical 300k-token validation pack:
+
+| Category | Step 8 loss | Step 16 loss | Relative change |
+| --- | ---: | ---: | ---: |
+| general English | 10.102311081 | 9.584511214 | -5.125559% |
+| general Thai | 10.250705522 | 9.824723932 | -4.155632% |
+| technical/scientific/code | 10.121698719 | 9.606904253 | -5.086048% |
+| combined | 10.158238441 | 9.672046466 | -4.786184% |
+
+Post-tranche gate: **PASS**. Every category improved, combined validation loss
+improved, the validation packs are unchanged, and final holdout remains
+untouched.
+
+Tracked evidence hashes:
+
+- step16 validation:
+  `d3ec4ab356b0b1d4fb89ee06f6b6d661257f59457672d9bf615b5fb4aa6cc6d5`;
+- step8-to-step16 comparison:
+  `bd079dcedeeb5c4d35c285ea4b8cdfa26b667f5e7a25d996bc44dc0d7d40ea18`.
+
 ## Current work
 
-Exact-qualify and commit the third bounded authorization. No step 9 is
-permitted until that commit is clean, remote-synchronized, and validate-only
-passes from the exact commit.
+Record and exact-qualify the third bounded-tranche + post-step16 validation
+evidence before any further training authorization.
 
 ## Next action
 
-1. commit the bounded authorization and task/current ledger;
-2. exact-qualify the authorization commit;
-3. push and verify branch synchronization;
-4. run `--validate-only` from the clean exact authorization commit;
-5. execute at most steps 9 through 16;
-6. re-verify every checkpoint/metric and evaluate step16 on the unchanged
-   validation pack before any further expansion.
+1. full-regression the complete step16 evidence WIP;
+2. commit and exact-qualify the third-tranche evidence;
+3. push and confirm remote synchronization;
+4. only after that, design the next bounded expansion from verified step16;
+5. continue to use the identical validation pack and keep final holdout
+   untouched before every subsequent expansion.
