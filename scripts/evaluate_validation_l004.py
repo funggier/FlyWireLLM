@@ -31,6 +31,10 @@ from flywire_llm.pretraining_scaling import (
     load_scaling_authorization,
     load_scaling_state,
 )
+from flywire_llm.pretraining_rolling import (
+    load_rolling_authorization,
+    load_rolling_state,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -57,7 +61,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--model",
-        choices=("step0", "step4", "step8", "step16", "step32"),
+        choices=("step0", "step4", "step8", "step16", "step32", "step40"),
         required=True,
     )
     parser.add_argument("--output-json", required=True)
@@ -216,38 +220,75 @@ def _load_model(
             ),
         }
 
-    authorization = load_scaling_authorization(
-        ROOT / "configs" / "pretraining-tranche-l004-v4.json",
+    if model_name == "step32":
+        authorization = load_scaling_authorization(
+            ROOT / "configs" / "pretraining-tranche-l004-v4.json",
+            repo_root=ROOT,
+            external_root=external_root,
+        )
+        state = load_scaling_state(
+            authorization.run_root / "state.json",
+            authorization=authorization,
+            verify_files=True,
+        )
+        if state.optimizer_step != 32:
+            raise RuntimeError("scaling state is not optimizer step 32")
+        if state.supervised_tokens_seen != 2_097_152:
+            raise RuntimeError("step32 supervised-token progress changed")
+        checkpoint = authorization.run_root / state.checkpoint_file
+        observed_sha = sha256_file(checkpoint)
+        if observed_sha != state.checkpoint_sha256:
+            raise RuntimeError("step32 checkpoint SHA-256 mismatch")
+        loaded = load_pretraining_checkpoint(
+            checkpoint,
+            expected_lineage=lineage_from_contract(execution),
+        )
+        if loaded.progress.optimizer_step != 32:
+            raise RuntimeError("loaded checkpoint is not optimizer step 32")
+        if loaded.progress.supervised_tokens_seen != 2_097_152:
+            raise RuntimeError("loaded step32 supervised-token count changed")
+        return loaded.model, {
+            "model": "step32",
+            "optimizer_step": 32,
+            "supervised_tokens_seen": 2_097_152,
+            "checkpoint_sha256": observed_sha,
+            "scaling_authorization_sha256": (
+                authorization.authorization_sha256
+            ),
+        }
+
+    authorization = load_rolling_authorization(
+        ROOT / "configs" / "pretraining-tranche-l004-v5.json",
         repo_root=ROOT,
         external_root=external_root,
     )
-    state = load_scaling_state(
+    state = load_rolling_state(
         authorization.run_root / "state.json",
         authorization=authorization,
         verify_files=True,
     )
-    if state.optimizer_step != 32:
-        raise RuntimeError("scaling state is not optimizer step 32")
-    if state.supervised_tokens_seen != 2_097_152:
-        raise RuntimeError("step32 supervised-token progress changed")
+    if state.optimizer_step != 40:
+        raise RuntimeError("rolling state is not optimizer step 40")
+    if state.supervised_tokens_seen != 2_621_440:
+        raise RuntimeError("step40 supervised-token progress changed")
     checkpoint = authorization.run_root / state.checkpoint_file
     observed_sha = sha256_file(checkpoint)
     if observed_sha != state.checkpoint_sha256:
-        raise RuntimeError("step32 checkpoint SHA-256 mismatch")
+        raise RuntimeError("step40 checkpoint SHA-256 mismatch")
     loaded = load_pretraining_checkpoint(
         checkpoint,
         expected_lineage=lineage_from_contract(execution),
     )
-    if loaded.progress.optimizer_step != 32:
-        raise RuntimeError("loaded checkpoint is not optimizer step 32")
-    if loaded.progress.supervised_tokens_seen != 2_097_152:
-        raise RuntimeError("loaded step32 supervised-token count changed")
+    if loaded.progress.optimizer_step != 40:
+        raise RuntimeError("loaded checkpoint is not optimizer step 40")
+    if loaded.progress.supervised_tokens_seen != 2_621_440:
+        raise RuntimeError("loaded step40 supervised-token count changed")
     return loaded.model, {
-        "model": "step32",
-        "optimizer_step": 32,
-        "supervised_tokens_seen": 2_097_152,
+        "model": "step40",
+        "optimizer_step": 40,
+        "supervised_tokens_seen": 2_621_440,
         "checkpoint_sha256": observed_sha,
-        "scaling_authorization_sha256": (
+        "rolling_authorization_sha256": (
             authorization.authorization_sha256
         ),
     }

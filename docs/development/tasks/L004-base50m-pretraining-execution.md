@@ -713,18 +713,72 @@ Authorization:
 This pilot exists to prove bounded training remains restart-safe while avoiding
 unbounded checkpoint storage growth.
 
+## Fifth rolling-checkpoint pilot result
+
+Authorization commit:
+`8f5882861a52a57cbcbc10aafb1768373b22aed3`.
+
+The authorization was exact-qualified, `--validate-only` passed, and the
+branch was remote-synchronized before optimizer step33.
+
+Production result:
+
+- optimizer steps: 33 through 40;
+- cumulative optimizer steps: 40 / 7,630;
+- additional supervised tokens: 524,288;
+- cumulative supervised tokens: 2,621,440 / 500,000,000;
+- fraction of primary budget: 0.524288%;
+- training loss step33 to step40: 8.937551 -> 8.590367;
+- final checkpoint SHA-256:
+  `9f77df859cf1d41546d9bb919aac621e970375c175c6e9e9a93a4b200cedf95c`;
+- final state SHA-256:
+  `a93db123f8696d678c8c2a835ad381183018f88e30adc0612e28371333fee105`;
+- tracked fifth-tranche result SHA-256:
+  `995f97250b2fd06160cd4d6f3f0c31717cd181bd5bf20858d1f9c87c41b66b2a`;
+- final data cursor: order position 2567 / block offset 870;
+- pretraining complete: false;
+- public release eligibility: not qualified.
+
+Rolling retention result:
+
+- checkpoint creation cadence: every optimizer update;
+- retained full checkpoints in fifth-tranche run root: 1;
+- historical checkpoints pruned after atomic state commit: 7;
+- retained checkpoint: step40;
+- all step33-40 metrics retained and hash-verified;
+- final step40 checkpoint loaded successfully with matching optimizer/data
+  progress.
+
+Post-step40 validation on the byte-identical 300k-token validation pack:
+
+| Category | Step 32 loss | Step 40 loss | Relative change |
+| --- | ---: | ---: | ---: |
+| general English | 8.823402260 | 8.340751974 | -5.470115% |
+| general Thai | 9.078124258 | 8.614949760 | -5.102095% |
+| technical/scientific/code | 8.857479007 | 8.388065623 | -5.299627% |
+| combined | 8.919668508 | 8.447922452 | -5.288829% |
+
+Post-tranche gate: **PASS**. Every category improved, combined validation loss
+improved, the validation packs are unchanged, and final holdout remains
+untouched.
+
+Tracked evidence hashes:
+
+- step40 validation:
+  `c2dd89b43fd8e77b0dbc23f1fcc37f71f2bc5078209c5669ca98b20489e324b4`;
+- step32-to-step40 comparison:
+  `22b5ff56488599951ce6e4bb1decff6d2b851c6853234091e2ffff1248255a24`.
+
 ## Current work
 
-Commit and exact-qualify the v5 rolling authorization. No step33 is permitted
-until the authorization commit is clean, remote-synchronized, and
-`--validate-only` passes from the exact commit.
+Record and exact-qualify the fifth rolling-tranche + post-step40 validation
+evidence before authorizing a larger rolling tranche.
 
 ## Next action
 
-1. commit v5 authorization and task ledger;
-2. exact-qualify and push the authorization commit;
-3. run `--validate-only`;
-4. execute at most step33 through step40;
-5. confirm only the latest fifth-tranche checkpoint is retained;
-6. verify metrics/state/final checkpoint and evaluate step40 on the unchanged
-   validation pack before any larger rolling tranche.
+1. full-regression the complete step40 evidence WIP;
+2. commit and exact-qualify the rolling-pilot evidence;
+3. push and confirm remote synchronization;
+4. design the next bounded rolling tranche from verified step40;
+5. retain the latest checkpoint while keeping metrics and the unchanged
+   validation/holdout policy.

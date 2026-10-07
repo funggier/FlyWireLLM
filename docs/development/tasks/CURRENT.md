@@ -12,42 +12,50 @@ research/l004-base50m-pretraining
 
 ## Verified production progress
 
-Latest exact-qualified checkpoint: optimizer step 32.
+Latest verified checkpoint candidate: optimizer step 40.
 
-- supervised tokens seen: 2,097,152 / 500,000,000;
-- fraction of primary budget: 0.4194304%;
+- supervised tokens seen: 2,621,440 / 500,000,000;
+- fraction of primary budget: 0.524288%;
 - checkpoint SHA-256:
-  `136f554d7321be08ec266ac44296ae6870aadc7edb8d468812173ab240b8a463`;
-- step32 evidence commit:
-  `8fa74f72c9ae025b64728b1d6717eab3a7452136`;
-- post-step32 validation gate: PASS;
-- final holdout touched: false.
+  `9f77df859cf1d41546d9bb919aac621e970375c175c6e9e9a93a4b200cedf95c`;
+- external state SHA-256:
+  `a93db123f8696d678c8c2a835ad381183018f88e30adc0612e28371333fee105`;
+- fifth-tranche result SHA-256:
+  `995f97250b2fd06160cd4d6f3f0c31717cd181bd5bf20858d1f9c87c41b66b2a`;
+- pretraining complete: false;
+- public release eligibility: not qualified.
 
-## Rolling-checkpoint pilot
+## Rolling checkpoint pilot
 
-Qualified runner:
-`3ff63c1cb9199b9e4e0e3449a4837ee10ffa3a07`.
+- checkpoint creation: every update;
+- retained fifth-tranche checkpoints: 1;
+- historical fifth-tranche checkpoints pruned: 7;
+- all step33-40 metrics retained;
+- final checkpoint reload: PASS.
 
-Authorization candidate:
-`configs/pretraining-tranche-l004-v5.json`.
+## Post-step40 validation gate
 
-Authorization SHA-256:
-`cfff5b502da2a05e21583b8ae71e2151799aab33dc1ce1bd1eca9bb2e508c2b6`.
+Byte-identical 300k validation pack:
 
-Bound:
+- English: 8.823402260 -> 8.340751974 (-5.470115%);
+- Thai: 9.078124258 -> 8.614949760 (-5.102095%);
+- technical: 8.857479007 -> 8.388065623 (-5.299627%);
+- combined: 8.919668508 -> 8.447922452 (-5.288829%);
+- final holdout touched: false;
+- gate: PASS.
 
-- source step: 32;
-- maximum additional updates: 8;
-- end step: 40;
-- additional supervised tokens: 524,288;
-- cumulative supervised tokens at bound: 2,621,440;
-- create checkpoint every update;
-- retain latest fifth-tranche checkpoint only;
-- prune old checkpoint only after new metric + atomic state commit;
-- same 300k validation pack required after step40;
-- final holdout must remain untouched;
-- public release remains not qualified.
+Tracked hashes:
 
-Do not execute step33 until the v5 authorization is committed,
-exact-qualified, remote-synchronized, and `--validate-only` passes from the
-clean exact commit.
+- validation step40:
+  `c2dd89b43fd8e77b0dbc23f1fcc37f71f2bc5078209c5669ca98b20489e324b4`;
+- step32-to-step40 comparison:
+  `22b5ff56488599951ce6e4bb1decff6d2b851c6853234091e2ffff1248255a24`.
+
+## Active work
+
+Record and exact-qualify the complete step40 rolling evidence before any new
+training authorization.
+
+Do not execute step41 until the evidence commit is exact-qualified and
+remote-synchronized. The next tranche may reuse the rolling retention policy
+only after this pilot evidence is frozen.
