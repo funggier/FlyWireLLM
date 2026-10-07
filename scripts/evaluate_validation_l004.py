@@ -47,6 +47,10 @@ from flywire_llm.pretraining_warmup_guard import (
     load_warmup_guard_authorization,
     load_warmup_guard_state,
 )
+from flywire_llm.pretraining_warmup_followup import (
+    load_warmup_followup_authorization,
+    load_warmup_followup_state,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -73,7 +77,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--model",
-        choices=("step0", "step4", "step8", "step16", "step32", "step40", "step56", "step88", "step104"),
+        choices=("step0", "step4", "step8", "step16", "step32", "step40", "step56", "step88", "step104", "step120"),
         required=True,
     )
     parser.add_argument("--output-json", required=True)
@@ -380,38 +384,75 @@ def _load_model(
             ),
         }
 
-    authorization = load_warmup_guard_authorization(
-        ROOT / "configs" / "pretraining-tranche-l004-v8.json",
+    if model_name == "step104":
+        authorization = load_warmup_guard_authorization(
+            ROOT / "configs" / "pretraining-tranche-l004-v8.json",
+            repo_root=ROOT,
+            external_root=external_root,
+        )
+        state = load_warmup_guard_state(
+            authorization.run_root / "state.json",
+            authorization=authorization,
+            verify_files=True,
+        )
+        if state.optimizer_step != 104:
+            raise RuntimeError("warmup guard state is not optimizer step 104")
+        if state.supervised_tokens_seen != 6_815_744:
+            raise RuntimeError("step104 supervised-token progress changed")
+        checkpoint = authorization.run_root / state.checkpoint_file
+        observed_sha = sha256_file(checkpoint)
+        if observed_sha != state.checkpoint_sha256:
+            raise RuntimeError("step104 checkpoint SHA-256 mismatch")
+        loaded = load_pretraining_checkpoint(
+            checkpoint,
+            expected_lineage=lineage_from_contract(execution),
+        )
+        if loaded.progress.optimizer_step != 104:
+            raise RuntimeError("loaded checkpoint is not optimizer step 104")
+        if loaded.progress.supervised_tokens_seen != 6_815_744:
+            raise RuntimeError("loaded step104 supervised-token count changed")
+        return loaded.model, {
+            "model": "step104",
+            "optimizer_step": 104,
+            "supervised_tokens_seen": 6_815_744,
+            "checkpoint_sha256": observed_sha,
+            "warmup_guard_authorization_sha256": (
+                authorization.authorization_sha256
+            ),
+        }
+
+    authorization = load_warmup_followup_authorization(
+        ROOT / "configs" / "pretraining-tranche-l004-v9.json",
         repo_root=ROOT,
         external_root=external_root,
     )
-    state = load_warmup_guard_state(
+    state = load_warmup_followup_state(
         authorization.run_root / "state.json",
         authorization=authorization,
         verify_files=True,
     )
-    if state.optimizer_step != 104:
-        raise RuntimeError("warmup guard state is not optimizer step 104")
-    if state.supervised_tokens_seen != 6_815_744:
-        raise RuntimeError("step104 supervised-token progress changed")
+    if state.optimizer_step != 120:
+        raise RuntimeError("warmup follow-up state is not optimizer step 120")
+    if state.supervised_tokens_seen != 7_864_320:
+        raise RuntimeError("step120 supervised-token progress changed")
     checkpoint = authorization.run_root / state.checkpoint_file
     observed_sha = sha256_file(checkpoint)
     if observed_sha != state.checkpoint_sha256:
-        raise RuntimeError("step104 checkpoint SHA-256 mismatch")
+        raise RuntimeError("step120 checkpoint SHA-256 mismatch")
     loaded = load_pretraining_checkpoint(
         checkpoint,
         expected_lineage=lineage_from_contract(execution),
     )
-    if loaded.progress.optimizer_step != 104:
-        raise RuntimeError("loaded checkpoint is not optimizer step 104")
-    if loaded.progress.supervised_tokens_seen != 6_815_744:
-        raise RuntimeError("loaded step104 supervised-token count changed")
+    if loaded.progress.optimizer_step != 120:
+        raise RuntimeError("loaded checkpoint is not optimizer step 120")
+    if loaded.progress.supervised_tokens_seen != 7_864_320:
+        raise RuntimeError("loaded step120 supervised-token count changed")
     return loaded.model, {
-        "model": "step104",
-        "optimizer_step": 104,
-        "supervised_tokens_seen": 6_815_744,
+        "model": "step120",
+        "optimizer_step": 120,
+        "supervised_tokens_seen": 7_864_320,
         "checkpoint_sha256": observed_sha,
-        "warmup_guard_authorization_sha256": (
+        "warmup_followup_authorization_sha256": (
             authorization.authorization_sha256
         ),
     }

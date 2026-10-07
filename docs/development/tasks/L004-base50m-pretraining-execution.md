@@ -1046,15 +1046,65 @@ Authorization:
 Rationale: optimizer warmup continues through step153, so the 16-update
 validation cadence remains in force.
 
+## Ninth warmup-aware tranche result
+
+Authorization commit:
+`3d3a7c9161d80f00f992908a2f0e219e47ea2b56`.
+
+Production result:
+
+- optimizer steps: 105 through 120;
+- cumulative optimizer steps: 120 / 7,630;
+- additional supervised tokens: 1,048,576;
+- cumulative supervised tokens: 7,864,320 / 500,000,000;
+- fraction of primary budget: 1.572864%;
+- training loss step105 to step120: 7.021231 -> 6.854975;
+- final checkpoint SHA-256:
+  `f8b6f447124c9f08250da126fcecca827ffbbb8b23d93338934a01031ea5086d`;
+- final state SHA-256:
+  `25cf31506c855ef85aed5f4e0d3de9563a2c7206f9e368767ecea71fc4e4bb7b`;
+- tracked ninth-tranche result SHA-256:
+  `fd25888ce3b055de25737a2c0a6a6479f75ad3f01191b6bbfd8a359a02c3bbf1`;
+- final data cursor: order position 7702 / block offset 337;
+- pretraining complete: false;
+- public release eligibility: not qualified.
+
+Rolling retention:
+
+- full checkpoints retained in ninth-tranche run root: 1;
+- historical checkpoints pruned after atomic state commit: 15;
+- metrics retained and hash-verified: 16 / 16;
+- final checkpoint reload: PASS.
+
+Post-step120 validation on the byte-identical 300k-token validation pack:
+
+| Category | Step 104 loss | Step 120 loss | Relative change |
+| --- | ---: | ---: | ---: |
+| general English | 6.776078678 | 6.567051706 | -3.084778% |
+| general Thai | 7.331277076 | 7.236243482 | -1.296276% |
+| technical/scientific/code | 6.907709166 | 6.737619036 | -2.462323% |
+| combined | 7.005021640 | 6.846971408 | -2.256242% |
+
+Post-tranche gate: **PASS**. Every category improved, combined validation loss
+improved, the validation packs are unchanged, and final holdout remains
+untouched.
+
+Tracked evidence hashes:
+
+- step120 validation:
+  `854aa31870e7af6c7454a3a7608130c67623f071d60980d3208bc29474896c43`;
+- step104-to-step120 comparison:
+  `6d7a984b80fe5aeec65c9569d26f16192606f65dce55f9274e0ba54fddb761f3`.
+
 ## Current work
 
-Commit and exact-qualify v9. No step105 is permitted until the authorization
-commit is clean, remote-synchronized, and `--validate-only` passes.
+Record and exact-qualify the ninth warmup-aware tranche + post-step120
+validation evidence before any further training authorization.
 
 ## Next action
 
-1. commit v9 authorization and ledger;
-2. exact-qualify and push;
-3. execute at most step105 through120;
-4. verify retention, metrics/state, and final step120 checkpoint;
-5. evaluate step120 on the unchanged validation pack.
+1. full-regression the step120 evidence WIP;
+2. commit and exact-qualify the evidence;
+3. push and confirm remote synchronization;
+4. authorize the next warmup-aware tranche from verified step120;
+5. retain the 16-update cadence while optimizer warmup continues.

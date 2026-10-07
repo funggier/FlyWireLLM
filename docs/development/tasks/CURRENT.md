@@ -7,41 +7,49 @@ Branch: research/l004-base50m-pretraining
 
 ## Verified production progress
 
-Latest exact-qualified checkpoint: optimizer step 104.
+Latest verified checkpoint candidate: optimizer step 120.
 
-- supervised tokens seen: 6,815,744 / 500,000,000
-- fraction of primary budget: 1.3631488%
+- supervised tokens seen: 7,864,320 / 500,000,000
+- fraction of primary budget: 1.572864%
 - checkpoint SHA-256:
-  `0f61a87d497543af516f3818d2d47ce21412fec009ac7a08492ee4396952726b`
-- step104 evidence commit:
-  `7997a1747cd822b2e36e44a8c6069bab22efe8e7`
-- post-step104 validation gate: PASS
+  `f8b6f447124c9f08250da126fcecca827ffbbb8b23d93338934a01031ea5086d`
+- external state SHA-256:
+  `25cf31506c855ef85aed5f4e0d3de9563a2c7206f9e368767ecea71fc4e4bb7b`
+- ninth-tranche result SHA-256:
+  `fd25888ce3b055de25737a2c0a6a6479f75ad3f01191b6bbfd8a359a02c3bbf1`
+- pretraining complete: false
+- public release eligibility: not qualified
+
+## Rolling checkpoint retention
+
+- retained ninth-tranche full checkpoints: 1
+- historical ninth-tranche checkpoints pruned: 15
+- step105-120 metrics retained: 16 / 16
+- final checkpoint reload: PASS
+
+## Post-step120 validation gate
+
+Byte-identical 300k validation pack:
+
+- English: 6.776078678 -> 6.567051706 (-3.084778%)
+- Thai: 7.331277076 -> 7.236243482 (-1.296276%)
+- technical: 6.907709166 -> 6.737619036 (-2.462323%)
+- combined: 7.005021640 -> 6.846971408 (-2.256242%)
 - final holdout touched: false
+- gate: PASS
 
-## Ninth warmup-aware tranche
+Tracked hashes:
 
-Qualified runner:
-`7af23fc1f62a69cf08b03cb1bf16ed4720915ba1`.
+- validation step120:
+  `854aa31870e7af6c7454a3a7608130c67623f071d60980d3208bc29474896c43`
+- step104-to-step120 comparison:
+  `6d7a984b80fe5aeec65c9569d26f16192606f65dce55f9274e0ba54fddb761f3`
 
-Authorization candidate:
-`configs/pretraining-tranche-l004-v9.json`.
+## Active work
 
-Authorization SHA-256:
-`90bd19426caa899732f71fcd0ee6511f89e038f6d0cb678ee3b8b54f4ae1980b`.
+Record and exact-qualify the complete step120 evidence before any new training
+authorization.
 
-Bound:
-
-- source step: 104
-- maximum additional updates: 16
-- end step: 120
-- additional supervised tokens: 1,048,576
-- cumulative supervised tokens at bound: 7,864,320
-- create checkpoint every update
-- retain latest ninth-tranche checkpoint only
-- prune old checkpoint only after new metric + atomic state commit
-- same 300k validation pack required after step120
-- final holdout must remain untouched
-- public release remains not qualified
-
-Do not execute step105 until v9 is committed, exact-qualified,
-remote-synchronized, and `--validate-only` passes from the clean commit.
+Do not execute step121 until the evidence commit is exact-qualified and
+remote-synchronized. Continue warmup-aware cadence because optimizer warmup
+ends at step153.
