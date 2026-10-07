@@ -1264,16 +1264,48 @@ Tracked evidence hashes:
 - step136-to-step153 comparison:
   `1e484d263091c6d185e82e95315b4ee53788f5328b12b6540a371d6a4f36da42`.
 
+## Phase V first post-warmup cosine-decay authorization
+
+Step153 evidence commit:
+`988e10fd0c419dee91abb00224f0d96e0e02e1d1`.
+
+Post-warmup runner commit:
+`ed93936c426a3b6212659ddf7e30a835ea8b86bd`.
+
+Authorization:
+`configs/pretraining-tranche-l004-v12.json`.
+
+- authorization id: `base50m-post-warmup-1-v1`;
+- authorization SHA-256:
+  `d8e1ffe91ab4af0aed58fc5635674e9b87923b2cc96347344283706743d94846`;
+- source optimizer step: 153;
+- source checkpoint SHA-256:
+  `f00d36e288094aab5bc0bec52a62dd134e92505ee6a87f3797e8e70d05cc3700`;
+- maximum additional optimizer updates: 16;
+- authorized end step: 169;
+- additional supervised-token cap: 1,048,576;
+- cumulative supervised-token cap: 11,075,584;
+- schedule: existing qualified cosine decay, no new LR policy;
+- learning rate step154: 0.0006000000;
+- learning rate step169: 0.0005999939;
+- checkpoint creation cadence: every optimizer update;
+- rolling checkpoint retention: latest 1 checkpoint in this tranche;
+- prune prior checkpoint only after new metric + atomic state commit;
+- post-tranche validation baseline: step153;
+- candidate validation step: 169;
+- same 300k validation pack required;
+- final holdout must remain untouched;
+- public release eligibility: not qualified.
+
 ## Current work
 
-Record and exact-qualify the warmup-boundary + post-step153 validation
-evidence before any post-warmup training authorization.
+Commit and exact-qualify v12. No step154 is permitted until the authorization
+commit is clean, remote-synchronized, and `--validate-only` passes.
 
 ## Next action
 
-1. full-regression the step153 evidence WIP;
-2. commit and exact-qualify the evidence;
-3. push and confirm remote synchronization;
-4. define the first bounded post-warmup cosine-decay tranche from verified
-   step153;
-5. keep final holdout untouched and do not claim pretraining completion.
+1. commit v12 authorization and ledger;
+2. exact-qualify and push;
+3. execute at most step154 through169;
+4. verify rolling retention, metrics/state, and final step169 checkpoint;
+5. evaluate step169 on the unchanged validation pack.
