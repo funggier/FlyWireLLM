@@ -1,0 +1,53 @@
+{
+  "categories": {
+    "general_english": {
+      "forward_batches": 26,
+      "loss": 6.374071929616928,
+      "pack_sha256": "b1d143aa16a5ffc347a7a956b7c66124f4c772128e8ff962a0ba4c10ba5fd6f7",
+      "perplexity": 586.4409198593446,
+      "physical_input_positions": 100596,
+      "supervised_tokens": 100000
+    },
+    "general_thai": {
+      "forward_batches": 26,
+      "loss": 7.0940122724199295,
+      "pack_sha256": "42144c77105c3c05f09e153fb2516b7ea41e9e258bf961e7e084be2d3ec5b6f6",
+      "perplexity": 1204.7318287716969,
+      "physical_input_positions": 100129,
+      "supervised_tokens": 100000
+    },
+    "technical_scientific_code": {
+      "forward_batches": 26,
+      "loss": 6.578042985601425,
+      "pack_sha256": "c62792991671ad7dbe2121fccfa533475d6db6211c47d3111cfcc4a38af00747",
+      "perplexity": 719.1306023061433,
+      "physical_input_positions": 100025,
+      "supervised_tokens": 100000
+    }
+  },
+  "checkpoint_sha256": "8ee3cb135acd1058321c3838919dcd6e61b0fa98d37edd8cd2b32fb17d08f3a1",
+  "combined": {
+    "loss": 6.682042395879428,
+    "perplexity": 797.9471728954741,
+    "supervised_tokens": 300000
+  },
+  "elapsed_seconds": 73.402478300035,
+  "evaluation_id": "base50m-validation-v1",
+  "evaluation_only": true,
+  "final_holdout_touched": false,
+  "model": "step136",
+  "optimizer_step": 136,
+  "partition": "validation",
+  "pretraining_authorized": false,
+  "public_release_eligibility": "not_qualified",
+  "runtime": {
+    "batch_size": 4,
+    "device": "cpu",
+    "precision": "fp32",
+    "threads": 12
+  },
+  "schema_version": 1,
+  "stage": "L004",
+  "supervised_tokens_seen": 8912896,
+  "warmup_penultimate_authorization_sha256": "1fc3a96cf3d64e86d3bfd533f8ab5e7509b9dd69d0bb7773d1cdd9b95a75182a"
+}

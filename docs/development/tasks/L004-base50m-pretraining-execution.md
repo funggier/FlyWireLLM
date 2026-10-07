@@ -1129,15 +1129,66 @@ Authorization:
 Rationale: warmup remains active through step153. Step136 leaves 17 updates to
 the exact warmup boundary, enabling one final warmup-boundary tranche.
 
+## Tenth warmup-aware tranche result
+
+Authorization commit:
+`d5840a7aa9c6764605a682dc5c62b5ab571de642`.
+
+Production result:
+
+- optimizer steps: 121 through 136;
+- cumulative optimizer steps: 136 / 7,630;
+- additional supervised tokens: 1,048,576;
+- cumulative supervised tokens: 8,912,896 / 500,000,000;
+- fraction of primary budget: 1.7825792%;
+- training loss step121 to step136: 6.953884 -> 6.756546;
+- final checkpoint SHA-256:
+  `8ee3cb135acd1058321c3838919dcd6e61b0fa98d37edd8cd2b32fb17d08f3a1`;
+- final state SHA-256:
+  `3c2d16cd47bbff977e52ec7b5a022dcbc5125eb0646227d14e4121c3fa85a5cb`;
+- tracked tenth-tranche result SHA-256:
+  `fc762526743473932b628ea50456eb668dc6ed9592b7baaff67edb331c4d2b22`;
+- final data cursor: order position 8728 / block offset 759;
+- pretraining complete: false;
+- public release eligibility: not qualified.
+
+Rolling retention:
+
+- full checkpoints retained in tenth-tranche run root: 1;
+- historical checkpoints pruned after atomic state commit: 15;
+- metrics retained and hash-verified: 16 / 16;
+- final checkpoint reload: PASS.
+
+Post-step136 validation on the byte-identical 300k-token validation pack:
+
+| Category | Step 120 loss | Step 136 loss | Relative change |
+| --- | ---: | ---: | ---: |
+| general English | 6.567051706 | 6.374071930 | -2.938606% |
+| general Thai | 7.236243482 | 7.094012272 | -1.965539% |
+| technical/scientific/code | 6.737619036 | 6.578042986 | -2.368434% |
+| combined | 6.846971408 | 6.682042396 | -2.408788% |
+
+Post-tranche gate: **PASS**. Every category improved, combined validation loss
+improved, the validation packs are unchanged, and final holdout remains
+untouched.
+
+Tracked evidence hashes:
+
+- step136 validation:
+  `a0710642d686aa6cbed38d513eabfc540312f8e8c7fc242a98d65e9e5d90604b`;
+- step120-to-step136 comparison:
+  `2790a9f846a3c11349c4b9e0bc4a7d8981654c9e36ca9ed6ec6d50404ba0d64b`.
+
 ## Current work
 
-Commit and exact-qualify v10. No step121 is permitted until the authorization
-commit is clean, remote-synchronized, and `--validate-only` passes.
+Record and exact-qualify the tenth warmup-aware tranche + post-step136
+validation evidence before any further training authorization.
 
 ## Next action
 
-1. commit v10 authorization and ledger;
-2. exact-qualify and push;
-3. execute at most step121 through136;
-4. verify retention, metrics/state, and final step136 checkpoint;
-5. evaluate step136 on the unchanged validation pack.
+1. full-regression the step136 evidence WIP;
+2. commit and exact-qualify the evidence;
+3. push and confirm remote synchronization;
+4. authorize the final warmup-boundary tranche from verified step136 through
+   exact warmup end step153;
+5. keep final holdout untouched.
