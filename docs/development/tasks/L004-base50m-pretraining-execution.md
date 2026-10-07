@@ -1096,15 +1096,48 @@ Tracked evidence hashes:
 - step104-to-step120 comparison:
   `6d7a984b80fe5aeec65c9569d26f16192606f65dce55f9274e0ba54fddb761f3`.
 
+## Phase T tenth warmup-aware tranche authorization
+
+Step120 evidence commit:
+`9f951c0c33b00006e7ffb376626acfcf4c60b30d`.
+
+Warmup penultimate runner commit:
+`44586b6f643e152776129297be474e487111d694`.
+
+Authorization:
+`configs/pretraining-tranche-l004-v10.json`.
+
+- authorization id: `base50m-tenth-tranche-v1`;
+- authorization SHA-256:
+  `1fc3a96cf3d64e86d3bfd533f8ab5e7509b9dd69d0bb7773d1cdd9b95a75182a`;
+- source optimizer step: 120;
+- source checkpoint SHA-256:
+  `f8b6f447124c9f08250da126fcecca827ffbbb8b23d93338934a01031ea5086d`;
+- maximum additional optimizer updates: 16;
+- authorized end step: 136;
+- additional supervised-token cap: 1,048,576;
+- cumulative supervised-token cap: 8,912,896;
+- checkpoint creation cadence: every optimizer update;
+- rolling checkpoint retention: latest 1 checkpoint in this tranche;
+- prune prior checkpoint only after new metric + atomic state commit;
+- post-tranche validation baseline: step120;
+- candidate validation step: 136;
+- same 300k validation pack required;
+- final holdout must remain untouched;
+- public release eligibility: not qualified.
+
+Rationale: warmup remains active through step153. Step136 leaves 17 updates to
+the exact warmup boundary, enabling one final warmup-boundary tranche.
+
 ## Current work
 
-Record and exact-qualify the ninth warmup-aware tranche + post-step120
-validation evidence before any further training authorization.
+Commit and exact-qualify v10. No step121 is permitted until the authorization
+commit is clean, remote-synchronized, and `--validate-only` passes.
 
 ## Next action
 
-1. full-regression the step120 evidence WIP;
-2. commit and exact-qualify the evidence;
-3. push and confirm remote synchronization;
-4. authorize the next warmup-aware tranche from verified step120;
-5. retain the 16-update cadence while optimizer warmup continues.
+1. commit v10 authorization and ledger;
+2. exact-qualify and push;
+3. execute at most step121 through136;
+4. verify retention, metrics/state, and final step136 checkpoint;
+5. evaluate step136 on the unchanged validation pack.
