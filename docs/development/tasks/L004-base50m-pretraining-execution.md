@@ -929,16 +929,49 @@ Tracked evidence hashes:
 - step56-to-step88 comparison:
   `96831b5949c5f15a97108b78de1cef86b78aa8ba091af998dd7a9ca7832c1313`.
 
+## Phase R warmup-aware eighth tranche authorization
+
+Step88 evidence commit:
+`61f969000a330d686ebbabb0d6387c6e4a283fa9`.
+
+Warmup-guard runner commit:
+`79e3bd76a5088e6d9b60e3ffa647674edb78dbe6`.
+
+Authorization:
+`configs/pretraining-tranche-l004-v8.json`.
+
+- authorization id: `base50m-eighth-tranche-v1`;
+- authorization SHA-256:
+  `ffc8bfccec3bd0ec655d2899b3ac20417fd496fd39d2de906fc4dc18c5333367`;
+- source optimizer step: 88;
+- source checkpoint SHA-256:
+  `e5c6427334044b300c98c964499a14cb9126db87a2996b9ca5505f417e6bd27a`;
+- maximum additional optimizer updates: 16;
+- authorized end step: 104;
+- additional supervised-token cap: 1,048,576;
+- cumulative supervised-token cap: 6,815,744;
+- checkpoint creation cadence: every optimizer update;
+- rolling checkpoint retention: latest 1 checkpoint in this tranche;
+- prune prior checkpoint only after new metric + atomic state commit;
+- post-tranche validation baseline: step88;
+- candidate validation step: 104;
+- same 300k validation pack required;
+- final holdout must remain untouched;
+- public release eligibility: not qualified.
+
+Rationale: the optimizer is still in the declared 153-step warmup. The
+validation cadence is intentionally tightened to 16 updates while learning
+rate continues to rise.
+
 ## Current work
 
-Record and exact-qualify the seventh rolling-tranche + post-step88 validation
-evidence before any further training authorization.
+Commit and exact-qualify v8. No step89 is permitted until the authorization
+commit is clean, remote-synchronized, and `--validate-only` passes.
 
 ## Next action
 
-1. full-regression the step88 evidence WIP;
-2. commit and exact-qualify the evidence;
-3. push and confirm remote synchronization;
-4. only then design the next bounded rolling tranche from verified step88;
-5. continue with latest-checkpoint retention and unchanged validation/holdout
-   policy.
+1. commit v8 authorization and ledger;
+2. exact-qualify and push;
+3. execute at most step89 through104;
+4. verify retention, metrics/state, and final step104 checkpoint;
+5. evaluate step104 on the unchanged validation pack.
