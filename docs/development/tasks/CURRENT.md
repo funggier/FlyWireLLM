@@ -12,41 +12,48 @@ research/l004-base50m-pretraining
 
 ## Verified production progress
 
-Latest exact-qualified checkpoint: optimizer step 40.
+Latest verified checkpoint candidate: optimizer step 56.
 
-- supervised tokens seen: 2,621,440 / 500,000,000;
-- fraction of primary budget: 0.524288%;
+- supervised tokens seen: 3,670,016 / 500,000,000;
+- fraction of primary budget: 0.7340032%;
 - checkpoint SHA-256:
-  `9f77df859cf1d41546d9bb919aac621e970375c175c6e9e9a93a4b200cedf95c`;
-- step40 evidence commit:
-  `30e75e05b926224033033231a00de9ee3c6643bf`;
-- post-step40 validation gate: PASS;
-- final holdout touched: false.
+  `4095c686eeff521c906a73ef34d890135cd5c4900addab54b7477f6f72a4d116`;
+- external state SHA-256:
+  `52ebd96c161855febc8bf1cf45c8b0b81780b1be264a8bfa37634f045cecf86e`;
+- sixth-tranche result SHA-256:
+  `ddab037da4623f706ae5d162cb2dd088c045b3972467c4497be2f68c87cb253f`;
+- pretraining complete: false;
+- public release eligibility: not qualified.
 
-## Sixth rolling expansion
+## Rolling checkpoint retention
 
-Qualified runner:
-`ff71939f7547f9d6ac8f2f510d6a604b350c525e`.
+- retained sixth-tranche full checkpoints: 1;
+- historical sixth-tranche checkpoints pruned: 15;
+- step41-56 metrics retained: 16 / 16;
+- final checkpoint reload: PASS.
 
-Authorization candidate:
-`configs/pretraining-tranche-l004-v6.json`.
+## Post-step56 validation gate
 
-Authorization SHA-256:
-`b14f53cde35373e127c5405bca7b50744c9cea6366aa03f51d060dbc7af30f6f`.
+Byte-identical 300k validation pack:
 
-Bound:
+- English: 8.340751974 -> 7.532882587 (-9.685810%);
+- Thai: 8.614949760 -> 7.848998205 (-8.890958%);
+- technical: 8.388065623 -> 7.615953266 (-9.204892%);
+- combined: 8.447922452 -> 7.665944686 (-9.256451%);
+- final holdout touched: false;
+- gate: PASS.
 
-- source step: 40;
-- maximum additional updates: 16;
-- end step: 56;
-- additional supervised tokens: 1,048,576;
-- cumulative supervised tokens at bound: 3,670,016;
-- create checkpoint every update;
-- retain latest sixth-tranche checkpoint only;
-- prune old checkpoint only after new metric + atomic state commit;
-- same 300k validation pack required after step56;
-- final holdout must remain untouched;
-- public release remains not qualified.
+Tracked hashes:
 
-Do not execute step41 until v6 is committed, exact-qualified,
-remote-synchronized, and `--validate-only` passes from the clean commit.
+- validation step56:
+  `c7e663ec5e66bff5473ce1a3282dd910ea546fe7f90bc78c40083238696d0380`;
+- step40-to-step56 comparison:
+  `3941421b63283cdfd530c2c2be7ced5421330338192bea68c00b0db2bba14dad`.
+
+## Active work
+
+Record and exact-qualify the complete step56 evidence before any new training
+authorization.
+
+Do not execute step57 until the evidence commit is exact-qualified and
+remote-synchronized.

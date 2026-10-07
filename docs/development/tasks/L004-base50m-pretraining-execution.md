@@ -799,16 +799,66 @@ Authorization:
 - final holdout must remain untouched;
 - public release eligibility: not qualified.
 
+## Sixth bounded rolling expansion result
+
+Authorization commit:
+`3bf4dc264f83ab64f50d8652a179e794e3d691c9`.
+
+Production result:
+
+- optimizer steps: 41 through 56;
+- cumulative optimizer steps: 56 / 7,630;
+- additional supervised tokens: 1,048,576;
+- cumulative supervised tokens: 3,670,016 / 500,000,000;
+- fraction of primary budget: 0.7340032%;
+- training loss step41 to step56: 8.486466 -> 7.698671;
+- final checkpoint SHA-256:
+  `4095c686eeff521c906a73ef34d890135cd5c4900addab54b7477f6f72a4d116`;
+- final state SHA-256:
+  `52ebd96c161855febc8bf1cf45c8b0b81780b1be264a8bfa37634f045cecf86e`;
+- tracked sixth-tranche result SHA-256:
+  `ddab037da4623f706ae5d162cb2dd088c045b3972467c4497be2f68c87cb253f`;
+- final data cursor: order position 3594 / block offset 657;
+- pretraining complete: false;
+- public release eligibility: not qualified.
+
+Rolling retention:
+
+- full checkpoints retained in sixth-tranche run root: 1;
+- historical checkpoints pruned after atomic state commit: 15;
+- metrics retained and hash-verified: 16 / 16;
+- final checkpoint reload: PASS.
+
+Post-step56 validation on the byte-identical 300k-token validation pack:
+
+| Category | Step 40 loss | Step 56 loss | Relative change |
+| --- | ---: | ---: | ---: |
+| general English | 8.340751974 | 7.532882587 | -9.685810% |
+| general Thai | 8.614949760 | 7.848998205 | -8.890958% |
+| technical/scientific/code | 8.388065623 | 7.615953266 | -9.204892% |
+| combined | 8.447922452 | 7.665944686 | -9.256451% |
+
+Post-tranche gate: **PASS**. Every category improved, combined validation loss
+improved, the validation packs are unchanged, and final holdout remains
+untouched.
+
+Tracked evidence hashes:
+
+- step56 validation:
+  `c7e663ec5e66bff5473ce1a3282dd910ea546fe7f90bc78c40083238696d0380`;
+- step40-to-step56 comparison:
+  `3941421b63283cdfd530c2c2be7ced5421330338192bea68c00b0db2bba14dad`.
+
 ## Current work
 
-Commit and exact-qualify v6. No step41 is permitted until the authorization
-commit is clean, remote-synchronized, and `--validate-only` passes.
+Record and exact-qualify the sixth rolling-tranche + post-step56 validation
+evidence before any further training authorization.
 
 ## Next action
 
-1. commit v6 authorization and ledger;
-2. exact-qualify and push;
-3. execute at most step41 through56;
-4. verify rolling retention, metrics/state, and final step56 checkpoint;
-5. evaluate step56 on the unchanged validation pack before any further
-   expansion.
+1. full-regression the step56 evidence WIP;
+2. commit and exact-qualify the evidence;
+3. push and confirm remote synchronization;
+4. only then design the next bounded rolling tranche from verified step56;
+5. continue with latest-checkpoint retention and unchanged validation/holdout
+   policy.
