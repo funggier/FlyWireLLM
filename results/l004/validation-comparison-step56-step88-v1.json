@@ -1,0 +1,61 @@
+{
+  "authorization_sha256": "391250f1514f66ab5ad680cce09c7fcbe657afd32779884a96542f84d32a0620",
+  "candidate_checkpoint_sha256": "e5c6427334044b300c98c964499a14cb9126db87a2996b9ca5505f417e6bd27a",
+  "categories": {
+    "general_english": {
+      "absolute_change": -0.5415012002754214,
+      "gate_pass": true,
+      "pack_sha256": "b1d143aa16a5ffc347a7a956b7c66124f4c772128e8ff962a0ba4c10ba5fd6f7",
+      "relative_change": -0.07188499143459504,
+      "step56_loss": 7.532882587432861,
+      "step88_loss": 6.99138138715744
+    },
+    "general_thai": {
+      "absolute_change": -0.4241011763429645,
+      "gate_pass": true,
+      "pack_sha256": "42144c77105c3c05f09e153fb2516b7ea41e9e258bf961e7e084be2d3ec5b6f6",
+      "relative_change": -0.05403252303615585,
+      "step56_loss": 7.84899820538044,
+      "step88_loss": 7.424897029037475
+    },
+    "technical_scientific_code": {
+      "absolute_change": -0.4887776957082748,
+      "gate_pass": true,
+      "pack_sha256": "c62792991671ad7dbe2121fccfa533475d6db6211c47d3111cfcc4a38af00747",
+      "relative_change": -0.06417813747283142,
+      "step56_loss": 7.615953266253471,
+      "step88_loss": 7.127175570545196
+    }
+  },
+  "combined": {
+    "absolute_change": -0.48479335744221963,
+    "gate_pass": true,
+    "relative_change": -0.06323987157187429,
+    "step56_loss": 7.665944686355591,
+    "step88_loss": 7.181151328913371
+  },
+  "comparison": "step56_vs_step88",
+  "evaluation_id": "base50m-validation-v1",
+  "final_holdout_touched": false,
+  "gate_contract": {
+    "baseline_optimizer_step": 56,
+    "candidate_optimizer_step": 88,
+    "combined_loss_must_not_increase_vs_step56": true,
+    "evaluation_id": "base50m-validation-v1",
+    "final_holdout_must_remain_untouched": true,
+    "max_category_relative_loss_increase_vs_step56": 0.005,
+    "require_all_losses_finite": true,
+    "same_validation_pack_required": true
+  },
+  "gate_pass": true,
+  "larger_tranche_may_be_considered": true,
+  "partition": "validation",
+  "pretraining_complete": false,
+  "production_optimizer_steps": 88,
+  "public_release_eligibility": "not_qualified",
+  "same_validation_pack": true,
+  "schema_version": 1,
+  "stage": "L004",
+  "supervised_training_tokens_seen": 5767168,
+  "validation_supervised_tokens_per_model": 300000
+}

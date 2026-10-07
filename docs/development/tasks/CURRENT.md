@@ -12,41 +12,48 @@ research/l004-base50m-pretraining
 
 ## Verified production progress
 
-Latest exact-qualified checkpoint: optimizer step 56.
+Latest verified checkpoint candidate: optimizer step 88.
 
-- supervised tokens seen: 3,670,016 / 500,000,000;
-- fraction of primary budget: 0.7340032%;
+- supervised tokens seen: 5,767,168 / 500,000,000;
+- fraction of primary budget: 1.1534336%;
 - checkpoint SHA-256:
-  `4095c686eeff521c906a73ef34d890135cd5c4900addab54b7477f6f72a4d116`;
-- step56 evidence commit:
-  `5c1dde7596c0a697c803096653e62fb88b4a6580`;
-- post-step56 validation gate: PASS;
-- final holdout touched: false.
+  `e5c6427334044b300c98c964499a14cb9126db87a2996b9ca5505f417e6bd27a`;
+- external state SHA-256:
+  `263f0315f019fe4ec5cbb3c8e7f923427aa0c0e0d1ba2088df4c83840b274d9a`;
+- seventh-tranche result SHA-256:
+  `d6961d541c556b4af57dba481c49586639040af514452a0303e3e26bb8c37fc9`;
+- pretraining complete: false;
+- public release eligibility: not qualified.
 
-## Seventh rolling scaling tranche
+## Rolling checkpoint retention
 
-Qualified runner:
-`835d914ea91d2c22c802efab15f07f65a7e84e71`.
+- retained seventh-tranche full checkpoints: 1;
+- historical seventh-tranche checkpoints pruned: 31;
+- step57-88 metrics retained: 32 / 32;
+- final checkpoint reload: PASS.
 
-Authorization candidate:
-`configs/pretraining-tranche-l004-v7.json`.
+## Post-step88 validation gate
 
-Authorization SHA-256:
-`391250f1514f66ab5ad680cce09c7fcbe657afd32779884a96542f84d32a0620`.
+Byte-identical 300k validation pack:
 
-Bound:
+- English: 7.532882587 -> 6.991381387 (-7.188499%);
+- Thai: 7.848998205 -> 7.424897029 (-5.403252%);
+- technical: 7.615953266 -> 7.127175571 (-6.417814%);
+- combined: 7.665944686 -> 7.181151329 (-6.323987%);
+- final holdout touched: false;
+- gate: PASS.
 
-- source step: 56;
-- maximum additional updates: 32;
-- end step: 88;
-- additional supervised tokens: 2,097,152;
-- cumulative supervised tokens at bound: 5,767,168;
-- create checkpoint every update;
-- retain latest seventh-tranche checkpoint only;
-- prune old checkpoint only after new metric + atomic state commit;
-- same 300k validation pack required after step88;
-- final holdout must remain untouched;
-- public release remains not qualified.
+Tracked hashes:
 
-Do not execute step57 until v7 is committed, exact-qualified,
-remote-synchronized, and `--validate-only` passes from the clean commit.
+- validation step88:
+  `cab6d93ffef975042ee258e5400dd4974aa881a90085d6579d146defcb34fc18`;
+- step56-to-step88 comparison:
+  `96831b5949c5f15a97108b78de1cef86b78aa8ba091af998dd7a9ca7832c1313`.
+
+## Active work
+
+Record and exact-qualify the complete step88 evidence before any new training
+authorization.
+
+Do not execute step89 until the evidence commit is exact-qualified and
+remote-synchronized.

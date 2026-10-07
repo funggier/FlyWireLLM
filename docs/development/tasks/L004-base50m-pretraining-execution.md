@@ -879,16 +879,66 @@ Authorization:
 - final holdout must remain untouched;
 - public release eligibility: not qualified.
 
+## Seventh bounded rolling scaling result
+
+Authorization commit:
+`668c8effbae0cd31d98c472159f0ec8df708b4f5`.
+
+Production result:
+
+- optimizer steps: 57 through 88;
+- cumulative optimizer steps: 88 / 7,630;
+- additional supervised tokens: 2,097,152;
+- cumulative supervised tokens: 5,767,168 / 500,000,000;
+- fraction of primary budget: 1.1534336%;
+- training loss step57 to step88: 7.753659 -> 7.225092;
+- final checkpoint SHA-256:
+  `e5c6427334044b300c98c964499a14cb9126db87a2996b9ca5505f417e6bd27a`;
+- final state SHA-256:
+  `263f0315f019fe4ec5cbb3c8e7f923427aa0c0e0d1ba2088df4c83840b274d9a`;
+- tracked seventh-tranche result SHA-256:
+  `d6961d541c556b4af57dba481c49586639040af514452a0303e3e26bb8c37fc9`;
+- final data cursor: order position 5649 / block offset 232;
+- pretraining complete: false;
+- public release eligibility: not qualified.
+
+Rolling retention:
+
+- full checkpoints retained in seventh-tranche run root: 1;
+- historical checkpoints pruned after atomic state commit: 31;
+- metrics retained and hash-verified: 32 / 32;
+- final checkpoint reload: PASS.
+
+Post-step88 validation on the byte-identical 300k-token validation pack:
+
+| Category | Step 56 loss | Step 88 loss | Relative change |
+| --- | ---: | ---: | ---: |
+| general English | 7.532882587 | 6.991381387 | -7.188499% |
+| general Thai | 7.848998205 | 7.424897029 | -5.403252% |
+| technical/scientific/code | 7.615953266 | 7.127175571 | -6.417814% |
+| combined | 7.665944686 | 7.181151329 | -6.323987% |
+
+Post-tranche gate: **PASS**. Every category improved, combined validation loss
+improved, the validation packs are unchanged, and final holdout remains
+untouched.
+
+Tracked evidence hashes:
+
+- step88 validation:
+  `cab6d93ffef975042ee258e5400dd4974aa881a90085d6579d146defcb34fc18`;
+- step56-to-step88 comparison:
+  `96831b5949c5f15a97108b78de1cef86b78aa8ba091af998dd7a9ca7832c1313`.
+
 ## Current work
 
-Commit and exact-qualify v7. No step57 is permitted until the authorization
-commit is clean, remote-synchronized, and `--validate-only` passes.
+Record and exact-qualify the seventh rolling-tranche + post-step88 validation
+evidence before any further training authorization.
 
 ## Next action
 
-1. commit v7 authorization and ledger;
-2. exact-qualify and push;
-3. execute at most step57 through88;
-4. verify rolling retention, metrics/state, and final step88 checkpoint;
-5. evaluate step88 on the unchanged validation pack before any further
-   expansion.
+1. full-regression the step88 evidence WIP;
+2. commit and exact-qualify the evidence;
+3. push and confirm remote synchronization;
+4. only then design the next bounded rolling tranche from verified step88;
+5. continue with latest-checkpoint retention and unchanged validation/holdout
+   policy.
