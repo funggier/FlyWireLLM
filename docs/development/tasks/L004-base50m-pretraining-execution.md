@@ -494,16 +494,54 @@ Tracked evidence hashes:
 - step4-to-step8 comparison:
   `a1564c28fbcb0a0c90c940b69fc91a38123c418caae551759633e7165dee475f`.
 
+## Phase L third bounded expansion authorization
+
+Third-tranche runner commit:
+`4e0ef81406da2adc2db44a0fc08b13a9ebde57b4`.
+
+- exact runner qualification: PASS;
+- full repository regression: PASS;
+- L004 audit: PASS;
+- first/second tranche re-verification: PASS;
+- validation gate re-verification: PASS;
+- remote branch sync after push: 0/0.
+
+Authorization candidate:
+`configs/pretraining-tranche-l004-v3.json`.
+
+- authorization id: `base50m-third-tranche-v1`;
+- authorization SHA-256:
+  `a8be24f47fa5a98be39ebd3ba46c6a12591c2e4b5744d42a6ef5f5da8419def0`;
+- source optimizer step: 8;
+- source checkpoint SHA-256:
+  `2552f503438bf635f0e54a4fc1fc4bdcef3da57ad734c9ea7b0eebd379500e21`;
+- maximum additional optimizer updates: 8;
+- authorized end step: 16;
+- additional supervised-token cap: 524,288;
+- cumulative supervised-token cap: 1,048,576;
+- checkpoint cadence: every optimizer update;
+- run root:
+  `external://FlyWireLLM-data/L004/Runs/base50m-third-tranche-v1`;
+- public release eligibility: not qualified;
+- automatic FlyWireModel export: blocked.
+
+The post-tranche gate is predeclared before step 9: reuse the identical 300k
+validation pack at step 16, require finite losses, combined loss no worse than
+step 8, no category regression greater than 0.5%, and keep final holdout
+untouched.
+
 ## Current work
 
-Record and exact-qualify the second bounded-tranche + post-step8 validation
-evidence before any further training authorization.
+Exact-qualify and commit the third bounded authorization. No step 9 is
+permitted until that commit is clean, remote-synchronized, and validate-only
+passes from the exact commit.
 
 ## Next action
 
-1. full-regression the complete step8 evidence WIP;
-2. commit and exact-qualify the second-tranche evidence;
-3. push and confirm remote synchronization;
-4. design the next bounded authorization from the verified step8 checkpoint;
-5. continue to require an unchanged validation pack and untouched final holdout
-   before each subsequent expansion.
+1. commit the bounded authorization and task/current ledger;
+2. exact-qualify the authorization commit;
+3. push and verify branch synchronization;
+4. run `--validate-only` from the clean exact authorization commit;
+5. execute at most steps 9 through 16;
+6. re-verify every checkpoint/metric and evaluate step16 on the unchanged
+   validation pack before any further expansion.
