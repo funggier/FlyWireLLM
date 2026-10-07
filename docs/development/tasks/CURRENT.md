@@ -12,42 +12,45 @@ research/l004-base50m-pretraining
 
 ## Verified production progress
 
-Latest verified checkpoint: optimizer step 16.
+Latest verified checkpoint candidate: optimizer step 32.
 
-- supervised tokens seen: 1,048,576 / 500,000,000;
-- fraction of primary budget: 0.2097152%;
+- supervised tokens seen: 2,097,152 / 500,000,000;
+- fraction of primary budget: 0.4194304%;
 - checkpoint SHA-256:
-  `07a968b8e4c8a7f6711f24cd3466c46c374e09628c7d7c65848a2166efdcd71d`;
-- third-tranche evidence commit:
-  `73d78d18134f7f27b530eaea2eb4d9733435ad61`;
-- post-step16 validation gate: PASS;
-- final holdout touched: false.
+  `136f554d7321be08ec266ac44296ae6870aadc7edb8d468812173ab240b8a463`;
+- external state SHA-256:
+  `57b868d833bb11c96ffce634744b59a5d02c86c5868085ac7f04f4d4476c3951`;
+- fourth-tranche result SHA-256:
+  `1d0cdde6be95850dc70f691ae7b59115bfe40afa384e440a323a2f4901a01c39`;
+- pretraining complete: false;
+- public release eligibility: not qualified.
 
-## Fourth bounded scaling tranche
-
-Qualified runner:
-`074b429f640654db1bb8696971da8560f17c9066`.
-
-Authorization candidate:
-`configs/pretraining-tranche-l004-v4.json`.
-
-Authorization SHA-256:
+Fourth bounded tranche step17-32 completed within authorization
 `8ef449c63c6be4e2129a0604413fbfbb13f6d706a2c046d779079415981f0259`.
 
-Bound:
+## Post-step32 validation gate
 
-- source step: 16;
-- maximum additional updates: 16;
-- end step: 32;
-- additional supervised tokens: 1,048,576;
-- cumulative supervised tokens at bound: 2,097,152;
-- checkpoint every update;
-- same 300k validation pack required after step32;
-- combined validation loss must not worsen vs step16;
-- any category relative loss increase >0.5% fails the gate;
-- final holdout must remain untouched;
-- public release remains not qualified.
+Byte-identical 300k validation pack:
 
-Do not execute step17 until the v4 authorization is committed,
-exact-qualified, remote-synchronized, and `--validate-only` passes on the
-clean exact commit.
+- English: 9.584511214 -> 8.823402260 (-7.941030%);
+- Thai: 9.824723932 -> 9.078124258 (-7.599192%);
+- technical: 9.606904253 -> 8.857479007 (-7.800903%);
+- combined: 9.672046466 -> 8.919668508 (-7.778891%);
+- final holdout touched: false;
+- gate: PASS.
+
+Tracked hashes:
+
+- validation step32:
+  `34b4660037261fb7779fa8ce86ac2da5b1c323d805634bcaf10f3f0fdc5c2dc8`;
+- step16-to-step32 comparison:
+  `7182985f612cf6b708256abc88e12f040f5af82a58db42d1f8b9fa3bdc54ab27`.
+
+## Active work
+
+Record and exact-qualify the complete step32 evidence before any new training
+authorization.
+
+Do not execute step33 until the evidence commit is exact-qualified and
+remote-synchronized. Any next expansion must remain bounded, predeclare its
+post-tranche validation gate, and keep final holdout untouched.

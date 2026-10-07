@@ -627,18 +627,66 @@ validation pack at step32, require finite losses, combined loss no worse than
 step16, no category relative regression greater than 0.5%, and keep final
 holdout untouched.
 
+## Fourth bounded-tranche result
+
+Authorization commit:
+`9dc004dc0df0d233d2504aeaf238d396cc2eed4b`.
+
+The authorization was exact-qualified, `--validate-only` passed, and the
+branch was remote-synchronized before execution. The completed external run
+was then reloaded from the same authorization rather than overwritten.
+
+Production result:
+
+- optimizer steps: 17 through 32;
+- cumulative optimizer steps: 32 / 7,630;
+- additional supervised tokens: 1,048,576;
+- cumulative supervised tokens: 2,097,152 / 500,000,000;
+- fraction of primary budget: 0.4194304%;
+- training loss step17 to step32: 9.697028 -> 9.008830;
+- final checkpoint SHA-256:
+  `136f554d7321be08ec266ac44296ae6870aadc7edb8d468812173ab240b8a463`;
+- final state SHA-256:
+  `57b868d833bb11c96ffce634744b59a5d02c86c5868085ac7f04f4d4476c3951`;
+- tracked fourth-tranche result SHA-256:
+  `1d0cdde6be95850dc70f691ae7b59115bfe40afa384e440a323a2f4901a01c39`;
+- final data cursor: order position 2053 / block offset 970;
+- pretraining complete: false;
+- public release eligibility: not qualified.
+
+All step17-32 checkpoint and metric hashes were re-verified, and the final
+step32 checkpoint plus data cursor loaded successfully.
+
+Post-step32 validation on the byte-identical 300k-token validation pack:
+
+| Category | Step 16 loss | Step 32 loss | Relative change |
+| --- | ---: | ---: | ---: |
+| general English | 9.584511214 | 8.823402260 | -7.941030% |
+| general Thai | 9.824723932 | 9.078124258 | -7.599192% |
+| technical/scientific/code | 9.606904253 | 8.857479007 | -7.800903% |
+| combined | 9.672046466 | 8.919668508 | -7.778891% |
+
+Post-tranche gate: **PASS**. Every category improved, combined validation loss
+improved, the validation packs are unchanged, and final holdout remains
+untouched.
+
+Tracked evidence hashes:
+
+- step32 validation:
+  `34b4660037261fb7779fa8ce86ac2da5b1c323d805634bcaf10f3f0fdc5c2dc8`;
+- step16-to-step32 comparison:
+  `7182985f612cf6b708256abc88e12f040f5af82a58db42d1f8b9fa3bdc54ab27`.
+
 ## Current work
 
-Commit and exact-qualify the fourth bounded authorization. No step17 is
-permitted until that authorization commit is clean, remote-synchronized, and
-validate-only passes from the exact commit.
+Record and exact-qualify the fourth bounded-tranche + post-step32 validation
+evidence before any further training authorization.
 
 ## Next action
 
-1. commit the v4 authorization and current task ledger;
-2. exact-qualify the authorization commit;
-3. push and verify remote synchronization;
-4. run `--validate-only` from the clean exact authorization commit;
-5. execute at most steps17 through32;
-6. re-verify every checkpoint/metric and evaluate step32 on the unchanged
-   validation pack before any further expansion.
+1. full-regression the complete step32 evidence WIP;
+2. commit and exact-qualify the fourth-tranche evidence;
+3. push and confirm remote synchronization;
+4. only after that, design the next bounded expansion from verified step32;
+5. continue to reuse the identical validation pack and keep final holdout
+   untouched before every subsequent expansion.
