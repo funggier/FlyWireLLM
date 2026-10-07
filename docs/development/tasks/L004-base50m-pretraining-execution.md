@@ -849,16 +849,46 @@ Tracked evidence hashes:
 - step40-to-step56 comparison:
   `3941421b63283cdfd530c2c2be7ced5421330338192bea68c00b0db2bba14dad`.
 
+## Phase P seventh bounded rolling scaling authorization
+
+Step56 evidence commit:
+`5c1dde7596c0a697c803096653e62fb88b4a6580`.
+
+Rolling scaling runner commit:
+`835d914ea91d2c22c802efab15f07f65a7e84e71`.
+
+Authorization:
+`configs/pretraining-tranche-l004-v7.json`.
+
+- authorization id: `base50m-seventh-tranche-v1`;
+- authorization SHA-256:
+  `391250f1514f66ab5ad680cce09c7fcbe657afd32779884a96542f84d32a0620`;
+- source optimizer step: 56;
+- source checkpoint SHA-256:
+  `4095c686eeff521c906a73ef34d890135cd5c4900addab54b7477f6f72a4d116`;
+- maximum additional optimizer updates: 32;
+- authorized end step: 88;
+- additional supervised-token cap: 2,097,152;
+- cumulative supervised-token cap: 5,767,168;
+- checkpoint creation cadence: every optimizer update;
+- rolling checkpoint retention: latest 1 checkpoint in this tranche;
+- prune prior checkpoint only after new metric + atomic state commit;
+- post-tranche validation baseline: step56;
+- candidate validation step: 88;
+- same 300k validation pack required;
+- final holdout must remain untouched;
+- public release eligibility: not qualified.
+
 ## Current work
 
-Record and exact-qualify the sixth rolling-tranche + post-step56 validation
-evidence before any further training authorization.
+Commit and exact-qualify v7. No step57 is permitted until the authorization
+commit is clean, remote-synchronized, and `--validate-only` passes.
 
 ## Next action
 
-1. full-regression the step56 evidence WIP;
-2. commit and exact-qualify the evidence;
-3. push and confirm remote synchronization;
-4. only then design the next bounded rolling tranche from verified step56;
-5. continue with latest-checkpoint retention and unchanged validation/holdout
-   policy.
+1. commit v7 authorization and ledger;
+2. exact-qualify and push;
+3. execute at most step57 through88;
+4. verify rolling retention, metrics/state, and final step88 checkpoint;
+5. evaluate step88 on the unchanged validation pack before any further
+   expansion.

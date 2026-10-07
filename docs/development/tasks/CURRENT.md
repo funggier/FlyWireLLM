@@ -12,48 +12,41 @@ research/l004-base50m-pretraining
 
 ## Verified production progress
 
-Latest verified checkpoint candidate: optimizer step 56.
+Latest exact-qualified checkpoint: optimizer step 56.
 
 - supervised tokens seen: 3,670,016 / 500,000,000;
 - fraction of primary budget: 0.7340032%;
 - checkpoint SHA-256:
   `4095c686eeff521c906a73ef34d890135cd5c4900addab54b7477f6f72a4d116`;
-- external state SHA-256:
-  `52ebd96c161855febc8bf1cf45c8b0b81780b1be264a8bfa37634f045cecf86e`;
-- sixth-tranche result SHA-256:
-  `ddab037da4623f706ae5d162cb2dd088c045b3972467c4497be2f68c87cb253f`;
-- pretraining complete: false;
-- public release eligibility: not qualified.
+- step56 evidence commit:
+  `5c1dde7596c0a697c803096653e62fb88b4a6580`;
+- post-step56 validation gate: PASS;
+- final holdout touched: false.
 
-## Rolling checkpoint retention
+## Seventh rolling scaling tranche
 
-- retained sixth-tranche full checkpoints: 1;
-- historical sixth-tranche checkpoints pruned: 15;
-- step41-56 metrics retained: 16 / 16;
-- final checkpoint reload: PASS.
+Qualified runner:
+`835d914ea91d2c22c802efab15f07f65a7e84e71`.
 
-## Post-step56 validation gate
+Authorization candidate:
+`configs/pretraining-tranche-l004-v7.json`.
 
-Byte-identical 300k validation pack:
+Authorization SHA-256:
+`391250f1514f66ab5ad680cce09c7fcbe657afd32779884a96542f84d32a0620`.
 
-- English: 8.340751974 -> 7.532882587 (-9.685810%);
-- Thai: 8.614949760 -> 7.848998205 (-8.890958%);
-- technical: 8.388065623 -> 7.615953266 (-9.204892%);
-- combined: 8.447922452 -> 7.665944686 (-9.256451%);
-- final holdout touched: false;
-- gate: PASS.
+Bound:
 
-Tracked hashes:
+- source step: 56;
+- maximum additional updates: 32;
+- end step: 88;
+- additional supervised tokens: 2,097,152;
+- cumulative supervised tokens at bound: 5,767,168;
+- create checkpoint every update;
+- retain latest seventh-tranche checkpoint only;
+- prune old checkpoint only after new metric + atomic state commit;
+- same 300k validation pack required after step88;
+- final holdout must remain untouched;
+- public release remains not qualified.
 
-- validation step56:
-  `c7e663ec5e66bff5473ce1a3282dd910ea546fe7f90bc78c40083238696d0380`;
-- step40-to-step56 comparison:
-  `3941421b63283cdfd530c2c2be7ced5421330338192bea68c00b0db2bba14dad`.
-
-## Active work
-
-Record and exact-qualify the complete step56 evidence before any new training
-authorization.
-
-Do not execute step57 until the evidence commit is exact-qualified and
-remote-synchronized.
+Do not execute step57 until v7 is committed, exact-qualified,
+remote-synchronized, and `--validate-only` passes from the clean commit.
