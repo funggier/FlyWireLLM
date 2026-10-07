@@ -1013,15 +1013,48 @@ Tracked evidence hashes:
 - step88-to-step104 comparison:
   `7f03b35b296f2ee23863ad52ccf3f5b480c1be5fed725886a3dd61421e22a109`.
 
+## Phase S ninth warmup-aware tranche authorization
+
+Step104 evidence commit:
+`7997a1747cd822b2e36e44a8c6069bab22efe8e7`.
+
+Warmup follow-up runner commit:
+`7af23fc1f62a69cf08b03cb1bf16ed4720915ba1`.
+
+Authorization:
+`configs/pretraining-tranche-l004-v9.json`.
+
+- authorization id: `base50m-ninth-tranche-v1`;
+- authorization SHA-256:
+  `90bd19426caa899732f71fcd0ee6511f89e038f6d0cb678ee3b8b54f4ae1980b`;
+- source optimizer step: 104;
+- source checkpoint SHA-256:
+  `0f61a87d497543af516f3818d2d47ce21412fec009ac7a08492ee4396952726b`;
+- maximum additional optimizer updates: 16;
+- authorized end step: 120;
+- additional supervised-token cap: 1,048,576;
+- cumulative supervised-token cap: 7,864,320;
+- checkpoint creation cadence: every optimizer update;
+- rolling checkpoint retention: latest 1 checkpoint in this tranche;
+- prune prior checkpoint only after new metric + atomic state commit;
+- post-tranche validation baseline: step104;
+- candidate validation step: 120;
+- same 300k validation pack required;
+- final holdout must remain untouched;
+- public release eligibility: not qualified.
+
+Rationale: optimizer warmup continues through step153, so the 16-update
+validation cadence remains in force.
+
 ## Current work
 
-Record and exact-qualify the eighth warmup-aware tranche + post-step104
-validation evidence before any further training authorization.
+Commit and exact-qualify v9. No step105 is permitted until the authorization
+commit is clean, remote-synchronized, and `--validate-only` passes.
 
 ## Next action
 
-1. full-regression the step104 evidence WIP;
-2. commit and exact-qualify the evidence;
-3. push and confirm remote synchronization;
-4. only then authorize the next warmup-aware tranche from verified step104;
-5. keep the 16-update cadence while optimizer warmup continues.
+1. commit v9 authorization and ledger;
+2. exact-qualify and push;
+3. execute at most step105 through120;
+4. verify retention, metrics/state, and final step120 checkpoint;
+5. evaluate step120 on the unchanged validation pack.
