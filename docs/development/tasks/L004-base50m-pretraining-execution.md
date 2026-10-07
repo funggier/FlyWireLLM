@@ -1297,15 +1297,68 @@ Authorization:
 - final holdout must remain untouched;
 - public release eligibility: not qualified.
 
+## First post-warmup cosine-decay tranche result
+
+Authorization commit:
+`f11a412d04e7c50311230297f1f29b6116e8c3c7`.
+
+Production result:
+
+- optimizer steps: 154 through 169;
+- cumulative optimizer steps: 169 / 7,630;
+- additional supervised tokens: 1,048,576;
+- cumulative supervised tokens: 11,075,584 / 500,000,000;
+- fraction of primary budget: 2.2151168%;
+- training loss step154 to step169: 6.552233 -> 6.391935;
+- learning rate step154 to step169: 0.0006000000 -> 0.0005999939;
+- final checkpoint SHA-256:
+  `ccce01d29686a76edfe52fbaa531cf198a82bfd8aa17ded34625b8c6f14b979e`;
+- final state SHA-256:
+  `175ebccef8707fda0af0e65cf0646ac12f72b6464ab54c20ac6fa81be25124e6`;
+- tracked post-warmup result SHA-256:
+  `7069138a1910643eb577008076fdbafab2c6cfe52b74861539074d788df6a563`;
+- final data cursor: order position 10846 / block offset 3;
+- optimizer warmup complete: true;
+- pretraining complete: false;
+- public release eligibility: not qualified.
+
+Rolling retention:
+
+- full checkpoints retained in post-warmup run root: 1;
+- historical checkpoints pruned after atomic state commit: 15;
+- metrics retained and hash-verified: 16 / 16;
+- final checkpoint reload: PASS.
+
+Post-step169 validation on the byte-identical 300k-token validation pack:
+
+| Category | Step 153 loss | Step 169 loss | Relative change |
+| --- | ---: | ---: | ---: |
+| general English | 6.210462363 | 6.117310139 | -1.499924% |
+| general Thai | 6.872962925 | 6.745732500 | -1.851173% |
+| technical/scientific/code | 6.412851243 | 6.337900238 | -1.168763% |
+| combined | 6.498758844 | 6.400314292 | -1.514821% |
+
+Post-tranche gate: **PASS**. Every category improved, combined validation loss
+improved, the validation packs are unchanged, and final holdout remains
+untouched.
+
+Tracked evidence hashes:
+
+- step169 validation:
+  `eb6489be84dbf2ff06d7ff46905a2a6c9f84bb303c1053552c174e443881d962`;
+- step153-to-step169 comparison:
+  `0f01fef42571bb756cad34ed00b9d3eb36ca7240788dd70443c51baa6b1b631f`.
+
 ## Current work
 
-Commit and exact-qualify v12. No step154 is permitted until the authorization
-commit is clean, remote-synchronized, and `--validate-only` passes.
+Record and exact-qualify the first post-warmup tranche + post-step169
+validation evidence before any further training authorization.
 
 ## Next action
 
-1. commit v12 authorization and ledger;
-2. exact-qualify and push;
-3. execute at most step154 through169;
-4. verify rolling retention, metrics/state, and final step169 checkpoint;
-5. evaluate step169 on the unchanged validation pack.
+1. full-regression the step169 evidence WIP;
+2. commit and exact-qualify the evidence;
+3. push and confirm remote synchronization;
+4. consider a larger bounded post-warmup tranche because the first
+   post-warmup gate passed in all categories;
+5. keep final holdout untouched and do not claim pretraining completion.
