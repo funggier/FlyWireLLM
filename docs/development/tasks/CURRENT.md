@@ -12,45 +12,42 @@ research/l004-base50m-pretraining
 
 ## Verified production progress
 
-Latest verified checkpoint candidate: optimizer step 16.
+Latest verified checkpoint: optimizer step 16.
 
 - supervised tokens seen: 1,048,576 / 500,000,000;
 - fraction of primary budget: 0.2097152%;
 - checkpoint SHA-256:
   `07a968b8e4c8a7f6711f24cd3466c46c374e09628c7d7c65848a2166efdcd71d`;
-- external state SHA-256:
-  `ef8c3a15b902e2d65d6fc4597b977cd732d2969931e5926ff6b914d655651107`;
-- third-tranche result SHA-256:
-  `7a87e2adcd326260909f1ddff59d09c82589b13eabb7ccdc6c19ea10f963ddf3`;
-- pretraining complete: false;
-- public release eligibility: not qualified.
+- third-tranche evidence commit:
+  `73d78d18134f7f27b530eaea2eb4d9733435ad61`;
+- post-step16 validation gate: PASS;
+- final holdout touched: false.
 
-Third bounded tranche step9-16 completed within authorization
-`a8be24f47fa5a98be39ebd3ba46c6a12591c2e4b5744d42a6ef5f5da8419def0`.
+## Fourth bounded scaling tranche
 
-## Post-step16 validation gate
+Qualified runner:
+`074b429f640654db1bb8696971da8560f17c9066`.
 
-Byte-identical 300k validation pack:
+Authorization candidate:
+`configs/pretraining-tranche-l004-v4.json`.
 
-- English: 10.102311081 -> 9.584511214 (-5.125559%);
-- Thai: 10.250705522 -> 9.824723932 (-4.155632%);
-- technical: 10.121698719 -> 9.606904253 (-5.086048%);
-- combined: 10.158238441 -> 9.672046466 (-4.786184%);
-- final holdout touched: false;
-- gate: PASS.
+Authorization SHA-256:
+`8ef449c63c6be4e2129a0604413fbfbb13f6d706a2c046d779079415981f0259`.
 
-Tracked hashes:
+Bound:
 
-- validation step16:
-  `d3ec4ab356b0b1d4fb89ee06f6b6d661257f59457672d9bf615b5fb4aa6cc6d5`;
-- step8-to-step16 comparison:
-  `bd079dcedeeb5c4d35c285ea4b8cdfa26b667f5e7a25d996bc44dc0d7d40ea18`.
+- source step: 16;
+- maximum additional updates: 16;
+- end step: 32;
+- additional supervised tokens: 1,048,576;
+- cumulative supervised tokens at bound: 2,097,152;
+- checkpoint every update;
+- same 300k validation pack required after step32;
+- combined validation loss must not worsen vs step16;
+- any category relative loss increase >0.5% fails the gate;
+- final holdout must remain untouched;
+- public release remains not qualified.
 
-## Active work
-
-Record and exact-qualify the complete step16 evidence before any new training
-authorization.
-
-Do not execute step17 until the evidence commit is exact-qualified and
-remote-synchronized. Any next expansion must remain bounded and must predeclare
-its post-tranche validation gate while keeping final holdout untouched.
+Do not execute step17 until the v4 authorization is committed,
+exact-qualified, remote-synchronized, and `--validate-only` passes on the
+clean exact commit.

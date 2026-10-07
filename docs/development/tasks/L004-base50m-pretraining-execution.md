@@ -587,16 +587,58 @@ Tracked evidence hashes:
 - step8-to-step16 comparison:
   `bd079dcedeeb5c4d35c285ea4b8cdfa26b667f5e7a25d996bc44dc0d7d40ea18`.
 
+## Phase M fourth bounded scaling authorization
+
+Step16 evidence commit:
+`73d78d18134f7f27b530eaea2eb4d9733435ad61`.
+
+Fourth-tranche runner commit:
+`074b429f640654db1bb8696971da8560f17c9066`.
+
+- step16 evidence exact qualification: PASS;
+- runner exact qualification: PASS;
+- full repository regression: PASS;
+- L004 audit: PASS;
+- third-tranche re-verification: PASS;
+- step16 validation gate re-verification: PASS;
+- remote branch sync after both commits: 0/0.
+
+Authorization candidate:
+`configs/pretraining-tranche-l004-v4.json`.
+
+- authorization id: `base50m-fourth-tranche-v1`;
+- authorization SHA-256:
+  `8ef449c63c6be4e2129a0604413fbfbb13f6d706a2c046d779079415981f0259`;
+- source optimizer step: 16;
+- source checkpoint SHA-256:
+  `07a968b8e4c8a7f6711f24cd3466c46c374e09628c7d7c65848a2166efdcd71d`;
+- maximum additional optimizer updates: 16;
+- authorized end step: 32;
+- additional supervised-token cap: 1,048,576;
+- cumulative supervised-token cap: 2,097,152;
+- checkpoint cadence: every optimizer update;
+- run root:
+  `external://FlyWireLLM-data/L004/Runs/base50m-fourth-tranche-v1`;
+- public release eligibility: not qualified;
+- automatic FlyWireModel export: blocked.
+
+The post-tranche gate is predeclared before step17: reuse the identical 300k
+validation pack at step32, require finite losses, combined loss no worse than
+step16, no category relative regression greater than 0.5%, and keep final
+holdout untouched.
+
 ## Current work
 
-Record and exact-qualify the third bounded-tranche + post-step16 validation
-evidence before any further training authorization.
+Commit and exact-qualify the fourth bounded authorization. No step17 is
+permitted until that authorization commit is clean, remote-synchronized, and
+validate-only passes from the exact commit.
 
 ## Next action
 
-1. full-regression the complete step16 evidence WIP;
-2. commit and exact-qualify the third-tranche evidence;
-3. push and confirm remote synchronization;
-4. only after that, design the next bounded expansion from verified step16;
-5. continue to use the identical validation pack and keep final holdout
-   untouched before every subsequent expansion.
+1. commit the v4 authorization and current task ledger;
+2. exact-qualify the authorization commit;
+3. push and verify remote synchronization;
+4. run `--validate-only` from the clean exact authorization commit;
+5. execute at most steps17 through32;
+6. re-verify every checkpoint/metric and evaluate step32 on the unchanged
+   validation pack before any further expansion.

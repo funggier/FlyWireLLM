@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "stage": "L004",
+  "authorization_id": "base50m-fourth-tranche-v1",
+  "runner_commit": "074b429f640654db1bb8696971da8560f17c9066",
+  "evidence_commit": "73d78d18134f7f27b530eaea2eb4d9733435ad61",
+  "checkpoint_lane": "research_only",
+  "start_optimizer_step": 16,
+  "max_additional_optimizer_updates": 16,
+  "end_optimizer_step": 32,
+  "target_additional_supervised_tokens": 1048576,
+  "target_cumulative_supervised_tokens": 2097152,
+  "checkpoint_every_updates": 1,
+  "source_checkpoint": {
+    "result_path": "results/l004/third-bounded-tranche-v1.json",
+    "result_sha256": "7a87e2adcd326260909f1ddff59d09c82589b13eabb7ccdc6c19ea10f963ddf3",
+    "checkpoint": "external://FlyWireLLM-data/L004/Runs/base50m-third-tranche-v1/checkpoints/step-000016.pt",
+    "checkpoint_bytes": 602706571,
+    "checkpoint_sha256": "07a968b8e4c8a7f6711f24cd3466c46c374e09628c7d7c65848a2166efdcd71d",
+    "optimizer_step": 16,
+    "supervised_tokens_seen": 1048576,
+    "physical_input_positions_seen": 1051555,
+    "microbatches_seen": 1042,
+    "data_state": {
+      "block_input_offset": 931,
+      "order_position": 1026,
+      "supervised_tokens_consumed": 1048576
+    }
+  },
+  "run_root": "external://FlyWireLLM-data/L004/Runs/base50m-fourth-tranche-v1",
+  "repo_file_pins": [
+    {
+      "path": "configs/pretraining-execution-l004.json",
+      "sha256": "f9e533804cb7f10a8eb6e0aa11c3b1c1b3721401961ef5725127f885e24c63bb"
+    },
+    {
+      "path": "configs/pretraining-data-runtime-l004.json",
+      "sha256": "2d99c61c84fbfffb0ba5f23434bf6e8b92a92b3f588d7716238c0ebc76ee424b"
+    },
+    {
+      "path": "configs/pretraining-local-runtime-l004.json",
+      "sha256": "97f689652387deb034c6c21956bf44c6b7fe62e98baafdee442ee78af1ddf626"
+    },
+    {
+      "path": "results/l004/runtime-qualification-v1.json",
+      "sha256": "69a3f4402dc36865594b7ac93240b57fdbba3290be9f42e1692bd74ae4a9d9af"
+    },
+    {
+      "path": "results/l004/third-bounded-tranche-v1.json",
+      "sha256": "7a87e2adcd326260909f1ddff59d09c82589b13eabb7ccdc6c19ea10f963ddf3"
+    },
+    {
+      "path": "results/l004/validation-comparison-step8-step16-v1.json",
+      "sha256": "bd079dcedeeb5c4d35c285ea4b8cdfa26b667f5e7a25d996bc44dc0d7d40ea18"
+    },
+    {
+      "path": "configs/validation-l004-v1.json",
+      "sha256": "1909c06ae22d39848b1f9e81dcd0618203fb4c5308fcc5004a0f639770f19648"
+    },
+    {
+      "path": "scripts/run_pretraining_scaling_l004.py",
+      "sha256": "e490acb69f57c1397aa345d8baf134bca8e962fd40efc3cf2abc0cc8c58cb92c"
+    },
+    {
+      "path": "src/flywire_llm/pretraining_scaling.py",
+      "sha256": "9dc772afd9fe859bc0d6c45a6cf249376a0299570d59efda1fe29b237cf42854"
+    },
+    {
+      "path": "src/flywire_llm/pretraining_checkpoint.py",
+      "sha256": "23903b8f15ae48c894d96f1117d87407d2b8844281a572f026d2bd80cb4ee393"
+    },
+    {
+      "path": "src/flywire_llm/pretraining_data.py",
+      "sha256": "dbc02d328881c4467a6e97709fec828cce5be7888ba563c28c3fecbb095e32f4"
+    },
+    {
+      "path": "src/flywire_llm/pretraining_training.py",
+      "sha256": "f42e7f1da68e177d131f75e8a58e3b19f243e3efc9082cbeec15d34398b3db71"
+    },
+    {
+      "path": "src/flywire_llm/pretraining_execution.py",
+      "sha256": "5ce63526450c4dc7f2e6802445e964257ebdfc8c74c75b62d810a4e13cb66fe5"
+    }
+  ],
+  "post_tranche_validation_gate": {
+    "evaluation_id": "base50m-validation-v1",
+    "baseline_optimizer_step": 16,
+    "candidate_optimizer_step": 32,
+    "same_validation_pack_required": true,
+    "final_holdout_must_remain_untouched": true,
+    "combined_loss_must_not_increase_vs_step16": true,
+    "max_category_relative_loss_increase_vs_step16": 0.005,
+    "require_all_losses_finite": true
+  },
+  "pretraining_authorized": true,
+  "public_release_eligibility": "not_qualified",
+  "automatic_flywiremodel_export_allowed": false
+}
