@@ -1212,16 +1212,68 @@ Authorization:
 This tranche ends exactly at the declared optimizer warmup boundary. It must
 not execute optimizer step154.
 
+## Warmup-boundary production result
+
+Authorization commit:
+`655297bbe7154b26e1fca0cdf154bbfcbda962d5`.
+
+Production result:
+
+- optimizer steps: 137 through 153;
+- cumulative optimizer steps: 153 / 7,630;
+- additional supervised tokens: 1,114,112;
+- cumulative supervised tokens: 10,027,008 / 500,000,000;
+- fraction of primary budget: 2.0054016%;
+- training loss step137 to step153: 6.664082 -> 6.429739;
+- peak learning rate reached at step153: 0.0006000000;
+- final checkpoint SHA-256:
+  `f00d36e288094aab5bc0bec52a62dd134e92505ee6a87f3797e8e70d05cc3700`;
+- final state SHA-256:
+  `760052bfc230ddcf6b7ba3bbc70255d5090060f5e8982241287d273eda9c3f02`;
+- tracked warmup-boundary result SHA-256:
+  `49c7586d901964812a71b67caebbe324e735778fb748dc574146b02cefac1950`;
+- final data cursor: order position 9819 / block offset 6;
+- optimizer warmup complete: true;
+- pretraining complete: false;
+- public release eligibility: not qualified.
+
+Rolling retention:
+
+- full checkpoints retained in warmup-boundary run root: 1;
+- historical checkpoints pruned after atomic state commit: 16;
+- metrics retained and hash-verified: 17 / 17;
+- final checkpoint reload: PASS.
+
+Post-step153 validation on the byte-identical 300k-token validation pack:
+
+| Category | Step 136 loss | Step 153 loss | Relative change |
+| --- | ---: | ---: | ---: |
+| general English | 6.374071930 | 6.210462363 | -2.566798% |
+| general Thai | 7.094012272 | 6.872962925 | -3.115999% |
+| technical/scientific/code | 6.578042986 | 6.412851243 | -2.511260% |
+| combined | 6.682042396 | 6.498758844 | -2.742927% |
+
+Post-tranche gate: **PASS**. Every category improved, combined validation loss
+improved, the validation packs are unchanged, and final holdout remains
+untouched.
+
+Tracked evidence hashes:
+
+- step153 validation:
+  `b8d53069dac09fdcf899d92cff71636b51ec14b18ccb1ecd7b9339df59e6c13b`;
+- step136-to-step153 comparison:
+  `1e484d263091c6d185e82e95315b4ee53788f5328b12b6540a371d6a4f36da42`.
+
 ## Current work
 
-Commit and exact-qualify v11. No step137 is permitted until the authorization
-commit is clean, remote-synchronized, and `--validate-only` passes.
+Record and exact-qualify the warmup-boundary + post-step153 validation
+evidence before any post-warmup training authorization.
 
 ## Next action
 
-1. commit v11 authorization and ledger;
-2. exact-qualify and push;
-3. execute exactly within step137 through153;
-4. verify retention, metrics/state, and final step153 checkpoint;
-5. evaluate step153 on the unchanged validation pack before defining any
-   post-warmup continuation policy.
+1. full-regression the step153 evidence WIP;
+2. commit and exact-qualify the evidence;
+3. push and confirm remote synchronization;
+4. define the first bounded post-warmup cosine-decay tranche from verified
+   step153;
+5. keep final holdout untouched and do not claim pretraining completion.
