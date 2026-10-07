@@ -769,16 +769,46 @@ Tracked evidence hashes:
 - step32-to-step40 comparison:
   `22b5ff56488599951ce6e4bb1decff6d2b851c6853234091e2ffff1248255a24`.
 
+## Phase O sixth bounded rolling expansion authorization
+
+Step40 evidence commit:
+`30e75e05b926224033033231a00de9ee3c6643bf`.
+
+Rolling expansion runner commit:
+`ff71939f7547f9d6ac8f2f510d6a604b350c525e`.
+
+Authorization:
+`configs/pretraining-tranche-l004-v6.json`.
+
+- authorization id: `base50m-sixth-tranche-v1`;
+- authorization SHA-256:
+  `b14f53cde35373e127c5405bca7b50744c9cea6366aa03f51d060dbc7af30f6f`;
+- source optimizer step: 40;
+- source checkpoint SHA-256:
+  `9f77df859cf1d41546d9bb919aac621e970375c175c6e9e9a93a4b200cedf95c`;
+- maximum additional optimizer updates: 16;
+- authorized end step: 56;
+- additional supervised-token cap: 1,048,576;
+- cumulative supervised-token cap: 3,670,016;
+- checkpoint creation cadence: every optimizer update;
+- rolling checkpoint retention: latest 1 checkpoint in this tranche;
+- prune prior checkpoint only after new metric + atomic state commit;
+- post-tranche validation baseline: step40;
+- candidate validation step: 56;
+- same 300k validation pack required;
+- final holdout must remain untouched;
+- public release eligibility: not qualified.
+
 ## Current work
 
-Record and exact-qualify the fifth rolling-tranche + post-step40 validation
-evidence before authorizing a larger rolling tranche.
+Commit and exact-qualify v6. No step41 is permitted until the authorization
+commit is clean, remote-synchronized, and `--validate-only` passes.
 
 ## Next action
 
-1. full-regression the complete step40 evidence WIP;
-2. commit and exact-qualify the rolling-pilot evidence;
-3. push and confirm remote synchronization;
-4. design the next bounded rolling tranche from verified step40;
-5. retain the latest checkpoint while keeping metrics and the unchanged
-   validation/holdout policy.
+1. commit v6 authorization and ledger;
+2. exact-qualify and push;
+3. execute at most step41 through56;
+4. verify rolling retention, metrics/state, and final step56 checkpoint;
+5. evaluate step56 on the unchanged validation pack before any further
+   expansion.
