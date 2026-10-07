@@ -1349,16 +1349,52 @@ Tracked evidence hashes:
 - step153-to-step169 comparison:
   `0f01fef42571bb756cad34ed00b9d3eb36ca7240788dd70443c51baa6b1b631f`.
 
+## Phase W second post-warmup cosine-decay scaling authorization
+
+Step169 evidence commit:
+`068a2a1eaec7affa84d719d4c1d847fe90ef5a88`.
+
+Post-warmup scaling runner commit:
+`d30273244407936a93f4bf7bb341828d2a357cbb`.
+
+Authorization:
+`configs/pretraining-tranche-l004-v13.json`.
+
+- authorization id: `base50m-post-warmup-2-v1`;
+- authorization SHA-256:
+  `b72536d3968a89043b3d2f453ccd5b2258da9e2f1e0ec956733fc1f536857f02`;
+- source optimizer step: 169;
+- source checkpoint SHA-256:
+  `ccce01d29686a76edfe52fbaa531cf198a82bfd8aa17ded34625b8c6f14b979e`;
+- maximum additional optimizer updates: 32;
+- authorized end step: 201;
+- additional supervised-token cap: 2,097,152;
+- cumulative supervised-token cap: 13,172,736;
+- schedule: existing qualified cosine decay, no new LR policy;
+- learning rate step170: 0.0005999931;
+- learning rate step201: 0.0005999451;
+- checkpoint creation cadence: every optimizer update;
+- rolling checkpoint retention: latest 1 checkpoint in this tranche;
+- prune prior checkpoint only after new metric + atomic state commit;
+- post-tranche validation baseline: step169;
+- candidate validation step: 201;
+- same 300k validation pack required;
+- final holdout must remain untouched;
+- public release eligibility: not qualified.
+
+This doubles the prior post-warmup tranche length from 16 to 32 updates while
+remaining bounded and keeping the same validation and retention contracts.
+
 ## Current work
 
-Record and exact-qualify the first post-warmup tranche + post-step169
-validation evidence before any further training authorization.
+Commit and exact-qualify v13. No step170 is permitted until the authorization
+commit is clean, remote-synchronized, and `--validate-only` passes.
 
 ## Next action
 
-1. full-regression the step169 evidence WIP;
-2. commit and exact-qualify the evidence;
-3. push and confirm remote synchronization;
-4. consider a larger bounded post-warmup tranche because the first
-   post-warmup gate passed in all categories;
-5. keep final holdout untouched and do not claim pretraining completion.
+1. commit v13 authorization and ledger;
+2. exact-qualify and push;
+3. execute at most step170 through201;
+4. verify retention, metrics/state, and final step201 checkpoint;
+5. evaluate step201 on the unchanged validation pack before any further
+   expansion.
