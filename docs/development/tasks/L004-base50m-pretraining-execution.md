@@ -1648,16 +1648,69 @@ This doubles the validated 64-update post-warmup cadence to 128 updates after
 step297 improved every validation category, while preserving optimizer,
 retention, validation, and holdout contracts.
 
+## Phase Z fifth post-warmup production evidence
+
+The v16 production runner completed normally at the authorized hard stop:
+optimizer step 425 with 27,852,800 cumulative supervised tokens.
+
+Verified runtime evidence:
+
+- final checkpoint: `step-000425.pt`;
+- final checkpoint SHA-256:
+  `b02d6d6e3d4f5f7d06a9256707a71d44ace0293b8c55d2f8b93aa2653abe47ee`;
+- final state SHA-256:
+  `36c99e89a9566243831812dd6b73276dd281b39e23157f1c45b5699c23c0a1ce`;
+- retained checkpoint count: 1;
+- historical tranche checkpoints pruned after state commit: 127;
+- metrics present and verified: step298 through step425;
+- final checkpoint load: PASS;
+- pretraining complete: false;
+- public release eligibility: not qualified.
+
+Tracked production result:
+`results/l004/post-warmup-5-v1.json`.
+
+SHA-256:
+`eab3a1e0a280f4b9fdfcce04f5072e6928b5c9fb291d5fdb1f36ccec76f220b2`.
+
+Step425 was then evaluated on the same sealed 300k validation pack used for
+step297. No final-holdout material was read or materialized.
+
+| Category | step297 | step425 | Relative change |
+| --- | ---: | ---: | ---: |
+| general English | 5.577049066 | 5.275155045 | -5.413150% |
+| general Thai | 5.905298695 | 5.358594238 | -9.257863% |
+| technical/scientific/code | 5.766543058 | 5.430036368 | -5.835501% |
+| combined | 5.749630273 | 5.354595217 | -6.870617% |
+
+Post-tranche validation gate: **PASS**.
+
+- every category is finite and improved versus step297;
+- combined validation loss improved versus step297;
+- same validation pack: true;
+- final holdout touched: false.
+
+Tracked validation evidence:
+
+- step425 validation:
+  `results/l004/validation-step425-v1.json`;
+  SHA-256:
+  `f602f2e89e3b87d478272d4aaef4da67c845c3dc842ee5846156a91fc5683ffc`;
+- step297-to-step425 comparison:
+  `results/l004/validation-comparison-step297-step425-v1.json`;
+  SHA-256:
+  `281e2eb29688209cf17ef801bf4f5d4c9de9329e7341efdb1811a1773622157f`.
+
 ## Current work
 
-Commit and exact-qualify v16. No step298 is permitted until the authorization
-commit is clean, remote-synchronized, and `--validate-only` passes.
+Exact-qualify the step425 evidence commit. Do not authorize or execute a later
+production tranche until that commit is clean, remote-synchronized, and its
+qualification evidence is recorded. Final holdout remains sealed.
 
 ## Next action
 
-1. commit v16 authorization and ledger;
-2. exact-qualify and push;
-3. execute at most step298 through425;
-4. verify retention, metrics/state, and final step425 checkpoint;
-5. evaluate step425 on the unchanged validation pack before any further
-   expansion.
+1. run full repository regression and L004 audit on the evidence candidate;
+2. commit the step425 evidence;
+3. exact-qualify that exact commit from a clean worktree;
+4. push/fetch and confirm 0/0 synchronization;
+5. only then consider a later bounded research-only tranche.

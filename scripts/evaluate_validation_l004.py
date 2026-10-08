@@ -75,6 +75,12 @@ from flywire_llm.pretraining_post_warmup_expanded import (
     load_post_warmup_expanded_authorization,
     load_post_warmup_expanded_state,
 )
+from flywire_llm.pretraining_post_warmup_accelerated import (
+    load_post_warmup_accelerated_authorization,
+)
+from flywire_llm.pretraining_post_warmup_accelerated_evidence import (
+    load_completed_post_warmup_accelerated_state,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -101,7 +107,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--model",
-        choices=("step0", "step4", "step8", "step16", "step32", "step40", "step56", "step88", "step104", "step120", "step136", "step153", "step169", "step201", "step233", "step297"),
+        choices=("step0", "step4", "step8", "step16", "step32", "step40", "step56", "step88", "step104", "step120", "step136", "step153", "step169", "step201", "step233", "step297", "step425"),
         required=True,
     )
     parser.add_argument("--output-json", required=True)
@@ -667,38 +673,75 @@ def _load_model(
             ),
         }
 
-    authorization = load_post_warmup_expanded_authorization(
-        ROOT / "configs" / "pretraining-tranche-l004-v15.json",
+    if model_name == "step297":
+        authorization = load_post_warmup_expanded_authorization(
+            ROOT / "configs" / "pretraining-tranche-l004-v15.json",
+            repo_root=ROOT,
+            external_root=external_root,
+        )
+        state = load_post_warmup_expanded_state(
+            authorization.run_root / "state.json",
+            authorization=authorization,
+            verify_files=True,
+        )
+        if state.optimizer_step != 297:
+            raise RuntimeError("post-warmup expanded state is not optimizer step 297")
+        if state.supervised_tokens_seen != 19_464_192:
+            raise RuntimeError("step297 supervised-token progress changed")
+        checkpoint = authorization.run_root / state.checkpoint_file
+        observed_sha = sha256_file(checkpoint)
+        if observed_sha != state.checkpoint_sha256:
+            raise RuntimeError("step297 checkpoint SHA-256 mismatch")
+        loaded = load_pretraining_checkpoint(
+            checkpoint,
+            expected_lineage=lineage_from_contract(execution),
+        )
+        if loaded.progress.optimizer_step != 297:
+            raise RuntimeError("loaded checkpoint is not optimizer step 297")
+        if loaded.progress.supervised_tokens_seen != 19_464_192:
+            raise RuntimeError("loaded step297 supervised-token count changed")
+        return loaded.model, {
+            "model": "step297",
+            "optimizer_step": 297,
+            "supervised_tokens_seen": 19_464_192,
+            "checkpoint_sha256": observed_sha,
+            "post_warmup_expanded_authorization_sha256": (
+                authorization.authorization_sha256
+            ),
+        }
+
+    authorization = load_post_warmup_accelerated_authorization(
+        ROOT / "configs" / "pretraining-tranche-l004-v16.json",
         repo_root=ROOT,
         external_root=external_root,
     )
-    state = load_post_warmup_expanded_state(
+    state = load_completed_post_warmup_accelerated_state(
         authorization.run_root / "state.json",
         authorization=authorization,
         verify_files=True,
     )
-    if state.optimizer_step != 297:
-        raise RuntimeError("post-warmup expanded state is not optimizer step 297")
-    if state.supervised_tokens_seen != 19_464_192:
-        raise RuntimeError("step297 supervised-token progress changed")
+    if state.optimizer_step != 425:
+        raise RuntimeError("post-warmup accelerated state is not optimizer step 425")
+    if state.supervised_tokens_seen != 27_852_800:
+        raise RuntimeError("step425 supervised-token progress changed")
     checkpoint = authorization.run_root / state.checkpoint_file
     observed_sha = sha256_file(checkpoint)
     if observed_sha != state.checkpoint_sha256:
-        raise RuntimeError("step297 checkpoint SHA-256 mismatch")
+        raise RuntimeError("step425 checkpoint SHA-256 mismatch")
     loaded = load_pretraining_checkpoint(
         checkpoint,
         expected_lineage=lineage_from_contract(execution),
     )
-    if loaded.progress.optimizer_step != 297:
-        raise RuntimeError("loaded checkpoint is not optimizer step 297")
-    if loaded.progress.supervised_tokens_seen != 19_464_192:
-        raise RuntimeError("loaded step297 supervised-token count changed")
+    if loaded.progress.optimizer_step != 425:
+        raise RuntimeError("loaded checkpoint is not optimizer step 425")
+    if loaded.progress.supervised_tokens_seen != 27_852_800:
+        raise RuntimeError("loaded step425 supervised-token count changed")
     return loaded.model, {
-        "model": "step297",
-        "optimizer_step": 297,
-        "supervised_tokens_seen": 19_464_192,
+        "model": "step425",
+        "optimizer_step": 425,
+        "supervised_tokens_seen": 27_852_800,
         "checkpoint_sha256": observed_sha,
-        "post_warmup_expanded_authorization_sha256": (
+        "post_warmup_accelerated_authorization_sha256": (
             authorization.authorization_sha256
         ),
     }
