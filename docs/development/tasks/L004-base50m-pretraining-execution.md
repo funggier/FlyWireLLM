@@ -1385,16 +1385,67 @@ Authorization:
 This doubles the prior post-warmup tranche length from 16 to 32 updates while
 remaining bounded and keeping the same validation and retention contracts.
 
+## Second post-warmup cosine-decay scaling result
+
+Authorization commit:
+`4fe9324797f438f299bb4230cc11bca4dea72cee`.
+
+Production result:
+
+- optimizer steps: 170 through 201;
+- cumulative optimizer steps: 201 / 7,630;
+- additional supervised tokens: 2,097,152;
+- cumulative supervised tokens: 13,172,736 / 500,000,000;
+- fraction of primary budget: 2.6345472%;
+- training loss step170 to step201: 6.444974 -> 6.215267;
+- learning rate step170 to step201: 0.0005999931 -> 0.0005999451;
+- final checkpoint SHA-256:
+  `11fe2a45b65d43bec6a6710d64c2110a1be4cc11042e1fcbf1b6197a9feaa2a0`;
+- final state SHA-256:
+  `267f3e3bdcbb01743cd92d800518fda502d9b9642ae00186638e9b5ecd9183ac`;
+- tracked post-warmup-2 result SHA-256:
+  `75ac56438958999c683518dbc04f06c98672d649fc3a9074328d2aac6dd39dfd`;
+- final data cursor: order position 12898 / block offset 493;
+- optimizer warmup complete: true;
+- pretraining complete: false;
+- public release eligibility: not qualified.
+
+Rolling retention:
+
+- full checkpoints retained in post-warmup-2 run root: 1;
+- historical checkpoints pruned after atomic state commit: 31;
+- metrics retained and hash-verified: 32 / 32;
+- final checkpoint reload: PASS.
+
+Post-step201 validation on the byte-identical 300k-token validation pack:
+
+| Category | Step 169 loss | Step 201 loss | Relative change |
+| --- | ---: | ---: | ---: |
+| general English | 6.117310139 | 5.931827876 | -3.032089% |
+| general Thai | 6.745732500 | 6.452203094 | -4.351335% |
+| technical/scientific/code | 6.337900238 | 6.140651583 | -3.112208% |
+| combined | 6.400314292 | 6.174894184 | -3.522016% |
+
+Post-tranche gate: **PASS**. Every category improved, combined validation loss
+improved, the validation packs are unchanged, and final holdout remains
+untouched.
+
+Tracked evidence hashes:
+
+- step201 validation:
+  `1b84b6ff741701ada4a1980030a668ed217bf1fff368aa6c86adff0fb0ad3b2d`;
+- step169-to-step201 comparison:
+  `a791e099ab10ba971d6313bfa1b79578746c0f5223076bbcda56e8a2ede97385`.
+
 ## Current work
 
-Commit and exact-qualify v13. No step170 is permitted until the authorization
-commit is clean, remote-synchronized, and `--validate-only` passes.
+Record and exact-qualify the second post-warmup scaling tranche +
+post-step201 validation evidence before any further training authorization.
 
 ## Next action
 
-1. commit v13 authorization and ledger;
-2. exact-qualify and push;
-3. execute at most step170 through201;
-4. verify retention, metrics/state, and final step201 checkpoint;
-5. evaluate step201 on the unchanged validation pack before any further
-   expansion.
+1. full-regression the step201 evidence WIP;
+2. commit and exact-qualify the evidence;
+3. push and confirm remote synchronization;
+4. design the next bounded cosine-decay tranche from verified step201;
+5. keep final holdout untouched and do not claim pretraining completion.

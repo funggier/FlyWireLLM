@@ -7,44 +7,50 @@ Branch: research/l004-base50m-pretraining
 
 ## Verified production progress
 
-Latest exact-qualified checkpoint: optimizer step 169.
+Latest verified checkpoint candidate: optimizer step 201.
 
-- supervised tokens seen: 11,075,584 / 500,000,000
-- fraction of primary budget: 2.2151168%
+- supervised tokens seen: 13,172,736 / 500,000,000
+- fraction of primary budget: 2.6345472%
 - checkpoint SHA-256:
-  `ccce01d29686a76edfe52fbaa531cf198a82bfd8aa17ded34625b8c6f14b979e`
-- step169 evidence commit:
-  `068a2a1eaec7affa84d719d4c1d847fe90ef5a88`
-- post-step169 validation gate: PASS
+  `11fe2a45b65d43bec6a6710d64c2110a1be4cc11042e1fcbf1b6197a9feaa2a0`
+- external state SHA-256:
+  `267f3e3bdcbb01743cd92d800518fda502d9b9642ae00186638e9b5ecd9183ac`
+- post-warmup-2 result SHA-256:
+  `75ac56438958999c683518dbc04f06c98672d649fc3a9074328d2aac6dd39dfd`
+- optimizer warmup complete: true
+- pretraining complete: false
+- public release eligibility: not qualified
+
+## Rolling checkpoint retention
+
+- retained post-warmup-2 full checkpoints: 1
+- historical post-warmup-2 checkpoints pruned: 31
+- step170-201 metrics retained: 32 / 32
+- final checkpoint reload: PASS
+
+## Post-step201 validation gate
+
+Byte-identical 300k validation pack:
+
+- English: 6.117310139 -> 5.931827876 (-3.032089%)
+- Thai: 6.745732500 -> 6.452203094 (-4.351335%)
+- technical: 6.337900238 -> 6.140651583 (-3.112208%)
+- combined: 6.400314292 -> 6.174894184 (-3.522016%)
 - final holdout touched: false
+- gate: PASS
 
-## Second post-warmup scaling tranche
+Tracked hashes:
 
-Qualified runner:
-`d30273244407936a93f4bf7bb341828d2a357cbb`.
+- validation step201:
+  `1b84b6ff741701ada4a1980030a668ed217bf1fff368aa6c86adff0fb0ad3b2d`
+- step169-to-step201 comparison:
+  `a791e099ab10ba971d6313bfa1b79578746c0f5223076bbcda56e8a2ede97385`
 
-Authorization candidate:
-`configs/pretraining-tranche-l004-v13.json`.
+## Active work
 
-Authorization SHA-256:
-`b72536d3968a89043b3d2f453ccd5b2258da9e2f1e0ec956733fc1f536857f02`.
+Record and exact-qualify the complete step201 evidence before any new
+training authorization.
 
-Bound:
-
-- source step: 169
-- maximum additional updates: 32
-- end step: 201
-- additional supervised tokens: 2,097,152
-- cumulative supervised tokens at bound: 13,172,736
-- qualified cosine-decay schedule unchanged
-- LR step170: 0.0005999931
-- LR step201: 0.0005999451
-- create checkpoint every update
-- retain latest post-warmup-2 checkpoint only
-- prune old checkpoint only after new metric + atomic state commit
-- same 300k validation pack required after step201
-- final holdout must remain untouched
-- public release remains not qualified
-
-Do not execute step170 until v13 is committed, exact-qualified,
-remote-synchronized, and `--validate-only` passes from the clean commit.
+Do not execute step202 until the evidence commit is exact-qualified and
+remote-synchronized. Continue the already-qualified cosine-decay schedule,
+keep final holdout untouched, and remain research-only.
