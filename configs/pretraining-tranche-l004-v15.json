@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "stage": "L004",
+  "authorization_id": "base50m-post-warmup-4-v1",
+  "runner_commit": "db93205e6a105b2697449f6517ffa2f8617ea7ae",
+  "evidence_commit": "2c4650b574cd9a86989313b0d43ecdee3f0f52c3",
+  "checkpoint_lane": "research_only",
+  "start_optimizer_step": 233,
+  "max_additional_optimizer_updates": 64,
+  "end_optimizer_step": 297,
+  "target_additional_supervised_tokens": 4194304,
+  "target_cumulative_supervised_tokens": 19464192,
+  "checkpoint_every_updates": 1,
+  "rolling_checkpoint_retention": 1,
+  "prune_prior_checkpoint_after_state_commit": true,
+  "source_checkpoint": {
+    "result_path": "results/l004/post-warmup-3-v1.json",
+    "result_sha256": "e26e181ec16be56a23155544fa5f907e64bc5fd85ea47a39abacc45ef691b12e",
+    "checkpoint": "external://FlyWireLLM-data/L004/Runs/base50m-post-warmup-3-v1/checkpoints/step-000233.pt",
+    "checkpoint_bytes": 602706571,
+    "checkpoint_sha256": "1513602d920fe57b7bb12ee7ee69cdf77ea23f39f0253cdabb718e55413dd964",
+    "optimizer_step": 233,
+    "supervised_tokens_seen": 15269888,
+    "physical_input_positions_seen": 15310667,
+    "microbatches_seen": 15184,
+    "data_state": {
+      "block_input_offset": 843,
+      "order_position": 14951,
+      "supervised_tokens_consumed": 15269888
+    }
+  },
+  "run_root": "external://FlyWireLLM-data/L004/Runs/base50m-post-warmup-4-v1",
+  "repo_file_pins": [
+    {"path":"configs/pretraining-execution-l004.json","sha256":"f9e533804cb7f10a8eb6e0aa11c3b1c1b3721401961ef5725127f885e24c63bb"},
+    {"path":"configs/pretraining-data-runtime-l004.json","sha256":"2d99c61c84fbfffb0ba5f23434bf6e8b92a92b3f588d7716238c0ebc76ee424b"},
+    {"path":"configs/pretraining-local-runtime-l004.json","sha256":"97f689652387deb034c6c21956bf44c6b7fe62e98baafdee442ee78af1ddf626"},
+    {"path":"results/l004/runtime-qualification-v1.json","sha256":"69a3f4402dc36865594b7ac93240b57fdbba3290be9f42e1692bd74ae4a9d9af"},
+    {"path":"results/l004/post-warmup-3-v1.json","sha256":"e26e181ec16be56a23155544fa5f907e64bc5fd85ea47a39abacc45ef691b12e"},
+    {"path":"results/l004/validation-comparison-step201-step233-v1.json","sha256":"cd9c4f78e74200de9af3731b9cbeb4f3fecb07b5b9c2118c64348837bba687de"},
+    {"path":"configs/validation-l004-v1.json","sha256":"1909c06ae22d39848b1f9e81dcd0618203fb4c5308fcc5004a0f639770f19648"},
+    {"path":"scripts/run_pretraining_post_warmup_expanded_l004.py","sha256":"3672e437828016213211896a4b8eee5a04990a9f425a2ac8e30d3c32f717263f"},
+    {"path":"src/flywire_llm/pretraining_post_warmup_expanded.py","sha256":"4eccc075984b4a9d857d236c2680dce16d20c9652a4a93384f9ec1e2adcba59b"},
+    {"path":"src/flywire_llm/pretraining_checkpoint.py","sha256":"23903b8f15ae48c894d96f1117d87407d2b8844281a572f026d2bd80cb4ee393"},
+    {"path":"src/flywire_llm/pretraining_data.py","sha256":"dbc02d328881c4467a6e97709fec828cce5be7888ba563c28c3fecbb095e32f4"},
+    {"path":"src/flywire_llm/pretraining_training.py","sha256":"f42e7f1da68e177d131f75e8a58e3b19f243e3efc9082cbeec15d34398b3db71"},
+    {"path":"src/flywire_llm/pretraining_execution.py","sha256":"5ce63526450c4dc7f2e6802445e964257ebdfc8c74c75b62d810a4e13cb66fe5"}
+  ],
+  "post_tranche_validation_gate": {
+    "evaluation_id": "base50m-validation-v1",
+    "baseline_optimizer_step": 233,
+    "candidate_optimizer_step": 297,
+    "same_validation_pack_required": true,
+    "final_holdout_must_remain_untouched": true,
+    "combined_loss_must_not_increase_vs_step233": true,
+    "max_category_relative_loss_increase_vs_step233": 0.005,
+    "require_all_losses_finite": true
+  },
+  "pretraining_authorized": true,
+  "public_release_eligibility": "not_qualified",
+  "automatic_flywiremodel_export_allowed": false
+}

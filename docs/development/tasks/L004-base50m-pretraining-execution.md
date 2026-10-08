@@ -1522,16 +1522,53 @@ Tracked evidence hashes:
 - step201-to-step233 comparison:
   `cd9c4f78e74200de9af3731b9cbeb4f3fecb07b5b9c2118c64348837bba687de`.
 
+## Phase Y fourth post-warmup cosine-decay expansion authorization
+
+Step233 evidence commit:
+`2c4650b574cd9a86989313b0d43ecdee3f0f52c3`.
+
+Expanded post-warmup runner commit:
+`db93205e6a105b2697449f6517ffa2f8617ea7ae`.
+
+Authorization:
+`configs/pretraining-tranche-l004-v15.json`.
+
+- authorization id: `base50m-post-warmup-4-v1`;
+- authorization SHA-256:
+  `84b8fdd089c1211e78d6359589886d4ed83b38b328d5222d5f418cae4efbd7a9`;
+- source optimizer step: 233;
+- source checkpoint SHA-256:
+  `1513602d920fe57b7bb12ee7ee69cdf77ea23f39f0253cdabb718e55413dd964`;
+- maximum additional optimizer updates: 64;
+- authorized end step: 297;
+- additional supervised-token cap: 4,194,304;
+- cumulative supervised-token cap: 19,464,192;
+- schedule: existing qualified cosine decay, no new LR policy;
+- learning rate step234: 0.000599843647;
+- learning rate step297: 0.000599505950;
+- checkpoint creation cadence: every optimizer update;
+- rolling checkpoint retention: latest 1 checkpoint in this tranche;
+- prune prior checkpoint only after new metric + atomic state commit;
+- post-tranche validation baseline: step233;
+- candidate validation step: 297;
+- same 300k validation pack required;
+- final holdout must remain untouched;
+- public release eligibility: not qualified.
+
+This doubles the bounded post-warmup tranche from 32 to 64 updates after two
+consecutive 32-update PASS gates, while preserving the exact same optimizer,
+retention, and validation contracts.
+
 ## Current work
 
-Record and exact-qualify the third post-warmup + post-step233 validation
-evidence before any further training authorization.
+Commit and exact-qualify v15. No step234 is permitted until the authorization
+commit is clean, remote-synchronized, and `--validate-only` passes.
 
 ## Next action
 
-1. full-regression the step233 evidence WIP;
-2. commit and exact-qualify the evidence;
-3. push and confirm remote synchronization;
-4. decide whether to scale the next post-warmup tranche beyond 32 updates
-   based on the now two consecutive 32-update PASS gates;
-5. keep final holdout untouched and public release not qualified.
+1. commit v15 authorization and ledger;
+2. exact-qualify and push;
+3. execute at most step234 through297;
+4. verify retention, metrics/state, and final step297 checkpoint;
+5. evaluate step297 on the unchanged validation pack before any further
+   expansion.
