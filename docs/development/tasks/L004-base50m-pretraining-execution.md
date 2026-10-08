@@ -1611,16 +1611,53 @@ Tracked evidence hashes:
 - step233-to-step297 comparison:
   `b7e048dbc355171e6fa46017dc57f1fbc8ef9475db98281732d98fa0b419e0ed`.
 
+## Phase Z fifth post-warmup cosine-decay acceleration authorization
+
+Step297 evidence commit:
+`4b8775c324f004d406a5340324c85ac37e8c8642`.
+
+Accelerated post-warmup runner commit:
+`39b696a3495db40fffb2cc9ca69838058cc0c408`.
+
+Authorization:
+`configs/pretraining-tranche-l004-v16.json`.
+
+- authorization id: `base50m-post-warmup-5-v1`;
+- authorization SHA-256:
+  `71ce46ad2366ef60135abfc99ecb0b097782e1e322e35b906049b8c5cfe990ea`;
+- source optimizer step: 297;
+- source checkpoint SHA-256:
+  `f0917d81130d3fb8ff6c59d28cfd0b662633b68ae96b36c5d75caceb179870fc`;
+- maximum additional optimizer updates: 128;
+- authorized end step: 425;
+- additional supervised-token cap: 8,388,608;
+- cumulative supervised-token cap: 27,852,800;
+- schedule: existing qualified cosine decay, no LR-policy change;
+- learning rate step298: 0.000599499066;
+- learning rate step425: 0.000598238658;
+- checkpoint creation cadence: every optimizer update;
+- rolling checkpoint retention: latest 1 checkpoint in this tranche;
+- prune prior checkpoint only after new metric + atomic state commit;
+- post-tranche validation baseline: step297;
+- candidate validation step: 425;
+- same 300k validation pack required;
+- final holdout must remain untouched;
+- public release eligibility: not qualified.
+
+This doubles the validated 64-update post-warmup cadence to 128 updates after
+step297 improved every validation category, while preserving optimizer,
+retention, validation, and holdout contracts.
+
 ## Current work
 
-Record and exact-qualify the fourth post-warmup expanded tranche +
-post-step297 validation evidence before any further training authorization.
+Commit and exact-qualify v16. No step298 is permitted until the authorization
+commit is clean, remote-synchronized, and `--validate-only` passes.
 
 ## Next action
 
-1. full-regression the step297 evidence WIP;
-2. commit and exact-qualify the evidence;
-3. push and confirm remote synchronization;
-4. only then design the next bounded cosine-decay tranche from verified
-   step297;
-5. keep final holdout untouched and do not claim pretraining completion.
+1. commit v16 authorization and ledger;
+2. exact-qualify and push;
+3. execute at most step298 through425;
+4. verify retention, metrics/state, and final step425 checkpoint;
+5. evaluate step425 on the unchanged validation pack before any further
+   expansion.
