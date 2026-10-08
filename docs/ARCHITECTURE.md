@@ -172,4 +172,45 @@ normalization and byte fallback. The learned tokenizer is not coupled to the
 core model implementation; the released UTF-8 byte tokenizer remains the
 bootstrap/fallback baseline.
 
-No Base-50M language weights have been trained yet.
+Base-50M-v1 is now being pretrained from random initialization in the
+research-only L004 lineage. The latest exact-qualified milestone is optimizer
+step 681 with 44,630,016 supervised training tokens. This is 8.9260032% of the
+500M primary budget, so the control is still an in-progress pretrained base
+model rather than a completed or release-qualified model.
+
+## 50M research-budget policy
+
+Approximately 50M parameters is the standard architecture-research budget for
+FlyWireLLM. Base-50M-v1, at exactly 50,213,376 parameters, is the conventional
+Transformer control.
+
+FlyWire-inspired variants should remain near the same parameter budget and use
+matched or explicitly reported training-token and compute budgets. A larger
+parameter count is not itself an architectural improvement.
+
+Scaling above 50M should be considered only after a variant demonstrates a
+repeatable advantage over the control and a larger experiment is needed to test
+whether that advantage survives scale.
+
+## FlyWire-inspired architecture track
+
+The baseline must not be retrofitted mid-training. FlyWire-informed mechanisms
+are separate experimental variants, initially including:
+
+- sparse connectivity;
+- learned or conditional routing;
+- recurrence and feedback;
+- specialized circuits;
+- local-before-global processing;
+- learnable gating or inhibitory-style computation.
+
+Each experiment must identify the motivating FlyWire/connectome observation,
+state the mathematical mechanism actually implemented, preserve a matched
+control, and report negative results as well as wins.
+
+Validation loss is not the only success criterion. Matched quality at lower
+compute, better parameter efficiency, improved stability, or stronger
+qualitative capability at comparable resources can also be meaningful results.
+
+See `docs/RESEARCH_ROADMAP.md` for the project story, experimental sequence,
+and evidence policy.

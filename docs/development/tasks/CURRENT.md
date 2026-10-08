@@ -7,95 +7,129 @@ Branch: research/l004-base50m-pretraining
 
 ## Verified production progress
 
-Latest exact-qualified checkpoint: optimizer step 425.
+Latest exact-qualified checkpoint: optimizer step 681.
 
-- step425 evidence commit:
-  `691cb9d6e6640f8e4c7c36f3927ae12cdb6e8121`
+- step681 evidence commit:
+  `a0628a604ad3caf1efe55951cba3671eb794da69`
 - exact qualification: PASS
 - pushed/fetched branch synchronization: 0 ahead / 0 behind
-
-- supervised tokens seen: 27,852,800 / 500,000,000
-- fraction of primary budget: 5.57056%
+- supervised tokens seen: 44,630,016 / 500,000,000
+- fraction of primary budget: 8.9260032%
 - checkpoint SHA-256:
-  `b02d6d6e3d4f5f7d06a9256707a71d44ace0293b8c55d2f8b93aa2653abe47ee`
+  `592497980f6737fd74e13343cff0a1fecbaa3fc1fb97c44c47521e5f38f38ea4`
 - state SHA-256:
-  `36c99e89a9566243831812dd6b73276dd281b39e23157f1c45b5699c23c0a1ce`
+  `c1c35c918b6e93f381f0144685c1802b8e784f8fa9ac5935a566b614fc605a29`
 - retained checkpoint count: 1
-- historical checkpoints pruned after state commit: 127
-- post-step425 validation gate: PASS
-- same validation pack as step297: true
-- final holdout touched: false
+- historical checkpoints pruned after state commit: 255
 - pretraining complete: false
 - public release eligibility: not qualified
 
-## Fifth post-warmup accelerated tranche
+## Sixth post-warmup extended tranche
 
-Qualified runner:
-`39b696a3495db40fffb2cc9ca69838058cc0c408`.
+Runner commit:
+`ccb04e7a111dca65eb4f2ffccfe21fd7e66280be`
+
+Authorization commit:
+`46761af6112a9b7ab0376b940c9235670e8d3355`
 
 Authorization:
-`configs/pretraining-tranche-l004-v16.json`.
+`configs/pretraining-tranche-l004-v17.json`
 
 Authorization SHA-256:
-`71ce46ad2366ef60135abfc99ecb0b097782e1e322e35b906049b8c5cfe990ea`.
+`b7f3050fa280e0ff707a1ea3aaac42c66b9941aeb7fb5c814f8709e40261a824`
 
 Production result:
-`results/l004/post-warmup-5-v1.json`
-SHA-256:
-`eab3a1e0a280f4b9fdfcce04f5072e6928b5c9fb291d5fdb1f36ccec76f220b2`.
+`results/l004/post-warmup-6-v1.json`
 
-Step425 validation:
-`results/l004/validation-step425-v1.json`
 SHA-256:
-`f602f2e89e3b87d478272d4aaef4da67c845c3dc842ee5846156a91fc5683ffc`.
+`9a52762d002ab18af93517c36f1e462317dca30aee0c0ace26ef58a4a041ede1`
 
-Step297-to-step425 comparison:
-`results/l004/validation-comparison-step297-step425-v1.json`
+Step681 validation:
+`results/l004/validation-step681-v1.json`
+
 SHA-256:
-`281e2eb29688209cf17ef801bf4f5d4c9de9329e7341efdb1811a1773622157f`.
+`83043c81e76913db89870e4fc2f8b1d95bc280a4d0d649380a5cbe96c8c0182b`
+
+Step425-to-step681 comparison:
+`results/l004/validation-comparison-step425-step681-v1.json`
+
+SHA-256:
+`6c172d2d2483d19672464fb511a9207ff7780d50e49b5e867bf1ed9c1a6db445`
 
 Validation losses:
 
-| Category | step297 | step425 | Relative change |
+| Category | step425 | step681 | Relative change |
 | --- | ---: | ---: | ---: |
-| general English | 5.577049066 | 5.275155045 | -5.413150% |
-| general Thai | 5.905298695 | 5.358594238 | -9.257863% |
-| technical/scientific/code | 5.766543058 | 5.430036368 | -5.835501% |
-| combined | 5.749630273 | 5.354595217 | -6.870617% |
+| general English | 5.275155045 | 4.867667660 | -7.724652% |
+| general Thai | 5.358594238 | 4.740044962 | -11.543126% |
+| technical/scientific/code | 5.430036368 | 4.982780476 | -8.236702% |
+| combined | 5.354595217 | 4.863497699 | -9.171515% |
 
-The step425 evidence commit is exact-qualified and remote-synchronized. L004
-remains ACTIVE because the 500M research pretraining contract is not complete.
+Post-step681 validation gate: PASS.
 
-## Sixth post-warmup extended tranche candidate
+- every category improved versus step425
+- same sealed 300k validation pack: true
+- final holdout touched: false
+- exact validation rerun reproduced all category losses
+- exact runtime verifier reproduced tracked evidence hash
+- production-pinned v16/v17 module hashes remained unchanged
 
-Qualified runner commit:
-`ccb04e7a111dca65eb4f2ffccfe21fd7e66280be`.
+L004 remains ACTIVE because the 500M research pretraining contract is not
+complete.
 
-Authorization candidate:
-`configs/pretraining-tranche-l004-v17.json`.
+## Research direction
 
-Authorization candidate SHA-256:
-`b7f3050fa280e0ff707a1ea3aaac42c66b9941aeb7fb5c814f8709e40261a824`.
+FlyWireLLM keeps approximately 50M parameters as the standard research budget.
+Base-50M-v1 remains the conventional Transformer control. FlyWire-inspired
+Sparse, Routing, Recurrent, Circuit/local-global, and gating experiments must
+be separate variants and compared using matched or clearly reported
+parameter/token/compute budgets.
 
-Bounded contract:
+The project must preserve not only final metrics but the reason for each
+decision, checkpoint lineage, validation evidence, qualitative capability
+progression, and the research story from blank model to conventional control
+to measurable FlyWire-inspired architectural hypotheses.
 
-- source step: 425
-- candidate end step: 681
-- maximum additional updates: 256
-- additional supervised tokens: 16,777,216
-- cumulative supervised tokens at bound: 44,630,016 / 500,000,000
-- fraction of primary budget at bound: 8.9260032%
-- cosine LR step426: 0.000598225697
-- cosine LR step681: 0.000593382946
-- checkpoint every update
-- rolling retention: latest 1 checkpoint
-- prune prior checkpoint only after metric + atomic state commit
-- post-tranche validation baseline: step425
-- candidate validation step: 681
-- same sealed 300k validation pack required
-- final holdout must remain untouched
-- public release remains not qualified
+See `docs/RESEARCH_ROADMAP.md` and `docs/ARCHITECTURE.md`.
 
-The authorization candidate loads successfully, but step426 is not permitted
-until v17 itself is committed, exact-qualified from a clean worktree,
-pushed/fetched, and confirmed synchronized. Final holdout remains sealed.
+## Qualitative capability probe v1
+
+A fixed synthetic 12-prompt greedy-generation probe now compares step425 and
+step681 under identical decoding settings (32 new tokens, greedy, no sampling).
+It reads no train/validation/holdout records and explicitly records
+`final_holdout_touched=false`.
+
+Tracked result:
+`results/l004/qualitative-probe-step425-step681-v1.json`
+
+SHA-256:
+`7c574e1480b0c9296e80701450896203599a3fef43a18641a8d476594819ef68`
+
+Observed behavior, without assigning a benchmark score:
+
+- Thai surface fluency is visibly stronger at step681 on some continuations,
+  but semantic relevance, factual accuracy, and repetition remain weak;
+- English outputs show more sentence-like syntax but still contain invented
+  pseudo-words and repetition;
+- question-like prompts can still collapse into punctuation/list repetition;
+- Python, JSON, and technical continuations are not yet structurally reliable;
+- neither checkpoint reached EOS within the 32-token generation cap on these
+  prompts.
+
+This is observational evidence only. It does not replace the quantitative
+validation gate and does not qualify the model for release or assistant use.
+
+## Current work
+
+Exact-qualify and synchronize the qualitative-probe milestone, then use the
+strong step681 validation improvement plus the still-early qualitative behavior
+to design the next bounded pretraining expansion.
+
+## Next action
+
+1. rerun the qualitative probe from its exact commit and require byte-identical
+   deterministic evidence;
+2. push/fetch and confirm 0/0 synchronization;
+3. prepare the next bounded continuation without modifying the pinned v17
+   production module;
+4. keep the final holdout sealed and public release blocked.

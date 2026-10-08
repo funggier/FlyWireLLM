@@ -78,14 +78,20 @@ After the v0.1.0 blank baseline, L002 defines Base-50M-v1:
 The L002 32K engineering tokenizer is lossless on its 10,150-case benchmark.
 L003 has now qualified a globally deduplicated **research-only** corpus with
 969,701,220 available train tokens and a valid 500M Thai/English/technical
-mixture. The research-only checkpoint lineage is frozen and authorized before
-optimizer step 1, but Base-50M has **not** been pretrained yet.
+mixture. The research-only checkpoint lineage was frozen before optimizer step 1.
+L004 is now actively pretraining Base-50M from random initialization. The latest
+exact-qualified milestone is optimizer step 681 with 44,630,016 supervised
+training tokens (8.9260032% of the 500M primary budget). Pretraining remains
+incomplete and public checkpoint release remains not qualified.
 
 This does not make the corpus release-safe: the release-safe lane still has
 only 20,053,464 qualified train tokens, public release eligibility remains
 not qualified, and automatic FlyWireModel export remains blocked.
 
-See docs/RESULTS_L002.md and docs/RESULTS_L003.md.
+See docs/RESULTS_L002.md, docs/RESULTS_L003.md, and
+[docs/RESEARCH_ROADMAP.md](docs/RESEARCH_ROADMAP.md) for the 50M research
+budget, capability-progression evidence, and future FlyWire-inspired
+architecture track.
 
 ## v0.2.0 release milestone
 

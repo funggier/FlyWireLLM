@@ -4,7 +4,7 @@ Status: ACTIVE
 
 GitHub Issue: #6
 
-Updated: 2026-10-07
+Updated: 2026-10-08
 
 ## Objective
 
@@ -1723,7 +1723,7 @@ Qualification included:
 The evidence commit was pushed non-force, fetched again, and confirmed equal to
 `origin/research/l004-base50m-pretraining` at 0 ahead / 0 behind.
 
-## Phase AA sixth post-warmup cosine-decay extension authorization candidate
+## Phase AA sixth post-warmup cosine-decay extension authorization and result
 
 Step425 exact-qualified evidence commit:
 `691cb9d6e6640f8e4c7c36f3927ae12cdb6e8121`.
@@ -1734,10 +1734,10 @@ Extended post-warmup runner commit:
 Runner exact qualification: **PASS**.
 Runner commit was pushed/fetched and confirmed 0 ahead / 0 behind.
 
-Authorization candidate:
+Authorization:
 `configs/pretraining-tranche-l004-v17.json`.
 
-Candidate authorization SHA-256:
+Authorization SHA-256:
 `b7f3050fa280e0ff707a1ea3aaac42c66b9941aeb7fb5c814f8709e40261a824`.
 
 - authorization id: `base50m-post-warmup-6-v1`;
@@ -1769,16 +1769,149 @@ The new runner is isolated from the v16 runner/module, so v16 pinned production
 provenance remains byte-identical. The new state loader explicitly verifies
 `tranche_complete=false` before step681 and `true` at step681.
 
+## Phase AA sixth post-warmup production evidence
+
+Authorization commit:
+`46761af6112a9b7ab0376b940c9235670e8d3355`.
+
+The bounded v17 production runner completed normally at optimizer step 681.
+
+Verified runtime evidence:
+
+- optimizer steps: 426 through 681;
+- cumulative optimizer step: 681 / 7,630;
+- additional supervised tokens: 16,777,216;
+- cumulative supervised tokens: 44,630,016 / 500,000,000;
+- fraction of primary budget: 8.9260032%;
+- final checkpoint: `step-000681.pt`;
+- final checkpoint SHA-256:
+  `592497980f6737fd74e13343cff0a1fecbaa3fc1fb97c44c47521e5f38f38ea4`;
+- final state SHA-256:
+  `c1c35c918b6e93f381f0144685c1802b8e784f8fa9ac5935a566b614fc605a29`;
+- retained checkpoint count: 1;
+- historical tranche checkpoints pruned after state commit: 255;
+- metrics present and verified: step426 through step681;
+- final checkpoint load: PASS;
+- pretraining complete: false;
+- public release eligibility: not qualified.
+
+Tracked production result:
+`results/l004/post-warmup-6-v1.json`.
+
+SHA-256:
+`9a52762d002ab18af93517c36f1e462317dca30aee0c0ace26ef58a4a041ede1`.
+
+Step681 was evaluated on the same sealed 300k validation pack used for step425.
+No final-holdout material was read or materialized.
+
+| Category | step425 | step681 | Relative change |
+| --- | ---: | ---: | ---: |
+| general English | 5.275155045 | 4.867667660 | -7.724652% |
+| general Thai | 5.358594238 | 4.740044962 | -11.543126% |
+| technical/scientific/code | 5.430036368 | 4.982780476 | -8.236702% |
+| combined | 5.354595217 | 4.863497699 | -9.171515% |
+
+Post-tranche validation gate: **PASS**.
+
+- every category is finite and improved versus step425;
+- combined validation loss improved versus step425;
+- same validation pack: true;
+- final holdout touched: false.
+
+Tracked validation evidence:
+
+- step681 validation:
+  `results/l004/validation-step681-v1.json`;
+  SHA-256:
+  `83043c81e76913db89870e4fc2f8b1d95bc280a4d0d649380a5cbe96c8c0182b`;
+- step425-to-step681 comparison:
+  `results/l004/validation-comparison-step425-step681-v1.json`;
+  SHA-256:
+  `6c172d2d2483d19672464fb511a9207ff7780d50e49b5e867bf1ed9c1a6db445`.
+
+## Step681 evidence exact qualification
+
+Evidence commit:
+`a0628a604ad3caf1efe55951cba3671eb794da69`.
+
+Exact qualification from a clean worktree: **PASS**.
+
+Qualification included:
+
+- full repository pytest: PASS;
+- L004 audit: PASS;
+- step426-through-step681 runtime/state/checkpoint verification: PASS;
+- deterministic verifier output matched the tracked evidence SHA-256;
+- step681 validation rerun to a temporary output: PASS;
+- all three rerun category losses exactly matched the tracked validation;
+- step425-to-step681 predeclared validation gate: PASS;
+- same validation pack: true;
+- final holdout touched: false;
+- v16 and v17 production-pinned module hashes remained unchanged;
+- HEAD before/after qualification matched the evidence commit;
+- worktree before/after qualification was clean.
+
+The evidence commit was pushed non-force, fetched again, and confirmed equal to
+`origin/research/l004-base50m-pretraining` at 0 ahead / 0 behind.
+
+## Research-budget direction
+
+Approximately 50M parameters is the standard FlyWireLLM research budget.
+Base-50M-v1 remains the conventional Transformer control; future FlyWire-
+inspired Sparse, Routing, Recurrent, Circuit/local-global and gating variants
+must remain near the same parameter budget and use matched or explicitly
+reported token/compute budgets.
+
+The project must preserve the research story and decision rationale alongside
+metrics. See `docs/RESEARCH_ROADMAP.md` and `docs/ARCHITECTURE.md`.
+
+## Step425-to-step681 qualitative capability probe
+
+A fixed synthetic generation probe was added after the quantitative step681
+evidence gate. It uses 12 versioned prompts: four Thai, four English, and four
+technical/structured-code prompts.
+
+Decoding contract:
+
+- greedy decoding only;
+- 32 maximum new tokens;
+- no sampling;
+- stop on EOS if emitted;
+- same prompts/settings for both checkpoints;
+- no corpus partition is read;
+- final holdout touched: false.
+
+Tracked result:
+`results/l004/qualitative-probe-step425-step681-v1.json`.
+
+SHA-256:
+`7c574e1480b0c9296e80701450896203599a3fef43a18641a8d476594819ef68`.
+
+Observations are intentionally descriptive rather than scored:
+
+- step681 shows stronger Thai surface-form generation on some prompts than
+  step425, but relevance and factual correctness remain poor and repetition is
+  still common;
+- English at step681 is more sentence-like in several prompts but still creates
+  pseudo-words and repetitive constructions;
+- question-like prompts remain fragile and can collapse into punctuation;
+- Python, JSON, and technical continuation do not yet preserve the requested
+  structure reliably;
+- all 24 generations reached the 32-token cap without EOS.
+
+This is expected early-base-model behavior at only 44.63M supervised tokens.
+The probe is observational evidence only and does not change release status.
+
 ## Current work
 
-Commit and exact-qualify v17. Step426 is not permitted until the authorization
-commit is clean, remote-synchronized, and `--validate-only` passes from the
-exact commit. Final holdout remains sealed.
+Exact-qualify the versioned qualitative probe and synchronize its evidence.
+After that, design the next bounded continuation from step681 while preserving
+v17 production provenance byte-for-byte.
 
 ## Next action
 
-1. commit v17 authorization and ledger;
-2. run exact authorization qualification including full regression, L004 audit,
-   and `--validate-only`;
-3. push/fetch and confirm exact 0/0 synchronization;
-4. only then allow the bounded step426-through-step681 production tranche.
+1. exact-rerun the qualitative probe and require deterministic output;
+2. push/fetch the probe/documentation milestone and verify 0/0 sync;
+3. design a separately pinned next continuation runner/authorization;
+4. continue bounded pretraining only after exact qualification;
+5. keep final holdout sealed and public release blocked.

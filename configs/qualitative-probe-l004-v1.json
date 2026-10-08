@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "stage": "L004",
+  "probe_id": "base50m-qualitative-generation-v1",
+  "observational_only": true,
+  "evaluation_only": true,
+  "synthetic_prompts_only": true,
+  "source_partitions_read": [],
+  "final_holdout_touched": false,
+  "models": ["step425", "step681"],
+  "runtime": {
+    "device": "cpu",
+    "precision": "fp32",
+    "threads": 12
+  },
+  "decoding": {
+    "method": "greedy",
+    "max_new_tokens": 32,
+    "stop_on_eos": true,
+    "add_bos": false
+  },
+  "prompts": [
+    {
+      "id": "th-continuation-01",
+      "category": "general_thai",
+      "kind": "continuation",
+      "text": "ประเทศไทยมีภูมิอากาศ"
+    },
+    {
+      "id": "th-question-01",
+      "category": "general_thai",
+      "kind": "question_like",
+      "text": "คำถาม: ทำไมท้องฟ้าจึงมีสีฟ้า?\nคำตอบ:"
+    },
+    {
+      "id": "th-factual-stem-01",
+      "category": "general_thai",
+      "kind": "factual_stem",
+      "text": "น้ำเดือดที่อุณหภูมิประมาณ"
+    },
+    {
+      "id": "th-context-01",
+      "category": "general_thai",
+      "kind": "short_context",
+      "text": "แมวตัวหนึ่งนั่งอยู่หน้าประตู เพราะ"
+    },
+    {
+      "id": "en-continuation-01",
+      "category": "general_english",
+      "kind": "continuation",
+      "text": "The solar system consists of"
+    },
+    {
+      "id": "en-question-01",
+      "category": "general_english",
+      "kind": "question_like",
+      "text": "Question: Why does ice float on water?\nAnswer:"
+    },
+    {
+      "id": "en-definition-01",
+      "category": "general_english",
+      "kind": "definition_stem",
+      "text": "A computer program is a sequence of"
+    },
+    {
+      "id": "en-context-01",
+      "category": "general_english",
+      "kind": "short_context",
+      "text": "The scientist recorded the result because"
+    },
+    {
+      "id": "tech-python-01",
+      "category": "technical_scientific_code",
+      "kind": "code_completion",
+      "text": "Python function to add two numbers:\n```python\ndef add(a, b):\n"
+    },
+    {
+      "id": "tech-json-01",
+      "category": "technical_scientific_code",
+      "kind": "structured_text",
+      "text": "{\"name\": \"FlyWireLLM\", \"parameters\":"
+    },
+    {
+      "id": "tech-ml-01",
+      "category": "technical_scientific_code",
+      "kind": "technical_continuation",
+      "text": "In a neural network, gradient descent"
+    },
+    {
+      "id": "tech-markdown-01",
+      "category": "technical_scientific_code",
+      "kind": "markdown_continuation",
+      "text": "## Transformer attention\n\nThe purpose of attention is"
+    }
+  ],
+  "public_release_eligibility": "not_qualified"
+}
