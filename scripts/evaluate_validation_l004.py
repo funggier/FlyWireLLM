@@ -81,6 +81,10 @@ from flywire_llm.pretraining_post_warmup_accelerated import (
 from flywire_llm.pretraining_post_warmup_accelerated_evidence import (
     load_completed_post_warmup_accelerated_state,
 )
+from flywire_llm.pretraining_post_warmup_extended import (
+    load_post_warmup_extended_authorization,
+    load_post_warmup_extended_state,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -107,7 +111,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--model",
-        choices=("step0", "step4", "step8", "step16", "step32", "step40", "step56", "step88", "step104", "step120", "step136", "step153", "step169", "step201", "step233", "step297", "step425"),
+        choices=("step0", "step4", "step8", "step16", "step32", "step40", "step56", "step88", "step104", "step120", "step136", "step153", "step169", "step201", "step233", "step297", "step425", "step681"),
         required=True,
     )
     parser.add_argument("--output-json", required=True)
@@ -706,6 +710,43 @@ def _load_model(
             "supervised_tokens_seen": 19_464_192,
             "checkpoint_sha256": observed_sha,
             "post_warmup_expanded_authorization_sha256": (
+                authorization.authorization_sha256
+            ),
+        }
+
+    if model_name == "step681":
+        authorization = load_post_warmup_extended_authorization(
+            ROOT / "configs" / "pretraining-tranche-l004-v17.json",
+            repo_root=ROOT,
+            external_root=external_root,
+        )
+        state = load_post_warmup_extended_state(
+            authorization.run_root / "state.json",
+            authorization=authorization,
+            verify_files=True,
+        )
+        if state.optimizer_step != 681:
+            raise RuntimeError("post-warmup extended state is not optimizer step 681")
+        if state.supervised_tokens_seen != 44_630_016:
+            raise RuntimeError("step681 supervised-token progress changed")
+        checkpoint = authorization.run_root / state.checkpoint_file
+        observed_sha = sha256_file(checkpoint)
+        if observed_sha != state.checkpoint_sha256:
+            raise RuntimeError("step681 checkpoint SHA-256 mismatch")
+        loaded = load_pretraining_checkpoint(
+            checkpoint,
+            expected_lineage=lineage_from_contract(execution),
+        )
+        if loaded.progress.optimizer_step != 681:
+            raise RuntimeError("loaded checkpoint is not optimizer step 681")
+        if loaded.progress.supervised_tokens_seen != 44_630_016:
+            raise RuntimeError("loaded step681 supervised-token count changed")
+        return loaded.model, {
+            "model": "step681",
+            "optimizer_step": 681,
+            "supervised_tokens_seen": 44_630_016,
+            "checkpoint_sha256": observed_sha,
+            "post_warmup_extended_authorization_sha256": (
                 authorization.authorization_sha256
             ),
         }
