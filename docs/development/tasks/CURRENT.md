@@ -119,17 +119,51 @@ Observed behavior, without assigning a benchmark score:
 This is observational evidence only. It does not replace the quantitative
 validation gate and does not qualify the model for release or assistant use.
 
+## Seventh post-warmup sustained authorization candidate
+
+Candidate authorization:
+`configs/pretraining-tranche-l004-v18.json`
+
+Candidate authorization SHA-256:
+`2b3b1db9067a3a6ba687f90c3875e88e7a46f3f48cefe88ccfc0ecda74cd003f`
+
+Runner commit:
+`c9d79a2ef4879edbe09fb2ab8cc00f6836821274`
+
+Evidence commit:
+`ed87afecc5ad30446b1c956364b2a5d2a0729fe4`
+
+Bounded continuation proposal:
+
+- source optimizer step: 681;
+- production range: step682 through step1193;
+- maximum additional optimizer updates: 512;
+- additional supervised tokens: 33,554,432;
+- target cumulative supervised tokens: 78,184,448 / 500,000,000;
+- target fraction of primary budget: 15.6368896%;
+- step682 learning rate: 0.000593357961;
+- step1193 learning rate: 0.000574629804;
+- optimizer and cosine-decay policy: unchanged;
+- checkpoint retention: latest 1 after atomic state commit;
+- validation baseline: step681;
+- final holdout: sealed;
+- public release: not qualified.
+
+The v17 production module remains byte-identical and is not reused for this
+new bound. v18 uses a separately pinned sustained module/runner.
+
 ## Current work
 
-Exact-qualify and synchronize the qualitative-probe milestone, then use the
-strong step681 validation improvement plus the still-early qualitative behavior
-to design the next bounded pretraining expansion.
+Commit and exact-qualify v18 authorization. Production step682 is prohibited
+until the authorization commit is clean, full regression/audit passes,
+`--validate-only` passes from that exact commit, and GitHub synchronization is
+0 ahead / 0 behind.
 
 ## Next action
 
-1. rerun the qualitative probe from its exact commit and require byte-identical
-   deterministic evidence;
-2. push/fetch and confirm 0/0 synchronization;
-3. prepare the next bounded continuation without modifying the pinned v17
-   production module;
-4. keep the final holdout sealed and public release blocked.
+1. commit v18 authorization and ledger;
+2. exact-qualify full regression, L004 audit, source checkpoint, and
+   `--validate-only`;
+3. push/fetch and confirm exact synchronization;
+4. only then start the single bounded step682-through-step1193 runner;
+5. keep final holdout sealed and public release blocked.

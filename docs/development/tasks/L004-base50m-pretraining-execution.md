@@ -1915,3 +1915,45 @@ v17 production provenance byte-for-byte.
 3. design a separately pinned next continuation runner/authorization;
 4. continue bounded pretraining only after exact qualification;
 5. keep final holdout sealed and public release blocked.
+
+## Phase AB seventh post-warmup sustained authorization candidate
+
+The step681 quantitative validation gate passed and the versioned qualitative
+probe confirmed the model is still an early base model: language form is
+improving, while semantic relevance, repetition control, question answering,
+and structured/code generation remain immature. Continuing conventional
+Base-50M pretraining is therefore preferred over changing architecture now.
+
+A separate sustained continuation implementation preserves v17 provenance.
+
+Runner commit:
+`c9d79a2ef4879edbe09fb2ab8cc00f6836821274`.
+
+Candidate authorization:
+`configs/pretraining-tranche-l004-v18.json`.
+
+Candidate authorization SHA-256:
+`2b3b1db9067a3a6ba687f90c3875e88e7a46f3f48cefe88ccfc0ecda74cd003f`.
+
+Bounded contract:
+
+- source: exact-qualified step681 checkpoint;
+- source checkpoint SHA-256:
+  `592497980f6737fd74e13343cff0a1fecbaa3fc1fb97c44c47521e5f38f38ea4`;
+- source cumulative supervised tokens: 44,630,016;
+- authorized optimizer steps: 682 through 1193;
+- maximum additional updates: 512;
+- additional supervised tokens: 33,554,432;
+- target cumulative supervised tokens: 78,184,448;
+- primary-budget fraction at the boundary: 15.6368896%;
+- step682 LR: 0.000593357961;
+- step1193 LR: 0.000574629804;
+- optimizer/schedule/data policy: unchanged;
+- rolling checkpoint retention: 1;
+- prune prior checkpoint only after metric + atomic state commit;
+- validation baseline/candidate: step681 -> step1193 on the same sealed pack;
+- final holdout must remain untouched;
+- public release remains not qualified.
+
+Production is forbidden until this authorization is committed, exact-qualified,
+pushed/fetched, and confirmed 0/0 synchronized.
