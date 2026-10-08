@@ -1559,16 +1559,68 @@ This doubles the bounded post-warmup tranche from 32 to 64 updates after two
 consecutive 32-update PASS gates, while preserving the exact same optimizer,
 retention, and validation contracts.
 
+## Fourth post-warmup cosine-decay result
+
+Authorization commit:
+`527792cdf3eb59ec5ad4624a7b6dc10f32afa6e9`.
+
+Production result:
+
+- optimizer steps: 234 through 297;
+- cumulative optimizer steps: 297 / 7,630;
+- additional supervised tokens: 4,194,304;
+- cumulative supervised tokens: 19,464,192 / 500,000,000;
+- fraction of primary budget: 3.8928384%;
+- training loss step234 to step297: 6.049393 -> 5.593243;
+- learning rate step234 to step297: 0.000599843647 -> 0.000599505950;
+- final checkpoint SHA-256:
+  `f0917d81130d3fb8ff6c59d28cfd0b662633b68ae96b36c5d75caceb179870fc`;
+- final state SHA-256:
+  `bcb97673f3ce6a02f6149e03ee8c7ddecdc8ab19a647e9ec8c41c9f9fb1e28bf`;
+- tracked post-warmup-4 result SHA-256:
+  `83722298982d9deaa929a7fd89baf527d589f8b16a188b637198723100792450`;
+- final data cursor: order position 19059 / block offset 578;
+- optimizer warmup complete: true;
+- pretraining complete: false;
+- public release eligibility: not qualified.
+
+Rolling retention:
+
+- full checkpoints retained in post-warmup-4 run root: 1;
+- historical checkpoints pruned after atomic state commit: 63;
+- metrics retained and hash-verified: 64 / 64;
+- final checkpoint reload: PASS.
+
+Post-step297 validation on the byte-identical 300k-token validation pack:
+
+| Category | Step 233 loss | Step 297 loss | Relative change |
+| --- | ---: | ---: | ---: |
+| general English | 5.791585690 | 5.577049066 | -3.704281% |
+| general Thai | 6.260309313 | 5.905298695 | -5.670816% |
+| technical/scientific/code | 6.005837822 | 5.766543058 | -3.984369% |
+| combined | 6.019244275 | 5.749630273 | -4.479200% |
+
+Post-tranche gate: **PASS**. Every category improved, combined validation loss
+improved, the validation packs are unchanged, and final holdout remains
+untouched.
+
+Tracked evidence hashes:
+
+- step297 validation:
+  `f1e08c42cbe62e381837370a3d3dc7000e79f0c9622311dc706140fd19906e57`;
+- step233-to-step297 comparison:
+  `b7e048dbc355171e6fa46017dc57f1fbc8ef9475db98281732d98fa0b419e0ed`.
+
 ## Current work
 
-Commit and exact-qualify v15. No step234 is permitted until the authorization
-commit is clean, remote-synchronized, and `--validate-only` passes.
+Record and exact-qualify the fourth post-warmup expanded tranche +
+post-step297 validation evidence before any further training authorization.
 
 ## Next action
 
-1. commit v15 authorization and ledger;
-2. exact-qualify and push;
-3. execute at most step234 through297;
-4. verify retention, metrics/state, and final step297 checkpoint;
-5. evaluate step297 on the unchanged validation pack before any further
-   expansion.
+1. full-regression the step297 evidence WIP;
+2. commit and exact-qualify the evidence;
+3. push and confirm remote synchronization;
+4. only then design the next bounded cosine-decay tranche from verified
+   step297;
+5. keep final holdout untouched and do not claim pretraining completion.

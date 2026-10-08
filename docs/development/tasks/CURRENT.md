@@ -7,44 +7,48 @@ Branch: research/l004-base50m-pretraining
 
 ## Verified production progress
 
-Latest exact-qualified checkpoint: optimizer step 233.
+Latest verified checkpoint candidate: optimizer step 297.
 
-- supervised tokens seen: 15,269,888 / 500,000,000
-- fraction of primary budget: 3.0539776%
+- supervised tokens seen: 19,464,192 / 500,000,000
+- fraction of primary budget: 3.8928384%
 - checkpoint SHA-256:
-  `1513602d920fe57b7bb12ee7ee69cdf77ea23f39f0253cdabb718e55413dd964`
-- step233 evidence commit:
-  `2c4650b574cd9a86989313b0d43ecdee3f0f52c3`
-- post-step233 validation gate: PASS
+  `f0917d81130d3fb8ff6c59d28cfd0b662633b68ae96b36c5d75caceb179870fc`
+- external state SHA-256:
+  `bcb97673f3ce6a02f6149e03ee8c7ddecdc8ab19a647e9ec8c41c9f9fb1e28bf`
+- post-warmup-4 result SHA-256:
+  `83722298982d9deaa929a7fd89baf527d589f8b16a188b637198723100792450`
+- pretraining complete: false
+- public release eligibility: not qualified
+
+## Rolling checkpoint retention
+
+- retained post-warmup-4 full checkpoints: 1
+- historical post-warmup-4 checkpoints pruned: 63
+- step234-297 metrics retained: 64 / 64
+- final checkpoint reload: PASS
+
+## Post-step297 validation gate
+
+Byte-identical 300k validation pack:
+
+- English: 5.791585690 -> 5.577049066 (-3.704281%)
+- Thai: 6.260309313 -> 5.905298695 (-5.670816%)
+- technical: 6.005837822 -> 5.766543058 (-3.984369%)
+- combined: 6.019244275 -> 5.749630273 (-4.479200%)
 - final holdout touched: false
+- gate: PASS
 
-## Fourth post-warmup expanded tranche
+Tracked hashes:
 
-Qualified runner:
-`db93205e6a105b2697449f6517ffa2f8617ea7ae`.
+- validation step297:
+  `f1e08c42cbe62e381837370a3d3dc7000e79f0c9622311dc706140fd19906e57`
+- step233-to-step297 comparison:
+  `b7e048dbc355171e6fa46017dc57f1fbc8ef9475db98281732d98fa0b419e0ed`
 
-Authorization candidate:
-`configs/pretraining-tranche-l004-v15.json`.
+## Active work
 
-Authorization SHA-256:
-`84b8fdd089c1211e78d6359589886d4ed83b38b328d5222d5f418cae4efbd7a9`.
+Record and exact-qualify the complete step297 evidence before any new training
+authorization.
 
-Bound:
-
-- source step: 233
-- maximum additional updates: 64
-- end step: 297
-- additional supervised tokens: 4,194,304
-- cumulative supervised tokens at bound: 19,464,192
-- qualified cosine-decay schedule unchanged
-- LR step234: 0.000599843647
-- LR step297: 0.000599505950
-- create checkpoint every update
-- retain latest post-warmup-4 checkpoint only
-- prune old checkpoint only after new metric + atomic state commit
-- same 300k validation pack required after step297
-- final holdout must remain untouched
-- public release remains not qualified
-
-Do not execute step234 until v15 is committed, exact-qualified,
-remote-synchronized, and `--validate-only` passes from the clean commit.
+Do not execute step298 until the evidence commit is exact-qualified and
+remote-synchronized.
