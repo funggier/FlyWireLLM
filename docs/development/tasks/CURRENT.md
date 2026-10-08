@@ -7,8 +7,12 @@ Branch: research/l004-base50m-pretraining
 
 ## Verified production progress
 
-Latest verified production checkpoint: optimizer step 425.
-Exact qualification status: pending evidence commit qualification.
+Latest exact-qualified checkpoint: optimizer step 425.
+
+- step425 evidence commit:
+  `691cb9d6e6640f8e4c7c36f3927ae12cdb6e8121`
+- exact qualification: PASS
+- pushed/fetched branch synchronization: 0 ahead / 0 behind
 
 - supervised tokens seen: 27,852,800 / 500,000,000
 - fraction of primary budget: 5.57056%
@@ -59,6 +63,7 @@ Validation losses:
 | technical/scientific/code | 5.766543058 | 5.430036368 | -5.835501% |
 | combined | 5.749630273 | 5.354595217 | -6.870617% |
 
-The step425 evidence candidate is verified locally. Do not authorize any later
-production tranche until the evidence commit is exact-qualified, pushed, fetched,
-and confirmed synchronized. Final holdout remains sealed.
+The step425 evidence commit is exact-qualified and remote-synchronized. L004
+remains ACTIVE because the 500M research pretraining contract is not complete.
+Any later production tranche requires a new bounded authorization and exact
+qualification before execution. Final holdout remains sealed.

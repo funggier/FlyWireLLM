@@ -1701,16 +1701,35 @@ Tracked validation evidence:
   SHA-256:
   `281e2eb29688209cf17ef801bf4f5d4c9de9329e7341efdb1811a1773622157f`.
 
+## Step425 evidence exact qualification
+
+Evidence commit:
+`691cb9d6e6640f8e4c7c36f3927ae12cdb6e8121`.
+
+Exact qualification from a clean worktree: **PASS**.
+
+Qualification included:
+
+- full repository pytest: PASS;
+- L004 audit: PASS;
+- step298-through-step425 runtime/state/checkpoint verification: PASS;
+- step425 validation rerun to a temporary output: PASS;
+- step297-to-step425 predeclared validation gate: PASS;
+- same validation pack: true;
+- final holdout touched: false;
+- HEAD before/after qualification matched the evidence commit;
+- worktree before/after qualification was clean.
+
+The evidence commit was pushed non-force, fetched again, and confirmed equal to
+`origin/research/l004-base50m-pretraining` at 0 ahead / 0 behind.
+
 ## Current work
 
-Exact-qualify the step425 evidence commit. Do not authorize or execute a later
-production tranche until that commit is clean, remote-synchronized, and its
-qualification evidence is recorded. Final holdout remains sealed.
+L004 remains ACTIVE. Step425 is the latest exact-qualified production checkpoint,
+not completion of the 500M-token research contract. Final holdout remains sealed.
 
 ## Next action
 
-1. run full repository regression and L004 audit on the evidence candidate;
-2. commit the step425 evidence;
-3. exact-qualify that exact commit from a clean worktree;
-4. push/fetch and confirm 0/0 synchronization;
-5. only then consider a later bounded research-only tranche.
+Design any later bounded research-only tranche as a new authorization from
+step425, then commit, exact-qualify, and remote-synchronize that authorization
+before another production optimizer update is allowed.
