@@ -7,44 +7,44 @@ Branch: research/l004-base50m-pretraining
 
 ## Verified production progress
 
-Latest exact-qualified checkpoint: optimizer step 201.
+Latest production checkpoint candidate: optimizer step 233.
 
-- supervised tokens seen: 13,172,736 / 500,000,000
-- fraction of primary budget: 2.6345472%
+- supervised tokens seen: 15,269,888 / 500,000,000
+- fraction of primary budget: 3.0539776%
 - checkpoint SHA-256:
-  `11fe2a45b65d43bec6a6710d64c2110a1be4cc11042e1fcbf1b6197a9feaa2a0`
-- step201 evidence commit:
-  `789edfeff672a0bfe56fdf909742746b46ab3bf6`
-- post-step201 validation gate: PASS
+  `1513602d920fe57b7bb12ee7ee69cdf77ea23f39f0253cdabb718e55413dd964`
+- state SHA-256:
+  `93f5256d1fa82d29dcfb95c997518afd46901101475af4c553816e42c2edf7ed`
+- post-warmup-3 result SHA-256:
+  `e26e181ec16be56a23155544fa5f907e64bc5fd85ea47a39abacc45ef691b12e`
+- optimizer warmup complete: true
+- pretraining complete: false
+- public release eligibility: not qualified
+
+## Post-step233 validation
+
+Byte-identical 300k validation pack:
+
+- English: 5.931827876 -> 5.791585690 (-2.364232%)
+- Thai: 6.452203094 -> 6.260309313 (-2.974082%)
+- technical: 6.140651583 -> 6.005837822 (-2.195431%)
+- combined: 6.174894184 -> 6.019244275 (-2.520689%)
 - final holdout touched: false
+- gate: PASS
 
-## Third post-warmup tranche
+Tracked hashes:
 
-Qualified runner:
-`585aad92e6140725b8ccf7e75e0f107c974a378a`.
+- validation step233:
+  `89ab8cfc6bc0ed2f3923f53407ba9d432d5a76ac0086497a17545d79d6913561`
+- step201-to-step233 comparison:
+  `cd9c4f78e74200de9af3731b9cbeb4f3fecb07b5b9c2118c64348837bba687de`
 
-Authorization candidate:
-`configs/pretraining-tranche-l004-v14.json`.
+## Active work
 
-Authorization SHA-256:
-`0e776c62ab1fde305e9524a422a512ffe895c50f438c4901e9b83a857fb04680`.
+Record and exact-qualify complete step233 evidence before any new training
+authorization.
 
-Bound:
-
-- source step: 201
-- maximum additional updates: 32
-- end step: 233
-- additional supervised tokens: 2,097,152
-- cumulative supervised tokens at bound: 15,269,888
-- qualified cosine-decay schedule unchanged
-- LR step202: 0.0005999428
-- LR step233: 0.0005998475
-- create checkpoint every update
-- retain latest post-warmup-3 checkpoint only
-- prune old checkpoint only after new metric + atomic state commit
-- same 300k validation pack required after step233
-- final holdout must remain untouched
-- public release remains not qualified
-
-Do not execute step202 until v14 is committed, exact-qualified,
-remote-synchronized, and `--validate-only` passes from the clean commit.
+Do not execute step234 until the evidence commit is exact-qualified and
+remote-synchronized. The next post-warmup tranche size will be chosen from
+the two consecutive successful 32-update validation gates at step201 and
+step233.

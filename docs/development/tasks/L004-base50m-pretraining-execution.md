@@ -1470,15 +1470,68 @@ Authorization:
 - final holdout must remain untouched;
 - public release eligibility: not qualified.
 
+## Third post-warmup cosine-decay result
+
+Authorization commit:
+`7be038d29946d34ddbd845ddd797b6b070778c8b`.
+
+Production result:
+
+- optimizer steps: 202 through 233;
+- cumulative optimizer steps: 233 / 7,630;
+- additional supervised tokens: 2,097,152;
+- cumulative supervised tokens: 15,269,888 / 500,000,000;
+- fraction of primary budget: 3.0539776%;
+- training loss step202 to step233: 6.117244 -> 5.872188;
+- learning rate step202 to step233: 0.0005999428 -> 0.0005998475;
+- final checkpoint SHA-256:
+  `1513602d920fe57b7bb12ee7ee69cdf77ea23f39f0253cdabb718e55413dd964`;
+- final state SHA-256:
+  `93f5256d1fa82d29dcfb95c997518afd46901101475af4c553816e42c2edf7ed`;
+- tracked post-warmup-3 result SHA-256:
+  `e26e181ec16be56a23155544fa5f907e64bc5fd85ea47a39abacc45ef691b12e`;
+- final data cursor: order position 14951 / block offset 843;
+- optimizer warmup complete: true;
+- pretraining complete: false;
+- public release eligibility: not qualified.
+
+Rolling retention:
+
+- full checkpoints retained in post-warmup-3 run root: 1;
+- historical checkpoints pruned after atomic state commit: 31;
+- metrics retained and hash-verified: 32 / 32;
+- final checkpoint reload: PASS.
+
+Post-step233 validation on the byte-identical 300k-token validation pack:
+
+| Category | Step 201 loss | Step 233 loss | Relative change |
+| --- | ---: | ---: | ---: |
+| general English | 5.931827876 | 5.791585690 | -2.364232% |
+| general Thai | 6.452203094 | 6.260309313 | -2.974082% |
+| technical/scientific/code | 6.140651583 | 6.005837822 | -2.195431% |
+| combined | 6.174894184 | 6.019244275 | -2.520689% |
+
+Post-tranche gate: **PASS**. Every category improved, combined validation loss
+improved, the validation packs are unchanged, and final holdout remains
+untouched.
+
+Tracked evidence hashes:
+
+- step233 validation:
+  `89ab8cfc6bc0ed2f3923f53407ba9d432d5a76ac0086497a17545d79d6913561`;
+- step201-to-step233 comparison:
+  `cd9c4f78e74200de9af3731b9cbeb4f3fecb07b5b9c2118c64348837bba687de`.
+
 ## Current work
 
-Commit and exact-qualify v14. No step202 is permitted until the authorization
-commit is clean, remote-synchronized, and `--validate-only` passes.
+Record and exact-qualify the third post-warmup + post-step233 validation
+evidence before any further training authorization.
 
 ## Next action
 
-1. commit v14 authorization and ledger;
-2. exact-qualify and push;
-3. execute at most step202 through233;
-4. verify retention, metrics/state, and final step233 checkpoint;
-5. evaluate step233 on the unchanged validation pack.
+1. full-regression the step233 evidence WIP;
+2. commit and exact-qualify the evidence;
+3. push and confirm remote synchronization;
+4. decide whether to scale the next post-warmup tranche beyond 32 updates
+   based on the now two consecutive 32-update PASS gates;
+5. keep final holdout untouched and public release not qualified.
