@@ -1723,13 +1723,62 @@ Qualification included:
 The evidence commit was pushed non-force, fetched again, and confirmed equal to
 `origin/research/l004-base50m-pretraining` at 0 ahead / 0 behind.
 
+## Phase AA sixth post-warmup cosine-decay extension authorization candidate
+
+Step425 exact-qualified evidence commit:
+`691cb9d6e6640f8e4c7c36f3927ae12cdb6e8121`.
+
+Extended post-warmup runner commit:
+`ccb04e7a111dca65eb4f2ffccfe21fd7e66280be`.
+
+Runner exact qualification: **PASS**.
+Runner commit was pushed/fetched and confirmed 0 ahead / 0 behind.
+
+Authorization candidate:
+`configs/pretraining-tranche-l004-v17.json`.
+
+Candidate authorization SHA-256:
+`b7f3050fa280e0ff707a1ea3aaac42c66b9941aeb7fb5c814f8709e40261a824`.
+
+- authorization id: `base50m-post-warmup-6-v1`;
+- source optimizer step: 425;
+- source checkpoint SHA-256:
+  `b02d6d6e3d4f5f7d06a9256707a71d44ace0293b8c55d2f8b93aa2653abe47ee`;
+- maximum additional optimizer updates: 256;
+- authorized end step: 681;
+- additional supervised-token cap: 16,777,216;
+- cumulative supervised-token cap: 44,630,016;
+- fraction of 500M budget at bound: 8.9260032%;
+- schedule: existing qualified cosine decay, no LR-policy change;
+- learning rate step426: 0.000598225697;
+- learning rate step681: 0.000593382946;
+- checkpoint creation cadence: every optimizer update;
+- rolling checkpoint retention: latest 1 checkpoint;
+- prune prior checkpoint only after new metric + atomic state commit;
+- post-tranche validation baseline: step425;
+- candidate validation step: 681;
+- same sealed 300k validation pack required;
+- final holdout must remain untouched;
+- public release eligibility: not qualified.
+
+This doubles the validated 128-update cadence to 256 updates after step425
+improved all three validation categories and combined loss, while preserving
+the same optimizer, retention, validation, and holdout contracts.
+
+The new runner is isolated from the v16 runner/module, so v16 pinned production
+provenance remains byte-identical. The new state loader explicitly verifies
+`tranche_complete=false` before step681 and `true` at step681.
+
 ## Current work
 
-L004 remains ACTIVE. Step425 is the latest exact-qualified production checkpoint,
-not completion of the 500M-token research contract. Final holdout remains sealed.
+Commit and exact-qualify v17. Step426 is not permitted until the authorization
+commit is clean, remote-synchronized, and `--validate-only` passes from the
+exact commit. Final holdout remains sealed.
 
 ## Next action
 
-Design any later bounded research-only tranche as a new authorization from
-step425, then commit, exact-qualify, and remote-synchronize that authorization
-before another production optimizer update is allowed.
+1. commit v17 authorization and ledger;
+2. run exact authorization qualification including full regression, L004 audit,
+   and `--validate-only`;
+3. push/fetch and confirm exact 0/0 synchronization;
+4. only then allow the bounded step426-through-step681 production tranche.

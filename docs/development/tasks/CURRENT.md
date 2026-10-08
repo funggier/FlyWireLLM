@@ -65,5 +65,37 @@ Validation losses:
 
 The step425 evidence commit is exact-qualified and remote-synchronized. L004
 remains ACTIVE because the 500M research pretraining contract is not complete.
-Any later production tranche requires a new bounded authorization and exact
-qualification before execution. Final holdout remains sealed.
+
+## Sixth post-warmup extended tranche candidate
+
+Qualified runner commit:
+`ccb04e7a111dca65eb4f2ffccfe21fd7e66280be`.
+
+Authorization candidate:
+`configs/pretraining-tranche-l004-v17.json`.
+
+Authorization candidate SHA-256:
+`b7f3050fa280e0ff707a1ea3aaac42c66b9941aeb7fb5c814f8709e40261a824`.
+
+Bounded contract:
+
+- source step: 425
+- candidate end step: 681
+- maximum additional updates: 256
+- additional supervised tokens: 16,777,216
+- cumulative supervised tokens at bound: 44,630,016 / 500,000,000
+- fraction of primary budget at bound: 8.9260032%
+- cosine LR step426: 0.000598225697
+- cosine LR step681: 0.000593382946
+- checkpoint every update
+- rolling retention: latest 1 checkpoint
+- prune prior checkpoint only after metric + atomic state commit
+- post-tranche validation baseline: step425
+- candidate validation step: 681
+- same sealed 300k validation pack required
+- final holdout must remain untouched
+- public release remains not qualified
+
+The authorization candidate loads successfully, but step426 is not permitted
+until v17 itself is committed, exact-qualified from a clean worktree,
+pushed/fetched, and confirmed synchronized. Final holdout remains sealed.
