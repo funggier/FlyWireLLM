@@ -1437,15 +1437,48 @@ Tracked evidence hashes:
 - step169-to-step201 comparison:
   `a791e099ab10ba971d6313bfa1b79578746c0f5223076bbcda56e8a2ede97385`.
 
+## Phase X third post-warmup cosine-decay authorization
+
+Step201 evidence commit:
+`789edfeff672a0bfe56fdf909742746b46ab3bf6`.
+
+Post-warmup steady runner commit:
+`585aad92e6140725b8ccf7e75e0f107c974a378a`.
+
+Authorization:
+`configs/pretraining-tranche-l004-v14.json`.
+
+- authorization id: `base50m-post-warmup-3-v1`;
+- authorization SHA-256:
+  `0e776c62ab1fde305e9524a422a512ffe895c50f438c4901e9b83a857fb04680`;
+- source optimizer step: 201;
+- source checkpoint SHA-256:
+  `11fe2a45b65d43bec6a6710d64c2110a1be4cc11042e1fcbf1b6197a9feaa2a0`;
+- maximum additional optimizer updates: 32;
+- authorized end step: 233;
+- additional supervised-token cap: 2,097,152;
+- cumulative supervised-token cap: 15,269,888;
+- schedule: existing qualified cosine decay, no new LR policy;
+- learning rate step202: 0.0005999428;
+- learning rate step233: 0.0005998475;
+- checkpoint creation cadence: every optimizer update;
+- rolling checkpoint retention: latest 1 checkpoint in this tranche;
+- prune prior checkpoint only after new metric + atomic state commit;
+- post-tranche validation baseline: step201;
+- candidate validation step: 233;
+- same 300k validation pack required;
+- final holdout must remain untouched;
+- public release eligibility: not qualified.
+
 ## Current work
 
-Record and exact-qualify the second post-warmup scaling tranche +
-post-step201 validation evidence before any further training authorization.
+Commit and exact-qualify v14. No step202 is permitted until the authorization
+commit is clean, remote-synchronized, and `--validate-only` passes.
 
 ## Next action
 
-1. full-regression the step201 evidence WIP;
-2. commit and exact-qualify the evidence;
-3. push and confirm remote synchronization;
-4. design the next bounded cosine-decay tranche from verified step201;
-5. keep final holdout untouched and do not claim pretraining completion.
+1. commit v14 authorization and ledger;
+2. exact-qualify and push;
+3. execute at most step202 through233;
+4. verify retention, metrics/state, and final step233 checkpoint;
+5. evaluate step233 on the unchanged validation pack.
