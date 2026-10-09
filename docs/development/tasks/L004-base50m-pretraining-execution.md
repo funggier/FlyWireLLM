@@ -4,17 +4,16 @@ Status: ACTIVE
 
 GitHub Issue: #6
 
-Updated: 2026-10-08
+Updated: 2026-10-09
 
 ## Objective
 
 Implement, qualify, and then execute the first real Base-50M-v1
 research-only pretraining run from the frozen L003 lineage.
 
-L004 has qualified the runtime/data path and completed the first bounded
-production tranche. Pretraining has started, but only 4 of 7,630 planned
-optimizer updates (262,144 of 500,000,000 supervised tokens) have executed.
-Full Base-50M pretraining is not complete.
+L004 has qualified the runtime/data path and has now exact-qualified optimizer
+step 1193. Cumulative supervised training is 78,184,448 of 500,000,000 tokens
+(15.6368896% of the primary budget). Full Base-50M pretraining is not complete.
 
 ## Authoritative base
 
@@ -1957,3 +1956,160 @@ Bounded contract:
 
 Production is forbidden until this authorization is committed, exact-qualified,
 pushed/fetched, and confirmed 0/0 synchronized.
+
+
+## Phase AB seventh post-warmup sustained production evidence
+
+Authorization commit:
+`fc949583a7ecbbf3e717021efc9a3183295cb9e5`.
+
+The v18 sustained production runner completed normally at the authorized hard
+stop, optimizer step 1193.
+
+During the tranche, LConnect itself was upgraded. Production was deliberately
+stopped only after a committed rolling state existed at step917. The checkpoint,
+metric, state hash, optimizer progress and packed-data cursor were verified,
+the remaining Python process tree was explicitly stopped, and durable recovery
+markers were written outside the repository. After LConnect reconnected, those
+hashes were reverified before exactly one runner was launched with `--resume`.
+The resumed runner continued at step918 and completed step1193 with exit code 0.
+
+Verified runtime evidence:
+
+- optimizer steps in this tranche: 682 through 1193;
+- cumulative optimizer step: 1193 / 7,630;
+- additional supervised tokens: 33,554,432;
+- cumulative supervised tokens: 78,184,448 / 500,000,000;
+- fraction of primary budget: 15.6368896%;
+- final checkpoint: `step-001193.pt`;
+- final checkpoint bytes: 602,706,635;
+- final checkpoint SHA-256:
+  `eb13f05a38317d80feb2d46b19ddc8ee90ecab67634e7f1fcff33d557b65ed13`;
+- final state SHA-256:
+  `393ace6a462dab4c3d23b27e1c8c0ddc5ca40365e1d31b55301eecf613d07174`;
+- retained checkpoint count: 1;
+- historical tranche checkpoints pruned after state commit: 511;
+- metrics present and verified: 512, step682 through step1193;
+- final checkpoint load: PASS;
+- pretraining complete: false;
+- public release eligibility: not qualified.
+
+Checkpoint serialization metadata caused a legitimate byte-size transition
+inside this tranche: 324 metric records report 602,706,571-byte checkpoints and
+188 report 602,706,635-byte checkpoints, beginning at step1006. Runtime evidence
+confirmed this was not corruption: each metric committed its own byte size and
+SHA-256, and the retained final file exactly matches the final metric/state.
+
+Tracked production result:
+`results/l004/post-warmup-7-v1.json`.
+
+SHA-256:
+`f8df5ac0129aa75b47eac072dbb06aad21b845db24bff2058b5a82f78ca49246`.
+
+### Step1193 quantitative validation
+
+Step1193 was evaluated on the same sealed 300k validation pack used at step681.
+No final-holdout material was read or materialized.
+
+| Category | step681 | step1193 | Relative change |
+| --- | ---: | ---: | ---: |
+| general English | 4.867667660 | 4.391436153 | -9.783567% |
+| general Thai | 4.740044962 | 4.085647923 | -13.805714% |
+| technical/scientific/code | 4.982780476 | 4.405080693 | -11.593924% |
+| combined | 4.863497699 | 4.294054923 | -11.708503% |
+
+Post-tranche validation gate: **PASS**.
+
+- every category is finite and improved versus step681;
+- combined validation loss improved versus step681;
+- same validation pack: true;
+- final holdout touched: false.
+
+Tracked validation evidence:
+
+- step1193 validation:
+  `results/l004/validation-step1193-v1.json`;
+  SHA-256:
+  `5699d1bb8b629f1da7e75cc3bd11f44a2a3a56e59978dfc83952ac50e3f81b0e`;
+- step681-to-step1193 comparison:
+  `results/l004/validation-comparison-step681-step1193-v1.json`;
+  SHA-256:
+  `4339a97027ee49cc2ad8ef41e1d00a2b45d99202e97f4d61d15062215dfbe4b8`.
+
+### Step681-to-step1193 qualitative capability probe
+
+The v2 qualitative probe uses the exact same 12 synthetic prompts and greedy
+decoding contract as v1, but compares step681 with step1193.
+
+Config:
+`configs/qualitative-probe-l004-v2.json`.
+
+Config SHA-256:
+`0969a229202420ee693b76e0f56649c95fa7d00d19f1fa409e0d976ab9d49206`.
+
+Tracked result:
+`results/l004/qualitative-probe-step681-step1193-v2.json`.
+
+SHA-256:
+`1262ad30117b268c22fc2d55cd1998fa3571cb1d02ab26c516951753356b7248`.
+
+Observed behavior is intentionally descriptive rather than scored:
+
+- Thai surface-form generation improves materially at step1193, including full
+  clauses and sentence-like continuations on prompts where step681 could
+  collapse into punctuation or list patterns;
+- semantic relevance and factual accuracy are still weak;
+- repetition remains common;
+- English remains sentence-like but can be irrelevant or invent pseudo-words;
+- question answering is not reliable;
+- Python and JSON structure remain unreliable;
+- all generations reached the fixed 32-token cap without EOS.
+
+The probe is observational only, reads no corpus partition, and does not change
+release status.
+
+## Step1193 evidence exact qualification
+
+Evidence commit:
+`4d2ba99e9af6048de55c90de6f44217988079115`.
+
+Exact qualification from a clean worktree: **PASS**.
+
+Qualification included:
+
+- full repository pytest: PASS;
+- L004 audit: PASS;
+- step682-through-step1193 runtime/state/checkpoint verification: PASS;
+- deterministic runtime-verifier temporary artifact byte-identical to tracked
+  result SHA-256;
+- step1193 validation rerun: all category and combined losses exactly matched;
+- the validation JSON differed only in nondeterministic `elapsed_seconds`;
+- step681-to-step1193 comparison temporary artifact byte-identical to the
+  tracked comparison and validation gate PASS;
+- qualitative v2 exact rerun temporary artifact byte-identical to tracked
+  evidence;
+- same validation pack: true;
+- final holdout touched: false;
+- v16, v17 and v18 production-pinned module hashes remained unchanged;
+- v18 production runner hash remained unchanged;
+- HEAD before/after qualification matched the evidence commit;
+- worktree before/after qualification was clean.
+
+The evidence commit was pushed non-force, fetched again, and confirmed equal to
+`origin/research/l004-base50m-pretraining` at 0 ahead / 0 behind.
+
+## Current work after step1193
+
+The Transformer control is still learning materially at 15.6368896% of the
+primary token budget. The next step is another separately pinned bounded
+continuation from the exact-qualified step1193 state. Existing v18 production
+files remain immutable.
+
+## Next action after step1193
+
+1. implement a separately pinned next-continuation module/runner;
+2. use step1193 as the exact source checkpoint;
+3. preserve optimizer, cosine schedule, data mixture and checkpoint-retention
+   semantics;
+4. exact-qualify a new authorization before production;
+5. keep the final holdout sealed and public release blocked.

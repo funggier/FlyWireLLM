@@ -149,38 +149,41 @@ a license to touch the final holdout.
 
 At optimizer step 425, cumulative supervised training was 27,852,800 tokens.
 
-At optimizer step 681, cumulative supervised training is 44,630,016 tokens,
+At optimizer step 681, cumulative supervised training was 44,630,016 tokens,
 8.9260032% of the 500M primary budget.
 
-Step425 to step681 validation on the byte-identical sealed 300k validation pack:
+At optimizer step 1193, cumulative supervised training is 78,184,448 tokens,
+15.6368896% of the 500M primary budget.
 
-| Category | step425 | step681 | Relative change |
+Step681 to step1193 validation on the same sealed 300k validation pack:
+
+| Category | step681 | step1193 | Relative change |
 | --- | ---: | ---: | ---: |
-| general English | 5.275155045 | 4.867667660 | -7.724652% |
-| general Thai | 5.358594238 | 4.740044962 | -11.543126% |
-| technical/scientific/code | 5.430036368 | 4.982780476 | -8.236702% |
-| combined | 5.354595217 | 4.863497699 | -9.171515% |
+| general English | 4.867667660 | 4.391436153 | -9.783567% |
+| general Thai | 4.740044962 | 4.085647923 | -13.805714% |
+| technical/scientific/code | 4.982780476 | 4.405080693 | -11.593924% |
+| combined | 4.863497699 | 4.294054923 | -11.708503% |
 
-All categories improved. The same validation packs were used and the final
-holdout remained untouched.
+All categories improved again. The same validation packs were used and the
+final holdout remained untouched.
 
-The first fixed qualitative-generation probe at step425 and step681 adds an
-important complementary observation. At step681, some Thai continuations show
-more natural phrase/sentence structure than at step425, and English outputs are
-more sentence-shaped, but semantic relevance and factual accuracy remain weak.
-Repetition is common, question-like prompts may collapse into punctuation, and
-Python/JSON/technical structure is not yet reliable. These observations are
-consistent with an early base model learning language-form statistics before it
-has robust instruction following or factual generation.
+The second fixed qualitative-generation probe compares step681 and step1193
+using the exact same 12 synthetic prompts and greedy decoding settings. Thai
+surface-form behavior improves visibly: step1193 produces complete Thai clauses
+and sentence-like continuations on prompts where step681 could collapse into
+punctuation/list patterns. However factual correctness, semantic relevance and
+repetition control remain weak. English remains sentence-shaped but can be
+irrelevant or invent pseudo-words, while Python and JSON structure are still
+unreliable.
 
-The probe is deliberately synthetic and observational. It reads no corpus
+The v2 probe is deliberately synthetic and observational. It reads no corpus
 partition and does not touch final holdout. Its tracked artifact is
-`results/l004/qualitative-probe-step425-step681-v1.json` with SHA-256
-`7c574e1480b0c9296e80701450896203599a3fef43a18641a8d476594819ef68`.
+`results/l004/qualitative-probe-step681-step1193-v2.json` with SHA-256
+`1262ad30117b268c22fc2d55cd1998fa3571cb1d02ab26c516951753356b7248`.
 
-This is evidence that the current control is still learning at step681. It is
-not evidence that pretraining is complete or that the model is ready for public
-release.
+This is strong evidence that the current 50M Transformer control is still
+learning materially at step1193. It is not evidence that pretraining is
+complete or that the model is ready for public release or assistant use.
 
 ## Long-term sequence
 
