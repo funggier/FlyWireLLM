@@ -2159,5 +2159,56 @@ Bounded contract:
 v19 uses a separate `pretraining_post_warmup_longrun.py` module and longrun
 runner. The v18 module and runner remain immutable.
 
-Production is forbidden until v19 authorization is committed, exact-qualified,
-pushed/fetched, and confirmed 0/0 synchronized.
+v19 authorization commit:
+`74e171421c46f1d9ddbf7a90e50fb6d3850dd42e`.
+
+The authorization was exact-qualified from a clean commit with full pytest,
+L004 audit, source step1193/checkpoint verification and `--validate-only`, then
+pushed/fetched and confirmed 0 ahead / 0 behind.
+
+## Phase AD v19 production start and user-requested pause
+
+Exactly one production runner was started after qualification:
+`proc-1791511343362-7`.
+
+The run advanced normally from step1194. On 2026-10-09 the user requested a
+pause so the machine could be used for other work.
+
+The pause request initially observed committed step1451. During the termination
+race, step1452 completed its checkpoint, metric and atomic state commit. The
+managed PowerShell wrapper then stopped, but its Python child tree remained
+alive and was explicitly terminated. Final verification found zero matching
+training Python processes.
+
+Authoritative paused state:
+
+- optimizer step: 1452;
+- next step on resume: 1453;
+- cumulative supervised tokens: 95,158,272 / 500,000,000;
+- primary-budget fraction: 19.0316544%;
+- v19 updates completed: 259 / 1,024;
+- v19 updates remaining: 765;
+- physical input positions: 95,413,071;
+- microbatches: 94,627;
+- data cursor: order position 93,176, block input offset 847;
+- checkpoint: `step-001452.pt`;
+- checkpoint SHA-256:
+  `0e092418c2c586f6cbddb697dc59bdf104d5d164ae66e97238fafb44bc557210`;
+- metric SHA-256:
+  `75c9a2ced065c4112a4b4e5314f074e50c9420c1593662e316750973df7f9096`;
+- state SHA-256:
+  `f3a572c7b354e43e35dfd9b3e11d7113f70c643d12daba570070d41b81fed65e`;
+- retained checkpoint count: 1;
+- v19 metric count: 259;
+- state loader with `verify_files=True`: PASS;
+- tranche complete: false;
+- final holdout touched: false;
+- public release: not qualified.
+
+Detailed pause/resume record:
+`docs/development/reports/FWLLM-20261009-l004-v19-paused-step1452.md`.
+
+Production must remain paused until the user explicitly asks to resume. Before
+resuming, reverify the recorded hashes and zero-process condition, then launch
+exactly one v19 runner with `--resume`. The next committed update must be
+step1453.

@@ -2,6 +2,7 @@
 
 Current task: L004 — Base-50M Research-Only Pretraining Execution
 Status: ACTIVE
+Production status: PAUSED BY USER REQUEST at step1452
 GitHub Issue: #6
 Branch: research/l004-base50m-pretraining
 
@@ -157,18 +158,43 @@ Bounded continuation proposal:
 
 v19 uses a separately pinned longrun module/runner. v18 remains byte-identical.
 
+## Production pause — step1452
+
+Production is intentionally paused at the user's request.
+
+Authoritative recoverable state:
+
+- optimizer step: 1452;
+- next step on resume: 1453;
+- cumulative supervised tokens: 95,158,272 / 500,000,000;
+- primary-budget fraction: 19.0316544%;
+- v19 tranche updates complete: 259 / 1,024;
+- v19 tranche updates remaining: 765;
+- checkpoint SHA-256:
+  `0e092418c2c586f6cbddb697dc59bdf104d5d164ae66e97238fafb44bc557210`;
+- metric SHA-256:
+  `75c9a2ced065c4112a4b4e5314f074e50c9420c1593662e316750973df7f9096`;
+- state SHA-256:
+  `f3a572c7b354e43e35dfd9b3e11d7113f70c643d12daba570070d41b81fed65e`;
+- state loader `verify_files=True`: PASS;
+- matching training Python processes after pause: 0;
+- final holdout touched: false;
+- public release: not qualified.
+
+Pause report:
+`docs/development/reports/FWLLM-20261009-l004-v19-paused-step1452.md`
+
+An external recovery marker also exists at:
+`T:\Space\Projects\ProjectsAI\FlyWireLLM-data\L004\Recovery\PAUSED-20261009-step1452.json`.
+
 ## Current work
 
-Commit and exact-qualify v19 authorization. Production step1194 is prohibited
-until the authorization commit is clean, full regression/audit passes,
-`--validate-only` passes from that exact commit, and GitHub synchronization is
-0 ahead / 0 behind.
+None while production is intentionally paused. Do not start another training
+runner until the user asks to resume.
 
 ## Next action
 
-1. commit v19 authorization and ledger;
-2. exact-qualify full regression, L004 audit, source checkpoint and
-   `--validate-only`;
-3. push/fetch and confirm exact synchronization;
-4. only then start one bounded step1194-through-step2217 production runner;
-5. keep final holdout sealed and public release blocked.
+When resuming, first reverify the step1452 state/checkpoint/metric hashes and
+confirm zero matching training processes. Then start exactly one v19 runner
+with `--resume`; it must continue from step1453. Keep the final holdout sealed
+and public release blocked.
