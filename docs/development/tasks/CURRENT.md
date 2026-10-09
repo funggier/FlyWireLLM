@@ -125,16 +125,50 @@ trained and characterized.
 L004 remains ACTIVE because the 500M research pretraining contract is not
 complete.
 
+## Eighth post-warmup longrun authorization candidate
+
+Candidate authorization:
+`configs/pretraining-tranche-l004-v19.json`
+
+Candidate authorization SHA-256:
+`6502c901b23182f579830d71f1b8f4539484cbbf4d0b9996b4115eb1cac6b5db`
+
+Runner implementation commit:
+`46941690ee45f65a4451e1eff55d7e6872ad1b13`
+
+Step1193 evidence commit:
+`4d2ba99e9af6048de55c90de6f44217988079115`
+
+Bounded continuation proposal:
+
+- source optimizer step: 1193;
+- production range: step1194 through step2217;
+- maximum additional optimizer updates: 1,024;
+- additional supervised tokens: 67,108,864;
+- target cumulative supervised tokens: 145,293,312 / 500,000,000;
+- target fraction of primary budget: 29.0586624%;
+- step1194 learning rate: 0.000574581773;
+- step2217 learning rate: 0.000504675007;
+- optimizer, cosine-decay and data policy: unchanged;
+- rolling checkpoint retention: latest 1 after atomic state commit;
+- validation baseline: step1193;
+- final holdout: sealed;
+- public release: not qualified.
+
+v19 uses a separately pinned longrun module/runner. v18 remains byte-identical.
+
 ## Current work
 
-Use the strong step1193 validation improvement plus still-early qualitative
-behavior to design the next bounded Base-50M continuation from the exact
-step1193 checkpoint.
+Commit and exact-qualify v19 authorization. Production step1194 is prohibited
+until the authorization commit is clean, full regression/audit passes,
+`--validate-only` passes from that exact commit, and GitHub synchronization is
+0 ahead / 0 behind.
 
 ## Next action
 
-1. create a separately pinned continuation module/runner without modifying v18;
-2. preserve the existing optimizer/cosine/data policy;
-3. exact-qualify the next authorization before any production execution;
-4. continue using the sealed 300k validation pack at the next boundary;
-5. keep the final holdout sealed and public release blocked.
+1. commit v19 authorization and ledger;
+2. exact-qualify full regression, L004 audit, source checkpoint and
+   `--validate-only`;
+3. push/fetch and confirm exact synchronization;
+4. only then start one bounded step1194-through-step2217 production runner;
+5. keep final holdout sealed and public release blocked.

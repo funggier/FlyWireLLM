@@ -2113,3 +2113,51 @@ files remain immutable.
    semantics;
 4. exact-qualify a new authorization before production;
 5. keep the final holdout sealed and public release blocked.
+
+
+## Phase AC eighth post-warmup longrun authorization candidate
+
+Step1193 remains the exact-qualified evidence source:
+`4d2ba99e9af6048de55c90de6f44217988079115`.
+
+The next continuation keeps the same model, optimizer, cosine schedule, packed
+data and rolling-checkpoint semantics, while doubling the qualified 512-update
+cadence to a bounded 1,024-update tranche.
+
+Longrun runner implementation commit:
+`46941690ee45f65a4451e1eff55d7e6872ad1b13`.
+
+Candidate authorization:
+`configs/pretraining-tranche-l004-v19.json`.
+
+Candidate authorization SHA-256:
+`6502c901b23182f579830d71f1b8f4539484cbbf4d0b9996b4115eb1cac6b5db`.
+
+Bounded contract:
+
+- source optimizer step: 1193;
+- source cumulative supervised tokens: 78,184,448;
+- source checkpoint SHA-256:
+  `eb13f05a38317d80feb2d46b19ddc8ee90ecab67634e7f1fcff33d557b65ed13`;
+- source checkpoint bytes: 602,706,635;
+- authorized optimizer steps: 1194 through 2217;
+- maximum additional updates: 1,024;
+- additional supervised tokens: 67,108,864;
+- target cumulative supervised tokens: 145,293,312;
+- primary-budget fraction at the boundary: 29.0586624%;
+- step1194 LR: 0.000574581773;
+- step2217 LR: 0.000504675007;
+- optimizer/schedule/data policy: unchanged;
+- rolling checkpoint retention: 1;
+- prior checkpoint pruning only after metric + atomic state commit;
+- validation baseline/candidate: step1193 -> step2217 on the same sealed pack;
+- maximum allowed per-category relative loss increase: 0.5%;
+- combined loss must not increase versus step1193;
+- final holdout must remain untouched;
+- public release remains not qualified.
+
+v19 uses a separate `pretraining_post_warmup_longrun.py` module and longrun
+runner. The v18 module and runner remain immutable.
+
+Production is forbidden until v19 authorization is committed, exact-qualified,
+pushed/fetched, and confirmed 0/0 synchronized.
